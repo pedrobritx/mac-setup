@@ -1,0 +1,17 @@
+# shellcheck configuration for mac-setup
+# Resolve `source` statements relative to the repository root.
+source-path=SCRIPTDIR
+source-path=SCRIPTDIR/..
+
+# SC1091: sourced files are resolved at runtime (lib/, config/); the
+# `# shellcheck source=` directives cover the real paths.
+disable=SC1091
+
+# SC2088: literal "~/..." strings here are display text for logs/reports,
+# never paths handed to commands — real paths always use ${HOME}.
+disable=SC2088
+
+# SC2119/SC2120: report renderers take an optional output-path argument and
+# are deliberately called without it for the default location.
+disable=SC2119
+disable=SC2120
