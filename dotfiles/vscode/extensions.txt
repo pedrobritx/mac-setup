@@ -1,0 +1,27 @@
+# VS Code extensions (managed by mac-setup).
+# One extension id per line; comments and blank lines are ignored.
+# Capture your current set with:
+#   code --list-extensions > dotfiles/vscode/extensions.txt
+
+# Language support
+dbaeumer.vscode-eslint
+esbenp.prettier-vscode
+charliermarsh.ruff
+ms-python.python
+swiftlang.swift-vscode
+timonwong.shellcheck
+foxundermoon.shell-format
+tamasfe.even-better-toml
+redhat.vscode-yaml
+
+# Infrastructure
+ms-azuretools.vscode-containers
+github.vscode-github-actions
+
+# Git
+eamodio.gitlens
+
+# Quality of life
+usernamehw.errorlens
+christian-kohler.path-intellisense
+streetsidesoftware.code-spell-checker

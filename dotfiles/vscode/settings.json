@@ -1,0 +1,48 @@
+{
+  // VS Code user settings (managed by mac-setup — this file is symlinked).
+  // Editor
+  "editor.fontFamily": "JetBrains Mono, Menlo, monospace",
+  "editor.fontSize": 13,
+  "editor.fontLigatures": true,
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "editor.rulers": [100],
+  "editor.minimap.enabled": false,
+  "editor.stickyScroll.enabled": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+
+  // Files
+  "files.autoSave": "onFocusChange",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.exclude": {
+    "**/.DS_Store": true,
+    "**/node_modules": true
+  },
+
+  // Workbench
+  "workbench.startupEditor": "none",
+  "workbench.editor.enablePreview": false,
+
+  // Terminal
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font, JetBrains Mono, Menlo",
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.defaultProfile.osx": "zsh",
+
+  // Git
+  "git.autofetch": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+
+  // Telemetry
+  "telemetry.telemetryLevel": "off",
+
+  // Language defaults
+  "[javascript][typescript][typescriptreact][json][jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff"
+  }
+}

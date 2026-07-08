@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Logs & reports are written to ~/.local/state/mac-setup, but ignore any
+# accidental local ones too
+*.log
+logs/
+reports/
+
+# Editor litter
+.idea/
+*.swp
+
+# Local-only overrides (never commit personal secrets)
+config/settings.local.sh
