@@ -1,0 +1,27 @@
+# Global gitignore (managed by mac-setup) — junk that should never be
+# committed from any repository on this machine.
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.vscode/.history/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment / secrets
+.env.local
+.env.*.local
+
+# Build & dependency junk that belongs in project ignores but leaks anyway
+npm-debug.log*
+yarn-error.log
+.pnpm-debug.log*

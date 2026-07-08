@@ -1,0 +1,53 @@
+# starship.toml — prompt configuration (managed by mac-setup).
+# Minimal two-line prompt: directory + git on the left, language versions
+# only when relevant, duration for slow commands.
+# Docs: https://starship.rs/config/
+
+add_newline = true
+command_timeout = 750
+
+format = """
+$directory$git_branch$git_status$nodejs$python$swift$docker_context$cmd_duration
+$character"""
+
+[directory]
+style = "bold cyan"
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+style = "yellow"
+stashed = ""
+
+[nodejs]
+symbol = " "
+format = "[$symbol($version )]($style)"
+# Only show when the project actually uses Node
+detect_files = ["package.json", ".node-version", ".nvmrc"]
+detect_folders = ["node_modules"]
+
+[python]
+symbol = " "
+format = "[$symbol($version )($virtualenv )]($style)"
+
+[swift]
+symbol = " "
+format = "[$symbol($version )]($style)"
+
+[docker_context]
+symbol = " "
+format = "[$symbol$context]($style) "
+only_with_files = true
+
+[cmd_duration]
+min_time = 2000
+format = "[took $duration]($style) "
+style = "dim yellow"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"

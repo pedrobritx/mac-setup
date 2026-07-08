@@ -1,0 +1,27 @@
+{
+  "Shell script header": {
+    "prefix": "shheader",
+    "description": "mac-setup style bash header with strict mode",
+    "body": [
+      "#!/usr/bin/env bash",
+      "#",
+      "# ${1:name}.sh — ${2:description}",
+      "",
+      "set -euo pipefail",
+      "",
+      "$0"
+    ]
+  },
+  "Bash function with doc": {
+    "prefix": "shfn",
+    "description": "documented bash function",
+    "body": [
+      "# ---------------------------------------------------------------------------",
+      "# ${1:name} — ${2:description}",
+      "# ---------------------------------------------------------------------------",
+      "${1:name}() {",
+      "  $0",
+      "}"
+    ]
+  }
+}
