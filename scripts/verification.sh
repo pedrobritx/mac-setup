@@ -99,11 +99,6 @@ run_checks() {
   check_warn "lang" "swiftformat" _version swiftformat --version
   check_warn "lang" "swiftlint" _version swiftlint --version
 
-  # Docker
-  check_warn "docker" "docker CLI" _version docker --version
-  check_warn "docker" "docker daemon" bash -c 'docker info >/dev/null 2>&1 && echo running'
-  check_warn "docker" "docker compose" bash -c 'docker compose version --short'
-
   # Terminal tools
   local tool
   for tool in starship zoxide fzf eza bat fd rg jq yq tree wget atuin btop htop tmux fastfetch nvim; do

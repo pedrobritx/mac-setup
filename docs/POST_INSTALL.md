@@ -27,11 +27,12 @@ Your personalized list is generated at
 
 ## First-launch approvals (macOS security prompts)
 
-- [ ] **Docker Desktop** — accept the service agreement, wait for
-      "Engine running", then `./verify.sh` (runs `hello-world`).
+- [ ] **Docker Desktop** — launch it the first time you actually need
+      containers and accept the service agreement. For performance, turn
+      **off** "Start Docker Desktop when you sign in" (Settings → General)
+      so the daemon isn't always running in the background.
 - [ ] **Logi Options+** — grant Accessibility/Input Monitoring permissions.
 - [ ] **Google Drive** — grant Finder integration when prompted.
-- [ ] **OnyX** — grant Full Disk Access if you plan to use it.
 
 ## System decisions (deliberately not automated)
 
@@ -39,7 +40,9 @@ Your personalized list is generated at
       Turn On. Store the recovery key off-device (password manager).
 - [ ] **Time Machine** — pick a backup disk.
 - [ ] **Dock layout** — pin the apps you actually use (automation of Dock
-      contents is destructive to personal muscle memory; we only set behavior).
+      contents is destructive to personal muscle memory; we only set the
+      icon size). Magnification, auto-hide, and hot corners are left stock
+      on purpose — enable them in System Settings only if you miss them.
 - [ ] **Wallpaper** — anything in `assets/wallpapers/` you like.
 
 ## Terminal finishing touches

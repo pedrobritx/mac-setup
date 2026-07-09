@@ -20,6 +20,11 @@ wiped, restoring it is: clone → one command → coffee.
 
 **Design principles**
 
+- **Stock-first, performance above all** — window management, Mission
+  Control, Spaces, and animations are **never** overridden. The Mac keeps its
+  brand-new feel; the only defaults written are small functional preferences
+  (typing, tap-to-click, Finder navigation). Legacy overrides from older
+  versions are actively deleted.
 - **Idempotent** — every action is guarded by a check; re-runs are no-ops.
 - **Single source of truth** — all packages live in one annotated [`Brewfile`](Brewfile).
 - **Prefer official channels** — Homebrew → Mac App Store (`mas`) → official
@@ -34,13 +39,15 @@ wiped, restoring it is: clone → one command → coffee.
 - 🍺 **Homebrew bootstrap** + `brew bundle` for ~40 formulae, ~25 casks, fonts
 - 🛍️ **Mac App Store** automation via `mas` (Pages, Final Cut Pro, TestFlight, …)
 - 🛠️ **Toolchains**: Node (via **fnm**), pnpm, bun, Python (via **uv**), pipx,
-  Swift + SwiftFormat/SwiftLint, Docker Desktop (verified with `hello-world`)
+  Swift + SwiftFormat/SwiftLint, Docker Desktop (installed, but only launched
+  when you need it — no always-on daemon eating battery)
 - 💻 **Terminal**: zsh + Starship prompt + autosuggestions, syntax highlighting,
   fzf, zoxide, atuin, eza, bat, ripgrep — no framework, startup stays fast
 - 🔑 **Git & SSH**: identity, Ed25519 key (never overwrites), SSH commit
   signing, Git LFS, GitHub CLI auth
-- ⚙️ **macOS defaults**: Finder, Dock, keyboard, trackpad, screenshots,
-  Safari developer mode — applied only when values differ
+- ⚙️ **macOS defaults**: minimal and stock-first — keyboard, tap-to-click,
+  Finder path bar, screenshot folder, Safari Develop menu. Hidden files stay
+  hidden (`⌘⇧.` when needed); window management and animations stay stock
 - 📁 **Directory layout**: `~/Developer/{Personal,Clients,OpenSource,…}`,
   `~/Screenshots`, `~/Downloads/Installers`
 - 🧪 **Verification**: `./verify.sh` checks every layer and prints a colored
@@ -68,10 +75,10 @@ mac-setup/
 │   ├── checks.sh         #   idempotency predicates
 │   └── report.sh         #   OK/SKIP/FAIL/MANUAL accumulation + rendering
 ├── scripts/              # one module per concern (run standalone or via install.sh)
-│   ├── xcode.sh brew.sh apps.sh mas.sh fonts.sh
-│   ├── git.sh ssh.sh terminal.sh node.sh python.sh swift.sh docker.sh
-│   ├── vscode.sh macos.sh finder.sh dock.sh security.sh
-│   └── directories.sh downloads.sh verification.sh
+│   ├── xcode.sh brew.sh apps.sh mas.sh
+│   ├── git.sh ssh.sh terminal.sh node.sh python.sh swift.sh
+│   ├── vscode.sh macos.sh security.sh
+│   └── directories.sh verification.sh
 ├── dotfiles/             # symlinked into $HOME (originals are backed up)
 │   ├── .zshrc .zprofile
 │   ├── .config/zsh/      #   aliases.zsh functions.zsh exports.zsh
@@ -106,8 +113,8 @@ cd ~/Developer/mac-setup
 ```bash
 ./install.sh --dry-run             # preview everything; change nothing
 ./install.sh --list                # list all modules
-./install.sh --only brew,fonts     # run specific modules
-./install.sh --skip macos,dock     # run everything except system defaults
+./install.sh --only brew,apps      # run specific modules
+./install.sh --skip macos          # run everything except system defaults
 ./install.sh --verbose             # debug output
 ```
 
@@ -131,7 +138,7 @@ cleans caches, and reports anything still outdated.
 ./verify.sh
 ```
 
-Prints a colored scorecard covering brew, git, node, python, swift, docker,
+Prints a colored scorecard covering brew, git, node, python, swift,
 fonts, apps, terminal plugins, and dotfile links. Every run of `install.sh`
 also writes reports to `~/.local/state/mac-setup/reports/`:
 
@@ -152,8 +159,9 @@ Logs live in `~/.local/state/mac-setup/logs/`.
 - **Identity & directories** — edit [`config/settings.sh`](config/settings.sh).
 - **Shell** — edit `dotfiles/.config/zsh/{aliases,functions,exports}.zsh`;
   changes apply instantly because the files are symlinked.
-- **macOS defaults** — tweak `scripts/macos.sh`, `finder.sh`, `dock.sh`; every
-  write is one documented `defaults_write` line.
+- **macOS defaults** — tweak `scripts/macos.sh`; every write is one documented
+  `defaults_write` line. Keep the rule in that file's header in mind: nothing
+  that touches window management, Mission Control, or animations.
 - **VS Code** — capture your extensions with
   `code --list-extensions > dotfiles/vscode/extensions.txt`.
 
@@ -196,7 +204,6 @@ This is a personal setup, but PRs and issues are welcome — see
 
 - [ ] Machine profiles (personal vs work) selecting Brewfile subsets
 - [ ] `defaults` diff tool: capture current settings back into the repo
-- [ ] Dock layout management via `dockutil`
 - [ ] Nightly scheduled `verify.sh` with notification on drift
 - [ ] Time Machine / restic backup bootstrap
 

@@ -21,8 +21,8 @@
 # Examples:
 #   ./install.sh                     # full setup
 #   ./install.sh --dry-run           # preview everything, change nothing
-#   ./install.sh --only brew,fonts   # just Homebrew packages and fonts
-#   ./install.sh --skip macos,dock   # everything except system defaults
+#   ./install.sh --only brew,apps    # just Homebrew packages and apps
+#   ./install.sh --skip macos        # everything except system defaults
 
 set -euo pipefail
 
@@ -41,8 +41,6 @@ MODULES=(
   xcode
   brew
   directories
-  downloads
-  fonts
   apps
   mas
   ssh
@@ -51,11 +49,8 @@ MODULES=(
   node
   python
   swift
-  docker
   vscode
   macos
-  finder
-  dock
   security
   verification
 )
@@ -69,8 +64,6 @@ module_description() {
     xcode) echo "Xcode Command Line Tools, Xcode, license, xcode-select" ;;
     brew) echo "Homebrew install/update + Brewfile bundle (formulae, casks, fonts, mas)" ;;
     directories) echo "Create the ~/Developer workspace directory layout" ;;
-    downloads) echo "Organize ~/Downloads (Installers folder)" ;;
-    fonts) echo "Verify developer fonts installed via Homebrew" ;;
     apps) echo "Verify GUI apps; report non-automatable apps (e.g. Cisco Secure Client)" ;;
     mas) echo "Verify Mac App Store apps; report unpurchased/unavailable ones" ;;
     git) echo "Git identity, defaults, LFS, SSH commit signing, GitHub auth" ;;
@@ -79,11 +72,8 @@ module_description() {
     node) echo "Node.js via fnm, pnpm, bun" ;;
     python) echo "Python via uv, pipx" ;;
     swift) echo "Swift toolchain checks, SwiftFormat, SwiftLint" ;;
-    docker) echo "Docker Desktop, virtualization check, hello-world" ;;
     vscode) echo "VS Code settings, keybindings-safe config, extensions" ;;
-    macos) echo "System defaults: keyboard, trackpad, screenshots, Safari, ..." ;;
-    finder) echo "Finder defaults: hidden files, extensions, path bar, list view" ;;
-    dock) echo "Dock defaults: visible Dock, size, magnification, hot corners" ;;
+    macos) echo "Minimal stock-first defaults: keyboard, trackpad, Finder, screenshots, Safari" ;;
     security) echo "Firewall, Touch ID for sudo, screen-lock settings" ;;
     verification) echo "Verify the whole installation and render a report" ;;
     *) echo "(no description)" ;;
