@@ -51,10 +51,60 @@ reconcile_casks() {
 }
 
 # ---------------------------------------------------------------------------
+# install_optional_casks — casks kept out of the Brewfile because they can be
+# unavailable for the running macOS version (a bad Brewfile entry makes the
+# whole `brew bundle` fail). Installed with a single attempt; when the cask
+# does not support this macOS yet, it becomes a manual action instead of a
+# hard failure.
+# ---------------------------------------------------------------------------
+readonly OPTIONAL_CASKS=(onyx)
+
+install_optional_casks() {
+  local cask output
+  for cask in "${OPTIONAL_CASKS[@]}"; do
+    if brew_cask_installed "${cask}"; then
+      log_skip "${cask} already installed."
+      report_skip "${MODULE}" "${cask}" "already installed"
+      continue
+    fi
+    if [[ "${DRY_RUN}" == "1" ]]; then
+      log_dry "brew install --cask ${cask}"
+      continue
+    fi
+    log_info "Installing optional cask: ${cask}"
+    if output="$(brew install --cask "${cask}" 2>&1)"; then
+      report_ok "${MODULE}" "${cask}" "installed"
+    elif grep -q "does not run on macOS" <<<"${output}"; then
+      log_warn "${cask} does not support macOS $(macos_version) yet; skipping."
+      report_manual "${MODULE}" "${cask}" \
+        "https://formulae.brew.sh/cask/${cask}" \
+        "the current cask does not support macOS $(macos_version) yet" \
+        "Re-run './install.sh --only apps' (or 'brew install --cask ${cask}') once a compatible release ships"
+    else
+      log_warn "${cask} failed to install; recording as manual action."
+      report_manual "${MODULE}" "${cask}" \
+        "https://formulae.brew.sh/cask/${cask}" \
+        "cask installation failed (may require Rosetta, password, or be gone from the cask repo)" \
+        "Check 'brew info --cask ${cask}' and install manually if needed"
+    fi
+  done
+}
+
+# ---------------------------------------------------------------------------
 # report_unautomatable_apps — apps with no Homebrew cask or MAS listing.
 # These always land in the manual-actions report with official links.
 # ---------------------------------------------------------------------------
 report_unautomatable_apps() {
+  if app_installed "VMware Fusion"; then
+    log_skip "VMware Fusion already installed."
+    report_skip "${MODULE}" "VMware Fusion" "already installed"
+  else
+    report_manual "${MODULE}" "VMware Fusion" \
+      "https://support.broadcom.com/group/ecx/free-downloads" \
+      "the vmware-fusion cask was removed from homebrew/cask; Broadcom now distributes Fusion only through its support portal" \
+      "Create a free Broadcom account, download 'VMware Fusion' from the free downloads page, and run the installer"
+  fi
+
   if app_installed "Cisco Secure Client"; then
     log_skip "Cisco Secure Client already installed."
     report_skip "${MODULE}" "Cisco Secure Client" "already installed"
@@ -72,6 +122,7 @@ report_unautomatable_apps() {
 main() {
   require_macos
   ensure_state_dirs
+  ensure_brew_in_path
 
   if ! has_command brew && [[ "${DRY_RUN}" != "1" ]]; then
     report_fail "${MODULE}" "apps" "Homebrew not installed — run the brew module first"
@@ -79,6 +130,7 @@ main() {
   fi
 
   reconcile_casks
+  install_optional_casks
   report_unautomatable_apps
 }
 

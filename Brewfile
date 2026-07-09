@@ -115,10 +115,18 @@ cask "appcleaner"     # clean app uninstalls
 cask "caffeine"       # keep the Mac awake
 cask "daisydisk"      # disk usage visualizer
 cask "logi-options+"  # Logitech peripherals
-cask "onyx"           # macOS maintenance
 cask "the-unarchiver" # archive extraction
 cask "vlc"            # media player
-cask "vmware-fusion"  # virtualization
+
+# NOT in this Brewfile on purpose (a single bad entry makes `brew bundle`
+# fail wholesale, blocking every other package):
+#   onyx          — often lags behind new macOS releases (refuses to install
+#                   on pre-release versions); scripts/apps.sh installs it
+#                   opportunistically and routes it to manual-actions when
+#                   the running macOS is not yet supported.
+#   vmware-fusion — removed from homebrew/cask after Broadcom moved
+#                   distribution to its support portal; scripts/apps.sh
+#                   records it as a manual action.
 
 # ----------------------------------------------------------------------------
 # 3. Casks — entertainment
