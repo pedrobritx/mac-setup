@@ -62,14 +62,42 @@ are not failures — they're a to-do list the tool writes for you.
 ## The Brewfile is the package database
 
 One annotated file declares taps, formulae, casks, fonts, and Mac App Store
-apps. Modules never hardcode package lists; `apps.sh`, `mas.sh`, `fonts.sh`,
-and `verification.sh` all *parse the Brewfile* to know what should exist.
+apps. Modules never hardcode package lists; `apps.sh`, `mas.sh`, and
+`verification.sh` all *parse the Brewfile* to know what should exist.
 Adding an app is therefore a one-line change that automatically flows into
 install, update, verify, and uninstall.
 
 `brew bundle` does the bulk install; the per-domain modules then *reconcile*
 — retrying individual failures and routing dead ends to the manual report.
 This two-phase approach means one broken cask can't block fifty good ones.
+
+## Stock-first macOS defaults
+
+`scripts/macos.sh` is the **only** place `defaults` is written, and it obeys
+one hard rule: *never override window management, Mission Control, Spaces,
+hot corners, or animations.* Earlier versions of this repo (and most
+"awesome macOS defaults" lists) tweaked exactly those — animation-duration
+hacks, forced window tabbing, title-bar double-click actions, Dock
+magnification, four hot corners — and the result was a Mac that glitched:
+full-screen transitions stuttered, Mission Control misbehaved, windows
+resized oddly.
+
+The module therefore does two things:
+
+1. **Deletes** every such override that earlier versions wrote (plus the
+   classic offenders like `NSWindowResizeTime` and
+   `expose-animation-duration`), restoring stock behavior on an
+   already-tweaked machine. On a fresh machine these deletes are no-ops.
+2. **Writes** only a small, purely functional set: key repeat and
+   text-substitution toggles, tap-to-click, Finder path bar / extensions /
+   list view / search scope, Dock icon size, screenshot folder, Safari's
+   Develop menu, expanded save panels.
+
+Hidden files and Finder's status bar deliberately stay off — `⌘⇧.` (or the
+`showfiles`/`hidefiles` aliases) toggles hidden files on demand.
+
+Adding a new `defaults_write` line? If it changes how windows, Spaces, or
+animations behave, it doesn't belong here.
 
 ## Install-source policy
 

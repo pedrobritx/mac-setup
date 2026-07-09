@@ -118,12 +118,10 @@ cask "logi-options+"  # Logitech peripherals
 cask "the-unarchiver" # archive extraction
 cask "vlc"            # media player
 
-# NOT in this Brewfile on purpose (a single bad entry makes `brew bundle`
-# fail wholesale, blocking every other package):
-#   onyx          — often lags behind new macOS releases (refuses to install
-#                   on pre-release versions); scripts/apps.sh installs it
-#                   opportunistically and routes it to manual-actions when
-#                   the running macOS is not yet supported.
+# NOT installed on purpose:
+#   onyx          — dropped entirely. System-maintenance "tweakers" are a
+#                   common source of the exact UI glitches this setup is
+#                   designed to avoid; macOS needs no third-party cleaner.
 #   vmware-fusion — removed from homebrew/cask after Broadcom moved
 #                   distribution to its support portal; scripts/apps.sh
 #                   records it as a manual action.

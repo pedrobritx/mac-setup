@@ -51,11 +51,13 @@ sudo).
 
 ## Docker
 
-**"Docker daemon not running" during install**
-First launch requires accepting the subscription agreement in the GUI. Open
-Docker Desktop, accept, wait for the whale, then `./verify.sh`.
+**`docker: command not found` after install**
+Docker Desktop is installed but deliberately never auto-launched (an idle
+daemon costs battery and RAM). Open Docker Desktop once, accept the
+subscription agreement, and it will symlink the CLI. Keep "Start Docker
+Desktop when you sign in" off.
 
-**`hello-world` fails on a corporate network**
+**Image pulls fail on a corporate network**
 Registry access may be proxied/blocked. Configure proxies in Docker Desktop
 → Settings → Resources → Proxies.
 
@@ -87,8 +89,14 @@ it back (or run `./uninstall.sh`, which restores automatically).
 
 **A setting didn't take effect**
 Some keyboard/trackpad settings need logout/login. Others need the target
-app restarted — the modules restart Finder/Dock automatically but only when
-something changed.
+app restarted — the macos module restarts Finder/Dock automatically but only
+when something changed.
+
+**Mission Control / full-screen / window animations feel glitchy**
+Almost always caused by leftover `defaults` overrides (from old setup
+scripts or "speed up your Mac" guides). Run `./install.sh --only macos` —
+it deletes every known window-management and animation override and
+restores stock behavior. Log out and back in afterwards.
 
 **Safari settings fail to apply**
 Sandboxed Safari preferences may require Full Disk Access for your terminal:

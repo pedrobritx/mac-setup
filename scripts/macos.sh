@@ -1,14 +1,28 @@
 #!/usr/bin/env bash
 #
-# scripts/macos.sh — System-wide macOS defaults.
+# scripts/macos.sh — macOS defaults: minimal, stock-first, performance-safe.
 #
-# Covers keyboard, trackpad, mouse, Mission Control, Safari, screenshots,
-# and developer conveniences. Finder and Dock have their own modules
-# (scripts/finder.sh, scripts/dock.sh).
+# This one module now owns every `defaults` write (Finder and Dock included).
+# The rule that keeps a Mac feeling brand new:
+#
+#   NEVER override window management, Mission Control, Spaces, animations,
+#   or rendering. Overrides in that area — hot corners, forced window
+#   tabbing, title-bar double-click actions, Dock magnification, minimize
+#   effects, animation-speed hacks — are exactly what made earlier versions
+#   of this repo glitch: full-screen management, Mission Control, window
+#   sizing, and animation speed all misbehaved.
+#
+# What remains is a small set of purely functional preferences: typing,
+# tap-to-click, Finder navigation, screenshot location, Safari's Develop
+# menu, and expanded save panels. Everything visual stays stock.
+#
+# remove_legacy_overrides additionally deletes every key earlier versions
+# wrote, so running this module on a previously-tweaked Mac restores stock
+# behavior. On a freshly formatted machine every delete is a silent no-op.
 #
 # Every write goes through defaults_write (lib/run.sh) so values are only
-# changed when they differ — re-runs are silent no-ops. Affected apps are
-# restarted only when something changed.
+# changed when they differ — re-runs are silent no-ops, and Finder/Dock are
+# restarted only when something actually changed.
 
 set -euo pipefail
 
@@ -20,8 +34,53 @@ readonly MODULE="macos"
 DEFAULTS_CHANGED=0
 
 # ---------------------------------------------------------------------------
+# remove_legacy_overrides — restore stock behavior wherever earlier versions
+# of mac-setup (or classic "speed up your Mac" guides) left overrides behind.
+# ---------------------------------------------------------------------------
+remove_legacy_overrides() {
+  local key
+
+  # Mission Control, Spaces, hot corners, and Dock behavior overrides.
+  for key in mru-spaces expose-group-apps expose-animation-duration \
+    autohide autohide-delay autohide-time-modifier launchanim \
+    magnification largesize mineffect minimize-to-application \
+    show-recents showhidden \
+    wvous-tl-corner wvous-tl-modifier wvous-tr-corner wvous-tr-modifier \
+    wvous-bl-corner wvous-bl-modifier wvous-br-corner wvous-br-modifier; do
+    defaults_delete com.apple.dock "${key}" \
+      "Dock/Mission Control: ${key} back to macOS default"
+  done
+
+  # System-wide window-management and animation overrides.
+  for key in AppleSpacesSwitchOnActivate AppleActionOnDoubleClick \
+    AppleWindowTabbingMode NSAutomaticWindowAnimationsEnabled \
+    NSWindowResizeTime com.apple.trackpad.forceClick; do
+    defaults_delete NSGlobalDomain "${key}" \
+      "System: ${key} back to macOS default"
+  done
+
+  # Finder overrides. Hidden files and the status bar stay OFF (stock);
+  # toggle hidden files any time with Cmd+Shift+. or the showfiles alias.
+  for key in AppleShowAllFiles ShowStatusBar ShowExternalHardDrivesOnDesktop \
+    FXEnableExtensionChangeWarning ShowRecentTags DisableAllAnimations; do
+    defaults_delete com.apple.finder "${key}" \
+      "Finder: ${key} back to macOS default"
+  done
+
+  # One-off tweaks that fought the stock experience.
+  defaults_delete com.apple.LaunchServices LSQuarantine \
+    "Gatekeeper download confirmation back to macOS default"
+  defaults_delete com.apple.CrashReporter UseUNC \
+    "Crash reporter back to macOS default"
+  defaults_delete com.apple.screencapture disable-shadow \
+    "Screenshot window shadow back to macOS default"
+  defaults_delete com.apple.screencapture type \
+    "Screenshot format back to macOS default (PNG)"
+}
+
+# ---------------------------------------------------------------------------
 # configure_keyboard — fast key repeat, disable press-and-hold, no auto
-# text meddling while coding.
+# text meddling while coding. Typing-only: no visual/animation impact.
 # ---------------------------------------------------------------------------
 configure_keyboard() {
   defaults_write NSGlobalDomain KeyRepeat int 2 "Fast key repeat"
@@ -41,53 +100,64 @@ configure_keyboard() {
 }
 
 # ---------------------------------------------------------------------------
-# configure_trackpad_mouse — tap to click, sensible tracking.
+# configure_trackpad — tap to click. Everything else stays stock.
 # ---------------------------------------------------------------------------
-configure_trackpad_mouse() {
+configure_trackpad() {
   defaults_write com.apple.AppleMultitouchTrackpad Clicking bool true \
     "Trackpad: tap to click"
   defaults_write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking bool true \
     "Trackpad (Bluetooth): tap to click"
-  defaults_write NSGlobalDomain com.apple.trackpad.forceClick bool true \
-    "Trackpad: enable Force Click"
   defaults_write NSGlobalDomain com.apple.mouse.tapBehavior int 1 \
     "Mouse/trackpad: tap registers as click"
 }
 
 # ---------------------------------------------------------------------------
-# configure_mission_control — stock macOS behavior.
-# Earlier versions of mac-setup overrode Mission Control (Space reordering,
-# window grouping, Space auto-switching), which made Mission Control feel
-# fast and glitchy. Those overrides are now actively removed so the system
-# defaults apply again; on a machine that was never touched this is a no-op.
+# configure_finder — navigation aids only. Deliberately NOT set (stock):
+# hidden files (Cmd+Shift+. when needed), the status bar, desktop icons
+# for external drives, and every warning dialog.
 # ---------------------------------------------------------------------------
-configure_mission_control() {
-  defaults_delete com.apple.dock mru-spaces \
-    "Mission Control: Space rearrangement back to macOS default"
-  defaults_delete com.apple.dock expose-group-apps \
-    "Mission Control: window grouping back to macOS default"
-  defaults_delete com.apple.dock expose-animation-duration \
-    "Mission Control: animation speed back to macOS default"
-  defaults_delete NSGlobalDomain AppleSpacesSwitchOnActivate \
-    "Space auto-switching on app activation back to macOS default"
+configure_finder() {
+  defaults_write com.apple.finder ShowPathbar bool true \
+    "Finder: show the path bar"
+  defaults_write NSGlobalDomain AppleShowAllExtensions bool true \
+    "Finder: show all file extensions"
+  defaults_write com.apple.finder FXPreferredViewStyle string "Nlsv" \
+    "Finder: default to list view"
+  defaults_write com.apple.finder _FXSortFoldersFirst bool true \
+    "Finder: keep folders on top when sorting"
+  defaults_write com.apple.finder FXDefaultSearchScope string "SCcf" \
+    "Finder: search the current folder by default"
+  defaults_write com.apple.finder NewWindowTarget string "PfHm" \
+    "Finder: new windows open in the home folder"
+  defaults_write com.apple.desktopservices DSDontWriteNetworkStores bool true \
+    "No .DS_Store on network volumes"
+  defaults_write com.apple.desktopservices DSDontWriteUSBStores bool true \
+    "No .DS_Store on USB volumes"
 }
 
 # ---------------------------------------------------------------------------
-# configure_screenshots — save into ~/Screenshots as PNG, no shadow.
+# configure_dock — icon size only. Position, auto-hide, magnification,
+# minimize behavior, recents, and animations all stay stock.
+# ---------------------------------------------------------------------------
+configure_dock() {
+  defaults_write com.apple.dock tilesize int 38 \
+    "Dock: icon size 38px (~20%)"
+}
+
+# ---------------------------------------------------------------------------
+# configure_screenshots — save into ~/Screenshots instead of the Desktop.
+# Format and shadow stay stock (PNG, with shadow).
 # ---------------------------------------------------------------------------
 configure_screenshots() {
   ensure_dir "${MAC_SETUP_SCREENSHOT_DIR}"
   defaults_write com.apple.screencapture location string \
     "${MAC_SETUP_SCREENSHOT_DIR}" "Screenshots saved to ${MAC_SETUP_SCREENSHOT_DIR/#${HOME}/~}"
-  defaults_write com.apple.screencapture type string "png" "Screenshots as PNG"
-  defaults_write com.apple.screencapture disable-shadow bool true \
-    "No window shadows in screenshots"
 }
 
 # ---------------------------------------------------------------------------
-# configure_safari — developer mode and privacy basics.
+# configure_safari — developer mode and download safety.
 # Safari's container may block `defaults` without Full Disk Access; failures
-# here are downgraded to warnings.
+# here are downgraded to a single manual action.
 # ---------------------------------------------------------------------------
 configure_safari() {
   defaults_write NSGlobalDomain WebKitDeveloperExtras bool true \
@@ -117,10 +187,9 @@ configure_safari() {
 }
 
 # ---------------------------------------------------------------------------
-# configure_developer_conveniences — expanded panels, no iCloud default
-# save target, crash reporter as notification.
+# configure_panels — expanded save/print panels, save locally by default.
 # ---------------------------------------------------------------------------
-configure_developer_conveniences() {
+configure_panels() {
   defaults_write NSGlobalDomain NSNavPanelExpandedStateForSaveMode bool true \
     "Expand the save panel by default"
   defaults_write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 bool true \
@@ -129,23 +198,21 @@ configure_developer_conveniences() {
     "Expand the print panel by default"
   defaults_write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud bool false \
     "Save new documents locally, not to iCloud"
-  defaults_write com.apple.CrashReporter UseUNC int 1 \
-    "Show crash reports as notifications, not dialogs"
-  defaults_write com.apple.LaunchServices LSQuarantine bool false \
-    "Disable the 'Are you sure you want to open?' dialog for downloaded apps"
 }
 
 # ---------------------------------------------------------------------------
-# apply_changes — restart affected system services when needed.
+# apply_changes — restart affected apps/services only when needed.
 # ---------------------------------------------------------------------------
 apply_changes() {
   if [[ "${DEFAULTS_CHANGED}" -eq 0 ]]; then
-    log_skip "All system defaults already configured."
-    report_skip "${MODULE}" "system defaults" "all values already set"
+    log_skip "All macOS defaults already configured."
+    report_skip "${MODULE}" "macOS defaults" "all values already set"
     return 0
   fi
+  run killall Finder 2>/dev/null || true
+  run killall Dock 2>/dev/null || true
   run killall SystemUIServer 2>/dev/null || true
-  report_ok "${MODULE}" "system defaults" "applied (some changes need logout/restart)"
+  report_ok "${MODULE}" "macOS defaults" "applied (keyboard/trackpad changes need logout)"
   log_info "Some keyboard/trackpad changes take effect after logout."
 }
 
@@ -158,16 +225,18 @@ main() {
 
   if [[ "${MAC_SETUP_ENABLE_MACOS_DEFAULTS}" != "1" ]]; then
     log_skip "macOS defaults disabled in config/settings.sh."
-    report_skip "${MODULE}" "system defaults" "disabled in settings"
+    report_skip "${MODULE}" "macOS defaults" "disabled in settings"
     return 0
   fi
 
+  remove_legacy_overrides
   configure_keyboard
-  configure_trackpad_mouse
-  configure_mission_control
+  configure_trackpad
+  configure_finder
+  configure_dock
   configure_screenshots
   configure_safari
-  configure_developer_conveniences
+  configure_panels
   apply_changes
 }
 

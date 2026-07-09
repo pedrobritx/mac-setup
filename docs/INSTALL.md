@@ -24,8 +24,8 @@ What happens, in order:
 3. `install.sh` takes over and runs all modules (see below).
 
 Expect 30–90 minutes on a fresh machine depending on network speed — Xcode
-and Docker Desktop dominate. The run is fully resumable: if anything is
-interrupted, run it again and completed steps are skipped.
+dominates. The run is fully resumable: if anything is interrupted, run it
+again and completed steps are skipped.
 
 ## Option B — from a clone
 
@@ -51,22 +51,24 @@ MAC_SETUP_GIT_EMAIL="work@example.com" ./install.sh --only git
 |---|--------|--------------|
 | 1 | `xcode` | Command Line Tools, optional full Xcode, license, `xcode-select` |
 | 2 | `brew` | Homebrew install/update, `brew bundle` (everything in the Brewfile) |
-| 3 | `directories` | `~/Developer/…`, `~/Workspace`, `~/Screenshots`, `~/Projects` |
-| 4 | `downloads` | `~/Downloads/Installers` + optional installer sweep |
-| 5 | `fonts` | JetBrains Mono (+ Nerd Font); verifies font files landed |
-| 6 | `apps` | Reconciles casks; reports non-automatable apps |
-| 7 | `mas` | Reconciles App Store apps; reports unpurchased ones |
-| 8 | `ssh` | Ed25519 key (only if missing), agent + keychain, GitHub guidance |
-| 9 | `git` | Identity, defaults, LFS, SSH commit signing, `gh` auth |
-| 10 | `terminal` | Links zsh/Starship dotfiles, verifies tools & plugins |
-| 11 | `node` | Node LTS via fnm, corepack, pnpm, bun |
-| 12 | `python` | Python via uv, pipx PATH |
-| 13 | `swift` | Verifies Swift; SwiftFormat/SwiftLint |
-| 14 | `docker` | Docker Desktop, virtualization check, `hello-world` |
-| 15 | `vscode` | Links settings/snippets, installs extensions |
-| 16–18 | `macos`/`finder`/`dock` | System defaults (only writes when values differ) |
-| 19 | `security` | Firewall, Touch ID for sudo, screen lock, FileVault status |
-| 20 | `verification` | Full scorecard + report |
+| 3 | `directories` | `~/Developer/…`, `~/Workspace`, `~/Screenshots`, `~/Downloads/Installers` |
+| 4 | `apps` | Reconciles casks; reports non-automatable apps |
+| 5 | `mas` | Reconciles App Store apps; reports unpurchased ones |
+| 6 | `ssh` | Ed25519 key (only if missing), agent + keychain, GitHub guidance |
+| 7 | `git` | Identity, defaults, LFS, SSH commit signing, `gh` auth |
+| 8 | `terminal` | Links zsh/Starship dotfiles, verifies tools & plugins |
+| 9 | `node` | Node LTS via fnm, corepack, pnpm, bun |
+| 10 | `python` | Python via uv, pipx PATH |
+| 11 | `swift` | Verifies Swift; SwiftFormat/SwiftLint |
+| 12 | `vscode` | Links settings/snippets, installs extensions |
+| 13 | `macos` | Minimal stock-first defaults; deletes legacy window/animation overrides |
+| 14 | `security` | Firewall, Touch ID for sudo, screen lock, FileVault status |
+| 15 | `verification` | Full scorecard + report |
+
+Deliberately **absent**: any module that overrides window management,
+Mission Control, hot corners, or animation speed. Docker Desktop is
+installed by the Brewfile but never auto-launched — start it the first time
+you actually need containers.
 
 ## Partial runs
 
@@ -74,7 +76,7 @@ MAC_SETUP_GIT_EMAIL="work@example.com" ./install.sh --only git
 ./install.sh --list                 # see all modules
 ./install.sh --only terminal        # one module
 ./install.sh --only brew,vscode     # several
-./install.sh --skip macos,dock      # all except
+./install.sh --skip macos           # all except
 ./install.sh --dry-run              # print, don't do — works with all of the above
 ```
 
