@@ -27,8 +27,13 @@ install_python() {
       log_dry "uv python install ${MAC_SETUP_PYTHON_VERSION}"
       return 0
     fi
-    report_fail "${MODULE}" "uv" "not installed — run the brew module first"
-    return 1
+    # Self-heal: the brew module may have failed partway; install uv here.
+    if ensure_brew_formula uv && has_command uv; then
+      report_ok "${MODULE}" "uv" "installed via Homebrew"
+    else
+      report_fail "${MODULE}" "uv" "not installed and brew install failed"
+      return 1
+    fi
   fi
 
   local want="${MAC_SETUP_PYTHON_VERSION}"
@@ -56,8 +61,12 @@ configure_pipx() {
       log_dry "pipx ensurepath"
       return 0
     fi
-    report_fail "${MODULE}" "pipx" "not installed — run the brew module first"
-    return 1
+    # Self-heal: the brew module may have failed partway; install pipx here.
+    if ! ensure_brew_formula pipx || ! has_command pipx; then
+      report_fail "${MODULE}" "pipx" "not installed and brew install failed"
+      return 1
+    fi
+    report_ok "${MODULE}" "pipx" "installed via Homebrew"
   fi
 
   run_quiet pipx ensurepath 2>/dev/null || true

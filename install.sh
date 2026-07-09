@@ -83,7 +83,7 @@ module_description() {
     vscode) echo "VS Code settings, keybindings-safe config, extensions" ;;
     macos) echo "System defaults: keyboard, trackpad, screenshots, Safari, ..." ;;
     finder) echo "Finder defaults: hidden files, extensions, path bar, list view" ;;
-    dock) echo "Dock defaults: autohide, size, recents" ;;
+    dock) echo "Dock defaults: visible Dock, size, magnification, hot corners" ;;
     security) echo "Firewall, Touch ID for sudo, screen-lock settings" ;;
     verification) echo "Verify the whole installation and render a report" ;;
     *) echo "(no description)" ;;

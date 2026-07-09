@@ -55,15 +55,21 @@ configure_trackpad_mouse() {
 }
 
 # ---------------------------------------------------------------------------
-# configure_mission_control — predictable Spaces behavior.
+# configure_mission_control — stock macOS behavior.
+# Earlier versions of mac-setup overrode Mission Control (Space reordering,
+# window grouping, Space auto-switching), which made Mission Control feel
+# fast and glitchy. Those overrides are now actively removed so the system
+# defaults apply again; on a machine that was never touched this is a no-op.
 # ---------------------------------------------------------------------------
 configure_mission_control() {
-  defaults_write com.apple.dock mru-spaces bool false \
-    "Mission Control: don't rearrange Spaces by recent use"
-  defaults_write com.apple.dock expose-group-apps bool true \
-    "Mission Control: group windows by application"
-  defaults_write NSGlobalDomain AppleSpacesSwitchOnActivate bool true \
-    "Switch to a Space with open windows of the activated app"
+  defaults_delete com.apple.dock mru-spaces \
+    "Mission Control: Space rearrangement back to macOS default"
+  defaults_delete com.apple.dock expose-group-apps \
+    "Mission Control: window grouping back to macOS default"
+  defaults_delete com.apple.dock expose-animation-duration \
+    "Mission Control: animation speed back to macOS default"
+  defaults_delete NSGlobalDomain AppleSpacesSwitchOnActivate \
+    "Space auto-switching on app activation back to macOS default"
 }
 
 # ---------------------------------------------------------------------------
@@ -84,12 +90,28 @@ configure_screenshots() {
 # here are downgraded to warnings.
 # ---------------------------------------------------------------------------
 configure_safari() {
+  defaults_write NSGlobalDomain WebKitDeveloperExtras bool true \
+    "Web views: enable inspector" || true
+
+  # Safari's preferences live in a sandboxed container that `defaults` can
+  # only write with Full Disk Access. Probe once; without access, record a
+  # single manual action instead of failing three writes.
+  if [[ "${DRY_RUN}" != "1" ]]; then
+    if ! defaults write com.apple.Safari mac-setup-probe -bool true 2>/dev/null; then
+      log_warn "Safari preferences are protected (terminal lacks Full Disk Access); skipping."
+      report_manual "${MODULE}" "Safari defaults" \
+        "https://support.apple.com/guide/mac-help/mchl211c911f/mac" \
+        "Safari's sandboxed preferences cannot be written without Full Disk Access" \
+        "Either grant your terminal Full Disk Access (System Settings → Privacy & Security → Full Disk Access) and re-run './install.sh --only macos', or enable 'Show features for web developers' manually in Safari → Settings → Advanced"
+      return 0
+    fi
+    defaults delete com.apple.Safari mac-setup-probe 2>/dev/null || true
+  fi
+
   defaults_write com.apple.Safari IncludeDevelopMenu bool true \
     "Safari: show the Develop menu" || true
   defaults_write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey bool true \
     "Safari: developer extras" || true
-  defaults_write NSGlobalDomain WebKitDeveloperExtras bool true \
-    "Web views: enable inspector" || true
   defaults_write com.apple.Safari AutoOpenSafeDownloads bool false \
     "Safari: don't auto-open downloads" || true
 }

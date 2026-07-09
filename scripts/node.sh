@@ -29,8 +29,13 @@ install_node() {
       log_dry "fnm install --lts && fnm default lts-latest"
       return 0
     fi
-    report_fail "${MODULE}" "fnm" "not installed — run the brew module first"
-    return 1
+    # Self-heal: the brew module may have failed partway; install fnm here.
+    if ensure_brew_formula fnm && has_command fnm; then
+      report_ok "${MODULE}" "fnm" "installed via Homebrew"
+    else
+      report_fail "${MODULE}" "fnm" "not installed and brew install failed"
+      return 1
+    fi
   fi
 
   # Make fnm's shims visible in this non-interactive shell.
@@ -77,18 +82,27 @@ enable_corepack() {
 }
 
 # ---------------------------------------------------------------------------
-# verify_package_managers — pnpm and bun come from the Brewfile.
+# verify_package_managers — pnpm and bun come from the Brewfile; when the
+# brew module missed them, install them here rather than just failing.
 # ---------------------------------------------------------------------------
 verify_package_managers() {
-  local pm
+  local pm formula
   for pm in pnpm bun; do
+    if [[ "${pm}" == "bun" ]]; then
+      formula="oven-sh/bun/bun"
+    else
+      formula="${pm}"
+    fi
+    if ! has_command "${pm}" && [[ "${DRY_RUN}" != "1" ]]; then
+      ensure_brew_formula "${formula}" || true
+    fi
     if has_command "${pm}"; then
       log_success "${pm} $(${pm} --version 2>/dev/null) available."
       report_ok "${MODULE}" "${pm}" "version $(${pm} --version 2>/dev/null)"
     elif [[ "${DRY_RUN}" == "1" ]]; then
       log_debug "${pm} missing (dry-run)"
     else
-      report_fail "${MODULE}" "${pm}" "not found — check the brew module output"
+      report_fail "${MODULE}" "${pm}" "not found and brew install failed"
     fi
   done
 }

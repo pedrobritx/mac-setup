@@ -213,16 +213,75 @@ defaults_write() {
 }
 
 # ---------------------------------------------------------------------------
+# defaults_delete <domain> <key> [description]
+# Idempotent `defaults delete`: removes a previously written override so the
+# system falls back to its stock value. A no-op when the key is not set.
+# Sets DEFAULTS_CHANGED=1 when a key was actually removed.
+# ---------------------------------------------------------------------------
+defaults_delete() {
+  local domain="$1" key="$2"
+  local desc="${3:-${domain} ${key} removed (system default restored)}"
+
+  if ! defaults read "${domain}" "${key}" >/dev/null 2>&1; then
+    log_debug "defaults already absent: ${domain} ${key}"
+    return 0
+  fi
+
+  if run defaults delete "${domain}" "${key}"; then
+    log_success "${desc}"
+    # Read by the calling module (macos/finder/dock) to decide on restarts.
+    # shellcheck disable=SC2034
+    DEFAULTS_CHANGED=1
+  else
+    log_warn "Failed to delete: ${desc}"
+    return 1
+  fi
+}
+
+# ---------------------------------------------------------------------------
+# ensure_brew_formula <formula>
+# Install a Homebrew formula only when it is not already installed. Accepts
+# fully qualified names (user/tap/formula); the installed check uses the
+# short name. Returns non-zero when brew is unavailable or install fails.
+# ---------------------------------------------------------------------------
+ensure_brew_formula() {
+  local formula="$1"
+  ensure_brew_in_path
+  if brew_formula_installed "${formula##*/}"; then
+    log_debug "formula already installed: ${formula}"
+    return 0
+  fi
+  if ! has_command brew; then
+    [[ "${DRY_RUN:-0}" == "1" ]] && return 0
+    log_warn "Homebrew not available; cannot install ${formula}."
+    return 1
+  fi
+  log_info "Installing ${formula} via Homebrew..."
+  run_retry 2 brew install --formula "${formula}"
+}
+
+# ---------------------------------------------------------------------------
 # sudo_keepalive
 # Ask for sudo once up front and keep the timestamp fresh for the duration
 # of the parent process, so long installs don't stall on a password prompt.
+# When stdin is a pipe (curl | bash), prompt on /dev/tty instead so the
+# password can still be read.
 # ---------------------------------------------------------------------------
 sudo_keepalive() {
   if [[ "${DRY_RUN:-0}" == "1" || "${MAC_SETUP_TEST:-0}" == "1" ]]; then
     log_debug "skipping sudo keepalive (dry-run/test mode)"
     return 0
   fi
-  if ! sudo -v; then
+  local sudo_ok=1
+  if sudo -n true 2>/dev/null; then
+    sudo_ok=0
+  elif [[ -t 0 ]]; then
+    sudo -v && sudo_ok=0
+  elif [[ -r /dev/tty ]]; then
+    # shellcheck disable=SC2024  # the redirect feeds sudo's password prompt
+    sudo -v </dev/tty && sudo_ok=0
+  fi
+  if [[ "${sudo_ok}" -ne 0 ]]; then
     log_warn "Could not obtain sudo; steps that need it will prompt or fail."
     return 0
   fi

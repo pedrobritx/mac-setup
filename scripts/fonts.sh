@@ -70,6 +70,7 @@ recommend_fonts() {
 main() {
   require_macos
   ensure_state_dirs
+  ensure_brew_in_path
 
   if ! has_command brew && [[ "${DRY_RUN}" != "1" ]]; then
     report_fail "${MODULE}" "fonts" "Homebrew not installed — run the brew module first"
