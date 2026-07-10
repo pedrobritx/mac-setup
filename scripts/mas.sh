@@ -2,11 +2,12 @@
 #
 # scripts/mas.sh — Mac App Store applications.
 #
-# MAS apps are declared in the Brewfile (section 5) and attempted by
-# `brew bundle`. Because mas installs fail whenever the App Store is signed
-# out or a paid app is unpurchased, this module reconciles afterwards:
+# MAS apps are declared in the Brewfile (section 5). The App Store is the
+# PREFERRED source when an app exists both there and as a cask — one source
+# per app means no duplicate copies. Because mas installs fail whenever the
+# App Store is signed out or a paid app is unpurchased, this module:
 #   * verifies each declared app is installed,
-#   * retries individual installs where possible,
+#   * installs what it can, with the shared progress counter,
 #   * routes anything left to the manual-actions report with the official
 #     App Store URL, the reason, and the manual steps.
 
@@ -59,13 +60,14 @@ install_mas_app() {
   local id="$1" name="$2"
 
   if mas_app_installed "${id}" || app_installed "${name}"; then
-    log_skip "${name} already installed."
+    progress_tick "${name}" "already installed"
     report_skip "${MODULE}" "${name}" "already installed"
     return 0
   fi
 
   log_info "Installing ${name} (App Store id ${id})..."
   if run mas install "${id}"; then
+    progress_tick "${name}" "installed from the App Store"
     report_ok "${MODULE}" "${name}" "installed via mas"
   else
     report_manual "${MODULE}" "${name}" \
@@ -85,6 +87,7 @@ reconcile_mas_apps() {
     if [[ "${signed_in}" == "1" || "${DRY_RUN}" == "1" ]]; then
       install_mas_app "${id}" "${name}"
     elif mas_app_installed "${id}" || app_installed "${name}"; then
+      progress_tick "${name}" "already installed"
       report_skip "${MODULE}" "${name}" "already installed"
     else
       report_manual "${MODULE}" "${name}" \

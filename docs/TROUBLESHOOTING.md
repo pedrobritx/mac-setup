@@ -11,6 +11,32 @@ First moves for any problem:
 
 ---
 
+## The selection screen
+
+**No checklist appeared — it just started installing**
+The selection screen needs a real terminal. It's skipped when there is no
+TTY (CI, some remote shells) or when you pass `--yes`, `--only`, or
+`--skip`. Run `./install.sh` from a normal Terminal window to get it.
+
+**I unticked something and want it back**
+Run `./install.sh` again — your previous choices are pre-loaded; tick the
+item and confirm. (Unticks live in
+`~/.local/state/mac-setup/unselected.tsv`; delete that file to reset to
+everything-ticked.)
+
+**Arrow keys print letters instead of moving**
+Your terminal is sending non-standard arrow sequences. Use `j`/`k` to move
+instead.
+
+## Duplicate apps (two copies of Teams/WhatsApp…)
+
+Two copies mean the app was installed from two sources (App Store + cask,
+or a manual download + cask). mac-setup prevents this: App Store versions
+are preferred in the Brewfile and casks are skipped when the app already
+exists. To clean up an existing duplicate: quit the app, delete the copy
+you don't want from `/Applications` (keep the App Store one), and empty
+the Trash. `brew list --cask` shows which copy Homebrew owns.
+
 ## Homebrew
 
 **`brew: command not found` right after install**

@@ -13,8 +13,8 @@ Your personalized list is generated at
       (uploads your SSH key automatically). Add the key as a **signing key**
       too: <https://github.com/settings/keys>.
 - [ ] **iCloud** — System Settings → Apple ID (Drive, Photos, Find My).
-- [ ] Sign in to: Notion, Obsidian (vault sync), Discord, WhatsApp, Teams,
-      Google Drive, Figma, Steam, ChatGPT, Claude.
+- [ ] Sign in to: Chrome, Notion, Obsidian (vault sync), Discord, WhatsApp,
+      Teams, Google Drive, Figma, Steam, ChatGPT, Claude.
 
 ## Licensed / org software
 

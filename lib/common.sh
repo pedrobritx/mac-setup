@@ -35,7 +35,10 @@ MAC_SETUP_LIB_DIR="${MAC_SETUP_ROOT}/lib"
 MAC_SETUP_SCRIPTS_DIR="${MAC_SETUP_ROOT}/scripts"
 MAC_SETUP_DOTFILES_DIR="${MAC_SETUP_ROOT}/dotfiles"
 MAC_SETUP_CONFIG_DIR="${MAC_SETUP_ROOT}/config"
-MAC_SETUP_BREWFILE="${MAC_SETUP_ROOT}/Brewfile"
+# The repository Brewfile by default. install.sh points this at a generated
+# "active" Brewfile (the user's picker selection) for the modules it spawns,
+# so honor an already-exported value.
+MAC_SETUP_BREWFILE="${MAC_SETUP_BREWFILE:-${MAC_SETUP_ROOT}/Brewfile}"
 export MAC_SETUP_LIB_DIR MAC_SETUP_SCRIPTS_DIR MAC_SETUP_DOTFILES_DIR \
   MAC_SETUP_CONFIG_DIR MAC_SETUP_BREWFILE
 
@@ -160,5 +163,7 @@ source "${MAC_SETUP_LIB_DIR}/run.sh"
 source "${MAC_SETUP_LIB_DIR}/checks.sh"
 # shellcheck source=lib/report.sh
 source "${MAC_SETUP_LIB_DIR}/report.sh"
+# shellcheck source=lib/progress.sh
+source "${MAC_SETUP_LIB_DIR}/progress.sh"
 # shellcheck source=config/settings.sh
 source "${MAC_SETUP_CONFIG_DIR}/settings.sh"

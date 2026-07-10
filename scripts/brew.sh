@@ -6,12 +6,17 @@
 #   1. Install Homebrew when missing (official installer).
 #   2. Configure shellenv for this session.
 #   3. Update Homebrew and upgrade outdated packages.
-#   4. Apply the repository Brewfile with `brew bundle` (taps, formulae,
-#      casks, fonts, mas apps).
+#   4. Install every formula and cask from the active Brewfile ONE BY ONE —
+#      each item is announced, installed, and confirmed with a running
+#      "X of Y" progress count, and one bad entry never blocks the rest
+#      (which `brew bundle` cannot guarantee).
 #
-# mas entries in the Brewfile may fail when the App Store is not signed in
-# or a paid app is unpurchased; that is tolerated here and reconciled by
-# scripts/mas.sh, which routes leftovers to the manual-actions report.
+# Duplicate-copy guard: a cask whose .app already exists (installed from
+# the Mac App Store or manually) is skipped — installing the same app from
+# two sources is how you end up with two copies of Teams/WhatsApp.
+#
+# mas entries in the Brewfile are installed by scripts/mas.sh, which routes
+# sign-in/purchase problems to the manual-actions report.
 
 set -euo pipefail
 
@@ -106,79 +111,60 @@ ensure_taps_trusted() {
 }
 
 # ---------------------------------------------------------------------------
-# apply_brewfile_entries — per-entry fallback when `brew bundle` fails.
-# Homebrew 6's bundle fetch is all-or-nothing: one unavailable entry blocks
-# every other package. This walks the Brewfile's formulae and casks one by
-# one, skipping anything already installed, so a single bad entry only costs
-# itself. mas entries are left to scripts/mas.sh.
+# install_formulae — every `brew "..."` line, one at a time, with progress.
 # ---------------------------------------------------------------------------
-apply_brewfile_entries() {
-  local entry failed=0
-
+install_formulae() {
+  local entry name
   while IFS= read -r entry; do
-    if brew_formula_installed "${entry##*/}"; then
-      log_debug "formula already installed: ${entry}"
+    name="${entry##*/}"
+    if brew_formula_installed "${name}"; then
+      progress_tick "${name}" "already installed"
+      report_skip "${MODULE}" "${name}" "already installed"
       continue
     fi
+    log_info "Installing ${name}..."
     if run_retry 2 brew install --formula "${entry}"; then
-      report_ok "${MODULE}" "${entry}" "installed individually"
+      progress_tick "${name}" "installed"
+      report_ok "${MODULE}" "${name}" "installed"
     else
-      report_fail "${MODULE}" "${entry}" "brew install failed"
-      failed=1
+      log_error "${name} failed to install — continuing with the rest."
+      report_fail "${MODULE}" "${name}" "brew install failed"
     fi
   done < <(grep -E '^brew "' "${MAC_SETUP_BREWFILE}" |
     sed -E 's/^brew "([^"]+)".*/\1/')
-
-  while IFS= read -r entry; do
-    if brew_cask_installed "${entry}"; then
-      log_debug "cask already installed: ${entry}"
-      continue
-    fi
-    if run_retry 2 brew install --cask "${entry}"; then
-      report_ok "${MODULE}" "${entry}" "installed individually"
-    else
-      report_fail "${MODULE}" "${entry}" "brew install --cask failed"
-      failed=1
-    fi
-  done < <(grep -E '^cask "' "${MAC_SETUP_BREWFILE}" |
-    sed -E 's/^cask "([^"]+)".*/\1/')
-
-  if [[ "${failed}" -eq 0 ]]; then
-    log_success "All Brewfile formulae and casks installed (individual fallback)."
-    report_ok "${MODULE}" "brew bundle fallback" "all formulae and casks installed"
-  else
-    log_warn "Some Brewfile entries still failed; see the install report."
-  fi
 }
 
 # ---------------------------------------------------------------------------
-# apply_brewfile — `brew bundle` against the repository Brewfile.
-# HOMEBREW_BUNDLE_MAS_SKIP is honored in test mode. A non-zero exit is
-# reported but not fatal: brew bundle installs everything it can and mas
-# leftovers are reconciled by scripts/mas.sh. Because bundle aborts wholesale
-# when any single entry is unavailable, a failure triggers the per-entry
-# fallback so every installable package still lands.
+# install_casks — every `cask "..."` line, one at a time, with progress and
+# the duplicate-copy guard (App Store / manual installs win over casks).
 # ---------------------------------------------------------------------------
-apply_brewfile() {
-  if [[ ! -f "${MAC_SETUP_BREWFILE}" ]]; then
-    report_fail "${MODULE}" "Brewfile" "not found at ${MAC_SETUP_BREWFILE}"
-    return 1
-  fi
+install_casks() {
+  local cask app
+  while IFS= read -r cask; do
+    if brew_cask_installed "${cask}"; then
+      progress_tick "${cask}" "already installed"
+      report_skip "${MODULE}" "${cask}" "already installed"
+      continue
+    fi
 
-  if has_command brew && brew bundle check --file="${MAC_SETUP_BREWFILE}" >/dev/null 2>&1; then
-    log_skip "Brewfile already satisfied."
-    report_skip "${MODULE}" "brew bundle" "Brewfile already satisfied"
-    return 0
-  fi
+    app="$(cask_app_name "${cask}")"
+    if [[ -n "${app}" ]] && app_installed "${app}"; then
+      progress_tick "${cask}" "already installed (${app}.app exists — skipping to avoid a second copy)"
+      report_skip "${MODULE}" "${cask}" \
+        "${app}.app already installed (App Store or manual) — cask skipped to avoid a duplicate"
+      continue
+    fi
 
-  log_info "Applying Brewfile (this can take a while on a fresh machine)..."
-  if run brew bundle install --file="${MAC_SETUP_BREWFILE}" --no-upgrade; then
-    log_success "Brewfile applied."
-    report_ok "${MODULE}" "brew bundle" "all entries installed"
-  else
-    log_warn "brew bundle failed — falling back to installing entries individually."
-    apply_brewfile_entries
-  fi
+    log_info "Installing ${cask}..."
+    if run_retry 2 brew install --cask "${cask}"; then
+      progress_tick "${cask}" "installed"
+      report_ok "${MODULE}" "${cask}" "installed"
+    else
+      log_error "${cask} failed to install — continuing with the rest."
+      report_fail "${MODULE}" "${cask}" "brew install --cask failed"
+    fi
+  done < <(grep -E '^cask "' "${MAC_SETUP_BREWFILE}" |
+    sed -E 's/^cask "([^"]+)".*/\1/')
 }
 
 # ---------------------------------------------------------------------------
@@ -188,10 +174,16 @@ main() {
   require_macos
   ensure_state_dirs
 
+  if [[ ! -f "${MAC_SETUP_BREWFILE}" ]]; then
+    report_fail "${MODULE}" "Brewfile" "not found at ${MAC_SETUP_BREWFILE}"
+    exit 1
+  fi
+
   install_homebrew
   update_homebrew
   ensure_taps_trusted
-  apply_brewfile
+  install_formulae
+  install_casks
 }
 
 main "$@"

@@ -21,7 +21,24 @@ What happens, in order:
 1. **Xcode Command Line Tools** — a system dialog appears; approve it.
    (Everything else depends on this, including `git`.)
 2. The repository is **cloned to `~/Developer/mac-setup`**.
-3. `install.sh` takes over and runs all modules (see below).
+3. **The selection screen** — a checklist of every app, terminal tool, and
+   setup step, each with a one-line explanation:
+
+   | Key | Action |
+   |-----|--------|
+   | `↑` / `↓` (or `j`/`k`) | move |
+   | `space` | tick / untick the highlighted item |
+   | `a` | tick / untick the whole group |
+   | `enter` | continue to the review screen |
+   | `q` | cancel — nothing is installed |
+
+   Everything starts ticked. Unticks are remembered for future runs
+   (new items still default to ticked).
+4. **Review & confirm** — a per-group summary, the exact list of skipped
+   items, and a single `y/N` question. Nothing installs before this point.
+5. **The run** — fully autonomous from here. Every item is announced,
+   installed, and confirmed with a running `[X/Y · Z to go]` counter.
+   You may be asked for your password (sudo) and App Store sign-in.
 
 Expect 30–90 minutes on a fresh machine depending on network speed — Xcode
 dominates. The run is fully resumable: if anything is interrupted, run it
@@ -70,15 +87,29 @@ Mission Control, hot corners, or animation speed. Docker Desktop is
 installed by the Brewfile but never auto-launched — start it the first time
 you actually need containers.
 
+### One source per app
+
+Apps that exist on the Mac App Store install from there (`mas` section of
+the Brewfile) instead of a Homebrew cask — Teams, WhatsApp, and The
+Unarchiver among them. Installing the same app from two sources is how
+duplicate copies appear. A guard in the brew/apps modules also skips any
+cask whose `.app` is already installed. Documented exception: **DaisyDisk**
+stays a cask because the App Store build is sandboxed and limited.
+
 ## Partial runs
 
 ```bash
+./install.sh --yes                  # everything, no selection screen, no prompts
 ./install.sh --list                 # see all modules
 ./install.sh --only terminal        # one module
 ./install.sh --only brew,vscode     # several
 ./install.sh --skip macos           # all except
 ./install.sh --dry-run              # print, don't do — works with all of the above
 ```
+
+`--only`, `--skip`, and `--yes` bypass the selection screen (power-user /
+CI path). To change what's installed interactively, just run `./install.sh`
+again — previous unticks are pre-loaded.
 
 Every module is also directly executable: `bash scripts/terminal.sh`.
 

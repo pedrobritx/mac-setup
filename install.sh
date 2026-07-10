@@ -6,6 +6,10 @@
 # configured workstation. Safe to run repeatedly: every action is guarded by
 # an idempotency check and skipped when already satisfied.
 #
+# On an interactive terminal a full run starts with a selection screen:
+# tick/untick what to install, review the summary, confirm once, and the
+# rest runs autonomously with an "X of Y installed" progress readout.
+#
 # Usage:
 #   ./install.sh [options]
 #
@@ -15,7 +19,7 @@
 #   -l, --list           List available modules and exit
 #   -o, --only <m,...>   Run only the given module(s), in the given order
 #   -s, --skip <m,...>   Run everything except the given module(s)
-#   -y, --yes            Assume "yes" for all confirmation prompts
+#   -y, --yes            Install everything: skip the selection screen and prompts
 #   -h, --help           Show this help
 #
 # Examples:
@@ -29,6 +33,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # shellcheck source=lib/common.sh
 source "${SCRIPT_DIR}/lib/common.sh"
+# shellcheck source=lib/picker.sh
+source "${SCRIPT_DIR}/lib/picker.sh"
 
 # ---------------------------------------------------------------------------
 # Module registry — execution order matters:
@@ -219,8 +225,34 @@ BANNER
     [[ -n "${m}" ]] && validate_module "${m}"
   done
 
-  # Ask for sudo once so system-level steps don't stall mid-run.
-  sudo_keepalive
+  # -------------------------------------------------------------------------
+  # Interactive selection — full runs on a real terminal only. Power-user
+  # flags (--only/--skip/--yes) and CI keep the non-interactive path.
+  # -------------------------------------------------------------------------
+  if [[ ${#only[@]} -eq 0 && ${#skip[@]} -eq 0 && "${MAC_SETUP_YES}" != "1" ]] &&
+    picker_available; then
+    log_info "Loading the selection screen (everything starts ticked)..."
+    picker_catalog
+    if ! picker_run; then
+      log_info "Selection cancelled — nothing was installed."
+      exit 0
+    fi
+    if ! picker_confirm; then
+      log_info "Not confirmed — nothing was installed. Run ./install.sh to start over."
+      exit 0
+    fi
+    MAC_SETUP_BREWFILE="${MAC_SETUP_STATE_DIR}/active-brewfile-${MAC_SETUP_RUN_ID}"
+    picker_write_selection "${MAC_SETUP_BREWFILE}"
+    export MAC_SETUP_BREWFILE
+    if [[ -n "${PICKER_SKIPPED_MODULES}" ]]; then
+      # shellcheck disable=SC2206  # module names never contain spaces
+      skip+=(${PICKER_SKIPPED_MODULES})
+    fi
+  fi
+
+  # Everything the run will install, for the "X of Y" progress readout.
+  MAC_SETUP_PROGRESS_TOTAL="$(grep -cE '^(brew|cask|mas) "' "${MAC_SETUP_BREWFILE}" || true)"
+  export MAC_SETUP_PROGRESS_TOTAL
 
   # Build the effective module list.
   local selected=()
@@ -229,12 +261,23 @@ BANNER
   else
     for m in "${MODULES[@]}"; do
       if [[ ${#skip[@]} -gt 0 ]] && in_list "${m}" "${skip[@]}"; then
-        log_info "Skipping module '${m}' (--skip)"
+        log_info "Skipping module '${m}'"
         continue
       fi
       selected+=("${m}")
     done
   fi
+
+  # Transparency: announce the plan before touching anything.
+  log_step "Plan — ${#selected[@]} steps, ${MAC_SETUP_PROGRESS_TOTAL} packages"
+  for m in "${selected[@]}"; do
+    printf '  %b•%b %-14s %s\n' "${C_CYAN}" "${C_RESET}" "${m}" "$(module_description "${m}")"
+  done
+  printf '\n'
+
+  # Ask for sudo once so system-level steps don't stall mid-run.
+  log_info "You may be asked for your password now (used for system-level steps)."
+  sudo_keepalive
 
   local start_ts end_ts
   start_ts="$(date +%s)"
@@ -249,6 +292,9 @@ BANNER
   render_install_report
   render_manual_report
   print_summary
+  if [[ -n "${MAC_SETUP_PROGRESS_TOTAL}" && "${MAC_SETUP_PROGRESS_TOTAL}" != "0" ]]; then
+    log_info "Packages: $(progress_count) of ${MAC_SETUP_PROGRESS_TOTAL} selected items are on this Mac."
+  fi
   log_info "Finished in $(((end_ts - start_ts) / 60))m $(((end_ts - start_ts) % 60))s."
   log_info "Reports: ${MAC_SETUP_REPORT_DIR/#${HOME}/~}"
 

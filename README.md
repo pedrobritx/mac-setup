@@ -6,6 +6,15 @@
 curl -fsSL https://raw.githubusercontent.com/pedrobritx/mac-setup/main/bootstrap.sh | bash
 ```
 
+Run that, and mac-setup introduces itself, shows a **tick-list of everything
+it can install** (apps, terminal tools, setup steps — each with a one-line
+explanation), lets you untick what you don't want, asks for one confirmation,
+and then runs autonomously with a live *"34 of 72 installed · 38 to go"*
+progress readout.
+
+New here? The friendly walkthrough lives on the
+**[landing page](https://pedrobritx.github.io/mac-setup/)**.
+
 `mac-setup` is an Infrastructure-as-Code project, not a shell script pile:
 modular, idempotent, logged, verifiable, and safe to run as many times as you
 like. Running it twice never breaks anything — everything already satisfied is
@@ -25,6 +34,15 @@ wiped, restoring it is: clone → one command → coffee.
   brand-new feel; the only defaults written are small functional preferences
   (typing, tap-to-click, Finder navigation). Legacy overrides from older
   versions are actively deleted.
+- **You choose, then it runs** — an interactive selection screen before
+  anything happens; one confirmation; then fully autonomous with per-item
+  progress. Transparent throughout: it says what it *will* do, what it *is*
+  doing, and what it *has* done.
+- **One source per app** — when an app exists on the Mac App Store, it
+  installs from there, not from a cask (two sources is how you end up with
+  two copies of Teams/WhatsApp). A guard also skips any cask whose app is
+  already installed. Documented exception: DaisyDisk stays on Homebrew — the
+  App Store build is sandboxed and limited.
 - **Idempotent** — every action is guarded by a check; re-runs are no-ops.
 - **Single source of truth** — all packages live in one annotated [`Brewfile`](Brewfile).
 - **Prefer official channels** — Homebrew → Mac App Store (`mas`) → official
@@ -36,8 +54,15 @@ wiped, restoring it is: clone → one command → coffee.
 
 ## Features
 
-- 🍺 **Homebrew bootstrap** + `brew bundle` for ~40 formulae, ~25 casks, fonts
-- 🛍️ **Mac App Store** automation via `mas` (Pages, Final Cut Pro, TestFlight, …)
+- ✅ **Interactive selection** — tick/untick every app, tool, and setup step
+  before anything installs; per-item explanations; choices remembered
+- 📊 **Live progress** — each item announced and confirmed, with a running
+  `[X/Y · Z to go]` counter across the whole run
+- 🍺 **Homebrew bootstrap** for ~40 formulae, ~20 casks, fonts — installed
+  one by one so a single bad package never blocks the rest
+- 🛍️ **Mac App Store** automation via `mas` (Pages, Final Cut Pro, Teams,
+  WhatsApp, …) — preferred over casks when an app exists in both, so you
+  never get two copies of the same app
 - 🛠️ **Toolchains**: Node (via **fnm**), pnpm, bun, Python (via **uv**), pipx,
   Swift + SwiftFormat/SwiftLint, Docker Desktop (installed, but only launched
   when you need it — no always-on daemon eating battery)
@@ -73,6 +98,8 @@ mac-setup/
 │   ├── log.sh            #   colored leveled logging → terminal + file
 │   ├── run.sh            #   dry-run wrapper, retries, backups, symlinks
 │   ├── checks.sh         #   idempotency predicates
+│   ├── picker.sh         #   interactive "tick what to install" screen
+│   ├── progress.sh       #   "X of Y installed · Z to go" counters
 │   └── report.sh         #   OK/SKIP/FAIL/MANUAL accumulation + rendering
 ├── scripts/              # one module per concern (run standalone or via install.sh)
 │   ├── xcode.sh brew.sh apps.sh mas.sh
@@ -87,6 +114,7 @@ mac-setup/
 │   └── vscode/           #   settings.json, extensions.txt, snippets/
 ├── assets/               # wallpapers, icons
 └── docs/                 # INSTALL, POST_INSTALL, TROUBLESHOOTING, ARCHITECTURE
+    └── index.html        # the landing page (GitHub Pages)
 ```
 
 ## Installation
@@ -98,7 +126,19 @@ curl -fsSL https://raw.githubusercontent.com/pedrobritx/mac-setup/main/bootstrap
 ```
 
 That installs the Xcode Command Line Tools, clones this repo to
-`~/Developer/mac-setup`, and runs the full install.
+`~/Developer/mac-setup`, and starts the install:
+
+1. **Pick** — a checklist of every app, tool, and setup step (with
+   explanations). `↑`/`↓` moves, `space` ticks/unticks, `a` toggles a whole
+   group, `enter` continues. Everything starts ticked; your unticks are
+   remembered for next time.
+2. **Confirm** — a per-group summary plus exactly what will be skipped,
+   then one `y` to proceed.
+3. **Relax** — the rest runs by itself, announcing each item before, during,
+   and after, with a running `[34/72 · 38 to go]` counter. You may be asked
+   for your password (sudo) and App Store sign-in along the way.
+
+Prefer no questions at all? `./install.sh --yes` installs everything.
 
 ### From a clone
 
@@ -111,9 +151,10 @@ cd ~/Developer/mac-setup
 ### Useful flags
 
 ```bash
+./install.sh --yes                 # install everything; skip the selection screen
 ./install.sh --dry-run             # preview everything; change nothing
 ./install.sh --list                # list all modules
-./install.sh --only brew,apps      # run specific modules
+./install.sh --only brew,apps      # run specific modules (skips the selection screen)
 ./install.sh --skip macos          # run everything except system defaults
 ./install.sh --verbose             # debug output
 ```
