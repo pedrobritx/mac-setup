@@ -32,6 +32,8 @@ bootstrap.sh ──▶ install.sh ──▶ scripts/<module>.sh   (one subproces
 | `lib/log.sh` | colored leveled logging; plain-text copy to the run's log file |
 | `lib/run.sh` | `run` (the dry-run choke point), retries, backups, symlinking, `defaults_write`, confirmations |
 | `lib/checks.sh` | pure predicates: `has_command`, `brew_cask_installed`, `app_installed`, `default_equals`, … |
+| `lib/picker.sh` | the interactive selection screen (sourced only by `install.sh`) |
+| `lib/progress.sh` | cross-module `[X/Y · Z to go]` package counters |
 | `lib/report.sh` | append-only TSV event stream → Markdown reports + terminal summary |
 
 Two invariants make the whole system trustworthy:
@@ -59,6 +61,25 @@ orchestrator renders:
 (App Store sign-in, org-licensed Cisco VPN, FileVault's recovery-key choice)
 are not failures — they're a to-do list the tool writes for you.
 
+## The selection screen and the active Brewfile
+
+A full interactive run starts in `lib/picker.sh`: the Brewfile is parsed
+into a catalog (section headers become groups, the inline comment after
+each entry becomes its explanation), the setup modules are appended as
+tickable "Setup steps", and a full-screen checklist renders over `/dev/tty`
+— which is why it works even when the script itself is piped
+(`curl | bash`). Xcode CLT and Homebrew are locked on; everything else can
+be unticked, and unticks persist in
+`~/.local/state/mac-setup/unselected.tsv` (new Brewfile entries still
+default to on).
+
+After one confirmation the picker writes a filtered **active Brewfile** to
+the state directory and exports `MAC_SETUP_BREWFILE` pointing at it, so
+every module (brew, apps, mas, verification) installs and verifies exactly
+the selection. Unticked setup steps become module skips. The repo Brewfile
+is never modified. Non-interactive paths (`--yes`, `--only`, `--skip`, CI,
+no TTY) use the repo Brewfile directly.
+
 ## The Brewfile is the package database
 
 One annotated file declares taps, formulae, casks, fonts, and Mac App Store
@@ -67,9 +88,23 @@ apps. Modules never hardcode package lists; `apps.sh`, `mas.sh`, and
 Adding an app is therefore a one-line change that automatically flows into
 install, update, verify, and uninstall.
 
-`brew bundle` does the bulk install; the per-domain modules then *reconcile*
-— retrying individual failures and routing dead ends to the manual report.
-This two-phase approach means one broken cask can't block fifty good ones.
+Packages install **one at a time** (`brew install` per entry, not one big
+`brew bundle`): each item is announced, installed, and confirmed with a
+running `[X/Y · Z to go]` counter from `lib/progress.sh` (a line-per-package
+tick file keyed by run id, since modules are subprocesses), and one broken
+cask can't block fifty good ones. The `apps.sh` module then *reconciles* —
+retrying individual failures and routing dead ends to the manual report.
+
+## One source per app
+
+When an app exists both as a cask and on the Mac App Store, the Brewfile
+declares it in the `mas` section — never both. Two sources for the same app
+is how duplicate copies happen (Teams and WhatsApp, historically). On top
+of the declaration policy, `cask_app_name` in `lib/checks.sh` maps each
+cask to the `.app` it installs, and the brew/apps modules skip any cask
+whose app already exists from the App Store or a manual install.
+Documented exception: DaisyDisk stays a cask (its App Store build is
+sandboxed and limited).
 
 ## Stock-first macOS defaults
 

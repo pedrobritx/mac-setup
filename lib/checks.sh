@@ -44,6 +44,39 @@ app_installed() {
     [[ -d "/System/Applications/${app}.app" ]]
 }
 
+# cask_app_name <cask> — print the .app bundle name a cask installs, for the
+# duplicate-copy guard (see scripts/brew.sh): when the app already exists —
+# from the Mac App Store or a manual install — the cask is skipped so a
+# second copy is never created. Prints nothing for unknown casks (no guard).
+cask_app_name() {
+  case "$1" in
+    visual-studio-code) echo "Visual Studio Code" ;;
+    antigravity) echo "Antigravity" ;;
+    docker-desktop) echo "Docker" ;;
+    postman) echo "Postman" ;;
+    figma) echo "Figma" ;;
+    sf-symbols) echo "SF Symbols" ;;
+    google-chrome) echo "Google Chrome" ;;
+    chatgpt) echo "ChatGPT" ;;
+    claude) echo "Claude" ;;
+    notion) echo "Notion" ;;
+    obsidian) echo "Obsidian" ;;
+    discord) echo "Discord" ;;
+    google-drive) echo "Google Drive" ;;
+    appcleaner) echo "AppCleaner" ;;
+    caffeine) echo "Caffeine" ;;
+    daisydisk) echo "DaisyDisk" ;;
+    logi-options+) echo "logioptionsplus" ;;
+    the-unarchiver) echo "The Unarchiver" ;;
+    microsoft-teams) echo "Microsoft Teams" ;;
+    whatsapp) echo "WhatsApp" ;;
+    vlc) echo "VLC" ;;
+    steam) echo "Steam" ;;
+    stremio) echo "Stremio" ;;
+    *) echo "" ;;
+  esac
+}
+
 # mas_app_installed <app_id> — true when a Mac App Store app id is installed.
 mas_app_installed() {
   has_command mas && mas list 2>/dev/null | awk '{print $1}' | grep -qx "$1"

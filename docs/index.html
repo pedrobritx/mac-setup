@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mac-setup — a brand-new Mac, ready in one command</title>
+<meta name="description" content="Turn a fresh Mac into a complete workstation: run one command, tick what you want, confirm once, relax.">
+<style>
+  /* ------------------------------------------------------------------ */
+  /* britx design — liquid glass, organic shapes, easy-on-the-eyes tones */
+  /* ------------------------------------------------------------------ */
+  :root {
+    --bg: #10131a;            /* deep blue-charcoal, never pure black */
+    --bg-soft: #161a24;
+    --ink: #e7eaf3;           /* soft off-white, never pure white */
+    --ink-dim: #9aa3b5;
+    --line: rgba(231, 234, 243, 0.09);
+    --glass: rgba(231, 234, 243, 0.055);
+    --glass-strong: rgba(231, 234, 243, 0.09);
+    --mint: #7ee8c7;
+    --sky: #7fb5ff;
+    --lilac: #c5a6ff;
+    --peach: #ffb99a;
+    --accent-grad: linear-gradient(115deg, var(--mint), var(--sky) 48%, var(--lilac));
+    --shadow: 0 18px 50px rgba(4, 6, 12, 0.55);
+    --shadow-soft: 0 8px 28px rgba(4, 6, 12, 0.35);
+    --code-bg: rgba(10, 12, 18, 0.72);
+    color-scheme: dark;
+  }
+  html[data-theme="light"] {
+    --bg: #eef1f7;
+    --bg-soft: #e5e9f2;
+    --ink: #262b38;
+    --ink-dim: #5d6577;
+    --line: rgba(38, 43, 56, 0.10);
+    --glass: rgba(255, 255, 255, 0.55);
+    --glass-strong: rgba(255, 255, 255, 0.75);
+    --mint: #23b28a;
+    --sky: #3874d8;
+    --lilac: #8a5fe0;
+    --peach: #e0784a;
+    --accent-grad: linear-gradient(115deg, #35c79d, #4b86e8 48%, #9a71ea);
+    --shadow: 0 18px 50px rgba(90, 100, 130, 0.28);
+    --shadow-soft: 0 8px 28px rgba(90, 100, 130, 0.18);
+    --code-bg: rgba(22, 26, 36, 0.92);
+    color-scheme: light;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+    overflow-x: hidden;
+    transition: background .4s ease, color .4s ease;
+  }
+  ::selection { background: var(--sky); color: var(--bg); }
+
+  /* ---- floating gradient blobs ------------------------------------- */
+  .blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
+  .blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(90px); opacity: .5;
+    animation: drift 26s ease-in-out infinite alternate;
+  }
+  html[data-theme="light"] .blob { opacity: .38; }
+  .blob.a { width: 46vw; height: 46vw; top: -14vw; left: -10vw;
+            background: radial-gradient(circle, var(--sky), transparent 65%); }
+  .blob.b { width: 40vw; height: 40vw; top: 22vh; right: -14vw;
+            background: radial-gradient(circle, var(--lilac), transparent 65%);
+            animation-delay: -8s; }
+  .blob.c { width: 34vw; height: 34vw; bottom: -12vw; left: 24vw;
+            background: radial-gradient(circle, var(--mint), transparent 65%);
+            animation-delay: -16s; }
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to   { transform: translate(5vw, 4vh) scale(1.12); }
+  }
+
+  /* ---- layout ------------------------------------------------------- */
+  /* .wrap only constrains width and side padding — vertical rhythm comes
+     from the header/section rules, so no padding shorthand here. */
+  .wrap { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+  section { padding-top: 88px; padding-bottom: 20px; }
+
+  /* ---- nav pill ------------------------------------------------------ */
+  nav {
+    position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
+    z-index: 50; display: flex; align-items: center; gap: 4px;
+    padding: 7px 10px; border-radius: 999px;
+    background: var(--glass-strong);
+    -webkit-backdrop-filter: blur(22px) saturate(1.5);
+    backdrop-filter: blur(22px) saturate(1.5);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow-soft);
+    white-space: nowrap;
+  }
+  nav a {
+    color: var(--ink-dim); text-decoration: none; font-size: 14px;
+    font-weight: 500; padding: 7px 14px; border-radius: 999px;
+    transition: color .25s, background .25s, transform .2s;
+  }
+  nav a:hover { color: var(--ink); transform: translateY(-1px); }
+  nav a.active { color: var(--ink); background: var(--glass-strong); }
+  #theme-btn {
+    cursor: pointer; border: none; font: inherit; font-size: 15px;
+    background: transparent; color: var(--ink-dim);
+    padding: 6px 10px; border-radius: 999px; line-height: 1;
+    transition: transform .3s ease, color .25s;
+  }
+  #theme-btn:hover { color: var(--ink); transform: rotate(24deg) scale(1.15); }
+
+  /* ---- hero ----------------------------------------------------------- */
+  header { padding-top: 168px; padding-bottom: 40px; text-align: center; }
+  .hello {
+    display: inline-block; font-size: 13.5px; font-weight: 600;
+    letter-spacing: .04em; color: var(--ink-dim);
+    padding: 7px 16px; border-radius: 999px;
+    background: var(--glass); border: 1px solid var(--line);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    margin-bottom: 26px;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.12;
+    font-weight: 750; letter-spacing: -0.02em; margin-bottom: 18px;
+  }
+  h1 .grad {
+    background: var(--accent-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .sub {
+    color: var(--ink-dim); font-size: clamp(1.02rem, 2vw, 1.2rem);
+    max-width: 620px; margin: 0 auto 40px;
+  }
+
+  /* ---- the command card ---------------------------------------------- */
+  .cmd-card {
+    max-width: 720px; margin: 0 auto; text-align: left;
+    border-radius: 26px; border: 1px solid var(--line);
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(22px) saturate(1.4);
+    backdrop-filter: blur(22px) saturate(1.4);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .cmd-head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 13px 18px; border-bottom: 1px solid var(--line);
+    font-size: 13px; color: var(--ink-dim);
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; opacity: .85; }
+  .dot.r { background: #ff8a80; } .dot.y { background: #ffd180; } .dot.g { background: #9ce6a8; }
+  .cmd-head span { margin-left: 8px; }
+  .cmd-body { display: flex; align-items: center; gap: 12px; padding: 20px 18px; background: var(--code-bg); }
+  .cmd-body code {
+    flex: 1; font-family: "SF Mono", ui-monospace, Menlo, monospace;
+    font-size: clamp(11.5px, 1.6vw, 14px); color: #d9e6ff;
+    overflow-x: auto; white-space: nowrap; scrollbar-width: none;
+  }
+  .cmd-body code::-webkit-scrollbar { display: none; }
+  .cmd-body code .p { color: #8ef0cf; }
+  #copy-btn {
+    cursor: pointer; border: none; font: inherit; font-size: 13.5px; font-weight: 600;
+    color: #10131a; padding: 10px 18px; border-radius: 999px;
+    background: var(--accent-grad); background-size: 160% 160%;
+    transition: transform .2s ease, box-shadow .2s ease, background-position .4s;
+    box-shadow: 0 6px 18px rgba(127, 181, 255, .25);
+    flex-shrink: 0;
+  }
+  #copy-btn:hover { transform: translateY(-2px) scale(1.03); background-position: 100% 0; }
+  #copy-btn:active { transform: scale(.97); }
+  .cmd-note { text-align: center; font-size: 13.5px; color: var(--ink-dim); padding: 12px 16px 14px; }
+
+  /* ---- section titles -------------------------------------------------- */
+  h2 {
+    font-size: clamp(1.7rem, 3.6vw, 2.3rem); font-weight: 720;
+    letter-spacing: -0.015em; margin-bottom: 10px;
+  }
+  .lead { color: var(--ink-dim); max-width: 640px; margin-bottom: 40px; }
+  .eyebrow {
+    font-size: 12.5px; font-weight: 700; letter-spacing: .12em;
+    text-transform: uppercase; margin-bottom: 12px;
+    background: var(--accent-grad);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+
+  /* ---- glass cards ------------------------------------------------------ */
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  .card {
+    border-radius: 24px; padding: 26px 24px;
+    background: var(--glass); border: 1px solid var(--line);
+    -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+    box-shadow: var(--shadow-soft);
+    transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
+  }
+  .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); background: var(--glass-strong); }
+  .card .ico {
+    display: inline-grid; place-items: center; width: 46px; height: 46px;
+    font-size: 21px; margin-bottom: 14px;
+    border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%;  /* organic squircle */
+    background: var(--accent-grad); color: #10131a;
+    box-shadow: 0 8px 20px rgba(127, 181, 255, .3);
+  }
+  .card h3 { font-size: 1.06rem; font-weight: 650; margin-bottom: 6px; }
+  .card p { font-size: .93rem; color: var(--ink-dim); }
+
+  /* ---- steps -------------------------------------------------------------- */
+  .steps { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); counter-reset: step; }
+  .step { position: relative; padding: 30px 24px 26px; border-radius: 24px;
+          background: var(--glass); border: 1px solid var(--line);
+          -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+          box-shadow: var(--shadow-soft); transition: transform .3s ease; }
+  .step:hover { transform: translateY(-5px); }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; top: -18px; left: 22px;
+    width: 40px; height: 40px; display: grid; place-items: center;
+    font-weight: 750; font-size: 17px; color: #10131a;
+    background: var(--accent-grad);
+    border-radius: 46% 54% 52% 48% / 55% 48% 52% 45%;
+    box-shadow: 0 8px 18px rgba(127, 181, 255, .35);
+  }
+  .step h3 { font-size: 1.05rem; margin: 4px 0 8px; }
+  .step p { font-size: .93rem; color: var(--ink-dim); }
+  .step kbd {
+    font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .8rem;
+    background: var(--glass-strong); border: 1px solid var(--line);
+    border-radius: 7px; padding: 2px 7px; color: var(--ink);
+  }
+
+  /* ---- terminal mock ------------------------------------------------------- */
+  .term {
+    margin-top: 42px; border-radius: 24px; overflow: hidden;
+    border: 1px solid var(--line); box-shadow: var(--shadow);
+    background: var(--code-bg);
+    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+  }
+  .term-head { display: flex; align-items: center; gap: 8px; padding: 12px 16px;
+               background: var(--glass-strong); border-bottom: 1px solid var(--line);
+               font-size: 12.5px; color: var(--ink-dim); }
+  .term pre {
+    padding: 20px 22px; overflow-x: auto;
+    font-family: "SF Mono", ui-monospace, Menlo, monospace;
+    font-size: 12.8px; line-height: 1.75; color: #c7d3ea;
+  }
+  .term .tk-h { color: #c5a6ff; font-weight: 600; }
+  .term .tk-g { color: #8ef0cf; }
+  .term .tk-d { color: #77809599; }
+  .term .tk-c { color: #7fb5ff; }
+
+  /* ---- FAQ ---------------------------------------------------------------- */
+  details {
+    border-radius: 20px; border: 1px solid var(--line);
+    background: var(--glass); margin-bottom: 12px;
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    transition: background .3s ease;
+  }
+  details[open] { background: var(--glass-strong); }
+  summary {
+    cursor: pointer; list-style: none; font-weight: 600; font-size: .98rem;
+    padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; font-size: 1.25rem; color: var(--ink-dim); transition: transform .3s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding: 0 22px 18px; font-size: .93rem; color: var(--ink-dim); }
+  details code { font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .85em;
+                 background: var(--glass-strong); padding: 1px 6px; border-radius: 6px; }
+
+  /* ---- footer ---------------------------------------------------------------- */
+  footer { text-align: center; padding: 70px 24px 46px; color: var(--ink-dim); font-size: 14px; }
+  footer a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
+  footer a:hover { border-color: var(--ink); }
+
+  /* ---- reveal on scroll -------------------------------------------------------- */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 560px) {
+    nav { gap: 0; padding: 6px; }
+    nav a { padding: 7px 9px; font-size: 12.5px; }
+    header { padding-top: 138px; }
+    .cmd-body { flex-direction: column; align-items: stretch; }
+    #copy-btn { width: 100%; }
+  }
+</style>
+<noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
+</head>
+<body>
+
+<div class="blobs" aria-hidden="true">
+  <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
+</div>
+
+<nav aria-label="Sections">
+  <a href="#install" class="active">Install</a>
+  <a href="#inside">What you get</a>
+  <a href="#how">How it works</a>
+  <a href="#faq">FAQ</a>
+  <button id="theme-btn" title="Toggle light/dark" aria-label="Toggle light or dark theme">☾</button>
+</nav>
+
+<header id="install" class="wrap">
+  <span class="hello">👋 for brand-new Macs (and freshly formatted ones)</span>
+  <h1>One command.<br>Your Mac, <span class="grad">ready to work.</span></h1>
+  <p class="sub">
+    mac-setup installs your apps, developer tools, and a beautiful terminal —
+    but only after <strong>you tick exactly what you want</strong>. No mystery
+    scripts, no gimmicks, nothing that touches how macOS looks and feels.
+  </p>
+
+  <div class="cmd-card reveal">
+    <div class="cmd-head"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>Terminal</span></div>
+    <div class="cmd-body">
+      <code id="cmd"><span class="p">curl</span> -fsSL https://raw.githubusercontent.com/pedrobritx/mac-setup/main/bootstrap.sh | <span class="p">bash</span></code>
+      <button id="copy-btn">Copy</button>
+    </div>
+    <div class="cmd-note">Paste it into Terminal and press <b>return</b> — the checklist appears before anything installs.</div>
+  </div>
+</header>
+
+<section id="inside" class="wrap">
+  <div class="reveal">
+    <div class="eyebrow">What you get</div>
+    <h2>Everything a workstation needs, nothing it doesn't</h2>
+    <p class="lead">Every item is optional and explained on the selection screen. Untick anything — your choices are remembered.</p>
+  </div>
+  <div class="grid">
+    <div class="card reveal"><div class="ico">📦</div><h3>Your apps</h3>
+      <p>Chrome, VS Code, Docker, Figma, Notion, Obsidian, WhatsApp, Teams, Discord, Steam… installed from the right source, exactly one copy of each.</p></div>
+    <div class="card reveal"><div class="ico">✨</div><h3>A lovely terminal</h3>
+      <p>zsh with a fast Starship prompt, history search, smart <code>cd</code>, syntax colors, and ghost-text suggestions — each one explained before you say yes.</p></div>
+    <div class="card reveal"><div class="ico">🛠️</div><h3>Developer toolchains</h3>
+      <p>Git + SSH keys + GitHub login, Node (fnm), Python (uv), Swift extras, VS Code settings & extensions.</p></div>
+    <div class="card reveal"><div class="ico">🍃</div><h3>A Mac that stays a Mac</h3>
+      <p>Stock-first: no animation hacks, no hot corners, no window-management overrides. Just a few tasteful defaults like tap-to-click and the Finder path bar.</p></div>
+    <div class="card reveal"><div class="ico">🔒</div><h3>Sensible security</h3>
+      <p>Firewall on, Touch&nbsp;ID for <code>sudo</code>, instant screen lock — and clear pointers for the choices only you should make, like FileVault.</p></div>
+    <div class="card reveal"><div class="ico">🧾</div><h3>Total transparency</h3>
+      <p>It says what it <em>will</em> do, what it <em>is</em> doing, and what it <em>did</em> — with reports and logs you can read afterwards.</p></div>
+  </div>
+</section>
+
+<section id="how" class="wrap">
+  <div class="reveal">
+    <div class="eyebrow">How it works</div>
+    <h2>Three steps, one confirmation</h2>
+    <p class="lead">You stay in charge until you press <b>y</b> — after that, it runs itself and shows its progress.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal"><h3>Open Terminal & paste</h3>
+      <p>Terminal lives in <kbd>Applications → Utilities</kbd> (or press <kbd>⌘ space</kbd> and type “Terminal”). Paste the command above, press <kbd>return</kbd>, and approve the Xcode tools dialog if it appears.</p></div>
+    <div class="step reveal"><h3>Tick what you want</h3>
+      <p>A checklist appears with everything pre-ticked. <kbd>↑</kbd><kbd>↓</kbd> to move, <kbd>space</kbd> to tick or untick, <kbd>a</kbd> for a whole group, <kbd>enter</kbd> to review. Every item has a plain-English explanation.</p></div>
+    <div class="step reveal"><h3>Confirm & relax</h3>
+      <p>Check the summary, press <kbd>y</kbd>, and watch the counter climb — <em>“34 of 72 · 38 to go”</em>. It may ask for your password or App Store sign-in; everything else is automatic. Re-running is always safe.</p></div>
+  </div>
+
+  <div class="term reveal" aria-label="Preview of the selection screen">
+    <div class="term-head"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>mac-setup — selection screen</span></div>
+    <pre>
+<span class="tk-h">mac-setup</span> <span class="tk-d">— tick what to install, untick what to skip</span>
+<span class="tk-d">↑/↓ move · space tick/untick · a toggles a whole group · enter continue</span>
+
+<span class="tk-c">Terminal environment</span>
+   <span class="tk-g">[✓]</span> starship     <span class="tk-d">pretty, fast shell prompt (git branch, language versions)</span>
+ <span class="tk-c">❯</span> <span class="tk-g">[✓]</span> zoxide       <span class="tk-d">smarter cd — 'z proj' jumps to your most-used folders</span>
+   <span class="tk-g">[✓]</span> fzf          <span class="tk-d">fuzzy finder — Ctrl-R searches history, Ctrl-T finds files</span>
+   [ ] tmux         <span class="tk-d">split the terminal into panes; sessions survive disconnects</span>
+
+<span class="tk-c">Browsers &amp; AI assistants</span>
+   <span class="tk-g">[✓]</span> Google Chrome <span class="tk-d">primary browser</span>
+   <span class="tk-g">[✓]</span> Claude        <span class="tk-d">Anthropic Claude desktop</span>
+
+<span class="tk-g">83</span> of 84 selected <span class="tk-d">· enter to review &amp; confirm</span></pre>
+  </div>
+</section>
+
+<section id="faq" class="wrap">
+  <div class="reveal">
+    <div class="eyebrow">FAQ</div>
+    <h2>Good questions</h2>
+  </div>
+  <div class="reveal">
+    <details>
+      <summary>Is it safe? What does it change on my Mac?</summary>
+      <p>It installs the apps and tools you ticked (via Homebrew and the Mac App Store — official sources only) and applies a small set of documented preferences. It never overrides window management, Mission Control, or animations, never overwrites SSH keys, and backs up any dotfile before touching it. Everything it does is logged and reported.</p>
+    </details>
+    <details>
+      <summary>Can I run it again later?</summary>
+      <p>Yes — that's the design. Re-running skips everything already installed and pre-loads your previous selection. It's also how you add something you unticked the first time.</p>
+    </details>
+    <details>
+      <summary>Do I need to know the terminal?</summary>
+      <p>No. If you can paste one line and press a few arrow keys, you're qualified. The screen tells you which keys do what at every step.</p>
+    </details>
+    <details>
+      <summary>Will it ask for my password?</summary>
+      <p>Once, near the start (for system-level steps like the firewall), and macOS may ask you to sign in to the App Store for those apps. It never sees or stores your password — that's the standard <code>sudo</code> prompt.</p>
+    </details>
+    <details>
+      <summary>What if something can't be installed automatically?</summary>
+      <p>It lands in a <em>manual actions</em> report with the official link and the exact steps — for example paid App Store apps you haven't purchased yet. Nothing fails silently.</p>
+    </details>
+    <details>
+      <summary>How do I undo it?</summary>
+      <p><code>./uninstall.sh</code> removes exactly what was installed — after showing you the list and asking. Your files are never touched.</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <p>Built with care by <a href="https://github.com/pedrobritx">Pedro Brito</a> ·
+     <a href="https://github.com/pedrobritx/mac-setup">source on GitHub</a> ·
+     <a href="https://github.com/pedrobritx/mac-setup/blob/main/docs/INSTALL.md">full install guide</a></p>
+</footer>
+
+<script>
+  // Theme: dark is the default; the choice persists.
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-btn');
+  function setTheme(t) {
+    if (t === 'light') { root.setAttribute('data-theme', 'light'); btn.textContent = '☀'; }
+    else { root.removeAttribute('data-theme'); btn.textContent = '☾'; }
+    try { localStorage.setItem('theme', t); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  setTheme(saved === 'light' ? 'light' : 'dark');
+  btn.addEventListener('click', function () {
+    setTheme(root.hasAttribute('data-theme') ? 'dark' : 'light');
+  });
+
+  // Copy the install command.
+  var copyBtn = document.getElementById('copy-btn');
+  copyBtn.addEventListener('click', function () {
+    var text = document.getElementById('cmd').textContent;
+    function done() {
+      copyBtn.textContent = 'Copied ✓';
+      setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1800);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done);
+    } else {
+      var ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta);
+      ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+      done();
+    }
+  });
+
+  // Reveal-on-scroll + active nav link.
+  var reveals = document.querySelectorAll('.reveal');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  reveals.forEach(function (el) { io.observe(el); });
+
+  var links = document.querySelectorAll('nav a');
+  var sections = ['install', 'inside', 'how', 'faq'].map(function (id) { return document.getElementById(id); });
+  var so = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        links.forEach(function (l) {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(function (s) { if (s) so.observe(s); });
+</script>
+</body>
+</html>

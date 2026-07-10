@@ -4,8 +4,8 @@
 #
 # Casks are declared in the Brewfile and installed by scripts/brew.sh. This
 # module reconciles the result:
-#   * retries any cask that brew bundle missed (individually, so one bad
-#     cask cannot block the rest),
+#   * retries any cask the brew module could not install,
+#   * skips casks whose app already exists outside Homebrew (duplicate guard),
 #   * records apps that cannot be automated at all (no cask, no Mac App
 #     Store listing) into the manual-actions report with URL + steps.
 
@@ -28,9 +28,12 @@ brewfile_app_casks() {
 
 # ---------------------------------------------------------------------------
 # reconcile_casks — ensure every Brewfile cask is installed; retry misses.
+# The duplicate-copy guard from scripts/brew.sh applies here too: an app
+# already present from the Mac App Store (or a manual install) is never
+# installed a second time from a cask.
 # ---------------------------------------------------------------------------
 reconcile_casks() {
-  local cask
+  local cask app
   while IFS= read -r cask; do
     if brew_cask_installed "${cask}"; then
       log_skip "${cask} already installed."
@@ -38,8 +41,16 @@ reconcile_casks() {
       continue
     fi
 
+    app="$(cask_app_name "${cask}")"
+    if [[ -n "${app}" ]] && app_installed "${app}"; then
+      log_skip "${cask}: ${app}.app already installed — not adding a second copy."
+      report_skip "${MODULE}" "${cask}" "app already installed outside Homebrew"
+      continue
+    fi
+
     log_info "Installing cask: ${cask}"
     if run_retry 2 brew install --cask "${cask}"; then
+      progress_tick "${cask}" "installed"
       report_ok "${MODULE}" "${cask}" "installed"
     else
       report_manual "${MODULE}" "${cask}" \

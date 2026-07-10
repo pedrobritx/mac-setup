@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — choose-what-you-install
+
+- **Interactive selection screen** (`lib/picker.sh`): a full run now starts
+  with a tick-list of every app, terminal tool, and setup step — grouped,
+  each with a one-line explanation parsed from the Brewfile comments
+  (the zsh plugins finally explain themselves). `↑/↓` move, `space` ticks,
+  `a` toggles a group, `enter` reviews, one `y` confirms, then the run is
+  fully autonomous. Works through `curl | bash` (reads `/dev/tty`).
+  Unticks are remembered across runs. `--yes`, `--only`, `--skip`, and
+  CI/no-TTY runs bypass it.
+- **Live progress** (`lib/progress.sh`): every package is announced,
+  installed, and confirmed with a running `[X/Y · Z to go]` counter across
+  the brew, apps, and mas modules; the final summary reports how many of
+  the selected items are on the machine.
+- **Landing page** (`docs/index.html`): a friendly GitHub Pages site with
+  the install command and a short tutorial for non-technical users.
+
+### Changed — apps & install flow
+
+- Replaced the `chatgpt-atlas` cask with `google-chrome`.
+- **One source per app:** Microsoft Teams, WhatsApp, and The Unarchiver
+  moved from casks to the Mac App Store section (the App Store wins when an
+  app exists in both — two sources is how duplicate copies of Teams and
+  WhatsApp appeared). A new duplicate-copy guard (`cask_app_name` +
+  `app_installed`) also skips any cask whose `.app` already exists.
+  Documented exception: DaisyDisk stays a cask (the App Store build is
+  sandboxed/limited).
+- `brew` module installs packages **one at a time** instead of one big
+  `brew bundle` — per-item announce/confirm with progress, and a single bad
+  entry never blocks the rest.
+
 ### Changed — performance overhaul (stock-first defaults)
 
 The Mac's UI glitched after earlier versions ran (full-screen management,
