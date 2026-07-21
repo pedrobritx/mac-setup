@@ -65,6 +65,16 @@ _picker_add() {
     grep -qx "$1	$2" "$(_picker_unselected_file)" 2>/dev/null; then
     on=0
   fi
+  # A preference pinned OFF in config/settings.sh (or the environment) starts
+  # unticked, so the file toggles and the picker agree.
+  if [[ "$1" == "pref" ]]; then
+    local _pk _pv
+    _pk="MAC_SETUP_PREF_$(printf '%s' "${2#*:}" | tr '[:lower:]' '[:upper:]')"
+    _pv="$(printf '%s' "${!_pk:-}" | tr '[:upper:]' '[:lower:]')"
+    case "${_pv}" in
+      0 | no | n | off | false | skip) on=0 ;;
+    esac
+  fi
   PICK_TYPE+=("$1")
   PICK_ID+=("$2")
   PICK_LABEL+=("$3")
@@ -143,10 +153,35 @@ picker_catalog() {
     "SwiftFormat + SwiftLint checks" "${g}" 0
   _picker_add step vscode "VS Code config" \
     "settings, snippets, and extensions" "${g}" 0
-  _picker_add step macos "macOS defaults" \
-    "keyboard, tap-to-click, Finder tweaks — stock-first, no animation hacks" "${g}" 0
-  _picker_add step security "Security" \
-    "firewall on, Touch ID for sudo, immediate screen lock" "${g}" 0
+
+  # macOS preferences — each is a single suggested `defaults` tweak the module
+  # applies. Stock-first: window management, Mission Control, magnification and
+  # animations are never offered here (removing legacy overrides always runs).
+  local mp="macOS preferences"
+  _picker_add pref macos:keyboard "Keyboard" \
+    "fast key repeat, no autocorrect or smart quotes/dashes" "${mp}" 0
+  _picker_add pref macos:trackpad "Tap to click" \
+    "tap the trackpad to click" "${mp}" 0
+  _picker_add pref macos:finder "Finder tweaks" \
+    "path bar, all extensions, list view, folders first, no .DS_Store on shares" "${mp}" 0
+  _picker_add pref macos:dock "Dock icon size" \
+    "~20% — position, magnification and animations stay stock" "${mp}" 0
+  _picker_add pref macos:screenshots "Screenshots → ~/Screenshots" \
+    "save screenshots to ~/Screenshots instead of the Desktop" "${mp}" 0
+  _picker_add pref macos:safari "Safari Develop menu" \
+    "Develop menu + web inspector (needs Full Disk Access to write)" "${mp}" 0
+  _picker_add pref macos:panels "Expanded save/print panels" \
+    "expand save/print dialogs; save new documents locally, not iCloud" "${mp}" 0
+
+  # Security — conservative, developer-friendly hardening. FileVault is only
+  # ever reported, never toggled automatically.
+  local sp="Security"
+  _picker_add pref security:firewall "Application firewall" \
+    "turn the macOS application firewall on" "${sp}" 0
+  _picker_add pref security:touchid_sudo "Touch ID for sudo" \
+    "approve terminal sudo with your fingerprint" "${sp}" 0
+  _picker_add pref security:screen_lock "Immediate screen lock" \
+    "require your password right after sleep/screensaver" "${sp}" 0
 }
 
 # _picker_comment <line> — the text after " # ", or empty.
@@ -458,4 +493,16 @@ picker_write_selection() {
     fi
   done
   PICKER_SKIPPED_MODULES="${PICKER_SKIPPED_MODULES# }"
+
+  # Per-category preferences (type "pref", id "<module>:<category>") are
+  # exported as MAC_SETUP_PREF_<CATEGORY> so the module subprocesses apply
+  # only what stayed ticked. Their modules always run (the stock-first cleanup
+  # in macos.sh must never be skipped), so pref items never touch the module
+  # skip list above.
+  local key
+  for i in "${!PICK_TYPE[@]}"; do
+    [[ "${PICK_TYPE[i]}" == "pref" ]] || continue
+    key="$(printf '%s' "${PICK_ID[i]#*:}" | tr '[:lower:]' '[:upper:]')"
+    export "MAC_SETUP_PREF_${key}=${PICK_ON[i]}"
+  done
 }

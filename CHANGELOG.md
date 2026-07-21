@@ -21,6 +21,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   installed, and confirmed with a running `[X/Y · Z to go]` counter across
   the brew, apps, and mas modules; the final summary reports how many of
   the selected items are on the machine.
+- **Per-category macOS & security suggestions in the picker:** the coarse
+  "macOS defaults" and "Security" steps are replaced by individual ticket
+  items — Keyboard, Tap to click, Finder tweaks, Dock icon size, Screenshots,
+  Safari Develop menu, Expanded panels, Application firewall, Touch ID for
+  sudo, Immediate screen lock. Each is a suggestion (ticked by default) you
+  can untick; choices are exported as `MAC_SETUP_PREF_<CATEGORY>` and applied
+  autonomously — no mid-run prompts. Staying stock-first, window management,
+  Mission Control, magnification and animations are never offered, and
+  `remove_legacy_overrides` always runs. Pin any category ahead of time in
+  `config/settings.sh` (or the environment) for `--only`/`--yes`/CI runs; a
+  category left unset applies, so plain runs still converge on the favourite
+  config. New helper `pref_enabled` (lib/run.sh) resolves the choice.
 - **Landing page** (`docs/index.html`): a friendly GitHub Pages site with
   the install command and a short tutorial for non-technical users.
 

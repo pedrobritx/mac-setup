@@ -116,9 +116,12 @@ main() {
     return 0
   fi
 
-  enable_firewall
-  enable_touchid_sudo
-  require_password_after_sleep
+  # Each hardening step is an optional suggestion, ticked/unticked on the
+  # selection screen or pinned in config/settings.sh (MAC_SETUP_PREF_*).
+  # FileVault is only ever *reported*, never changed automatically.
+  pref_enabled FIREWALL && enable_firewall
+  pref_enabled TOUCHID_SUDO && enable_touchid_sudo
+  pref_enabled SCREEN_LOCK && require_password_after_sleep
   check_filevault
 }
 

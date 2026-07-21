@@ -229,14 +229,18 @@ main() {
     return 0
   fi
 
+  # Stock-first cleanup always runs: it only *removes* legacy overrides, so it
+  # is never an opt-out. Each additive tweak below is an optional suggestion,
+  # ticked/unticked on the selection screen or pinned in config/settings.sh
+  # (MAC_SETUP_PREF_*); unset means "apply" so a plain run still converges.
   remove_legacy_overrides
-  configure_keyboard
-  configure_trackpad
-  configure_finder
-  configure_dock
-  configure_screenshots
-  configure_safari
-  configure_panels
+  pref_enabled KEYBOARD && configure_keyboard
+  pref_enabled TRACKPAD && configure_trackpad
+  pref_enabled FINDER && configure_finder
+  pref_enabled DOCK && configure_dock
+  pref_enabled SCREENSHOTS && configure_screenshots
+  pref_enabled SAFARI && configure_safari
+  pref_enabled PANELS && configure_panels
   apply_changes
 }
 

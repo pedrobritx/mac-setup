@@ -200,9 +200,15 @@ Logs live in `~/.local/state/mac-setup/logs/`.
 - **Identity & directories** — edit [`config/settings.sh`](config/settings.sh).
 - **Shell** — edit `dotfiles/.config/zsh/{aliases,functions,exports}.zsh`;
   changes apply instantly because the files are symlinked.
-- **macOS defaults** — tweak `scripts/macos.sh`; every write is one documented
-  `defaults_write` line. Keep the rule in that file's header in mind: nothing
-  that touches window management, Mission Control, or animations.
+- **macOS & security tweaks** — every category (keyboard, tap-to-click, Finder
+  tweaks, Dock icon size, screenshots, Safari, expanded panels, firewall, Touch
+  ID for sudo, screen lock) is a **suggestion you tick or untick** on the
+  selection screen. To decide up front instead — or for `--only`/`--yes`/CI
+  runs — pin any of them in [`config/settings.sh`](config/settings.sh):
+  `MAC_SETUP_PREF_SAFARI=no` skips just that one; unset applies. Adding a tweak
+  still means one documented `defaults_write` line in `scripts/macos.sh` — keep
+  that file's rule in mind: nothing that touches window management, Mission
+  Control, or animations.
 - **VS Code** — capture your extensions with
   `code --list-extensions > dotfiles/vscode/extensions.txt`.
 
