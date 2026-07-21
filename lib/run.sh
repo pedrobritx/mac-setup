@@ -239,6 +239,29 @@ defaults_delete() {
 }
 
 # ---------------------------------------------------------------------------
+# pref_enabled <CATEGORY_KEY>
+# Decide whether one optional preference *category* should be applied.
+#
+# Each macOS/security tweak is a suggestion the user can accept or skip up
+# front on the selection screen (lib/picker.sh exports the choices as
+# MAC_SETUP_PREF_<KEY>=1|0), or pin ahead of time in config/settings.sh.
+# The default when a category is unset is to APPLY it — the suggested set is
+# the favourite config, so a plain non-interactive run still converges on it.
+#
+# Values (case-insensitive): 0/no/off/false/skip → skip; anything else apply.
+# Returns 0 to apply, 1 to skip, so callers can write:
+#   pref_enabled KEYBOARD && configure_keyboard
+# ---------------------------------------------------------------------------
+pref_enabled() {
+  local var="MAC_SETUP_PREF_$1" val
+  val="${!var:-}"
+  case "$(printf '%s' "${val}" | tr '[:upper:]' '[:lower:]')" in
+    0 | no | n | off | false | skip) return 1 ;;
+    *) return 0 ;;
+  esac
+}
+
+# ---------------------------------------------------------------------------
 # ensure_brew_formula <formula>
 # Install a Homebrew formula only when it is not already installed. Accepts
 # fully qualified names (user/tap/formula); the installed check uses the

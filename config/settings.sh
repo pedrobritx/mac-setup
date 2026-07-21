@@ -83,3 +83,39 @@ export MAC_SETUP_PYTHON_VERSION
 MAC_SETUP_ENABLE_MACOS_DEFAULTS="${MAC_SETUP_ENABLE_MACOS_DEFAULTS:-1}"
 MAC_SETUP_ENABLE_SECURITY="${MAC_SETUP_ENABLE_SECURITY:-1}"
 export MAC_SETUP_ENABLE_MACOS_DEFAULTS MAC_SETUP_ENABLE_SECURITY
+
+# ===========================================================================
+# Suggested preferences — per-category tweaks (macOS defaults + security).
+#
+# Nothing here is forced. On an interactive install the selection screen lists
+# each of these as a ticked suggestion you can untick; those choices are what
+# actually drive the run. Set a value here to PIN a category regardless of the
+# picker (handy for `--only`, `--yes`, or fully unattended runs):
+#
+#     (blank / 1 / yes / on)  → apply this suggestion   ← default when unset
+#     0 / no / off            → skip this suggestion
+#
+# Override per run from the environment too, e.g.:
+#     MAC_SETUP_PREF_SAFARI=no ./install.sh --only macos
+#
+# Note: window management, Mission Control, Dock magnification and animations
+# are deliberately NOT offered — they stay stock (see scripts/macos.sh), and
+# legacy overrides are always removed regardless of these toggles.
+# ---------------------------------------------------------------------------
+# macOS defaults (scripts/macos.sh)
+MAC_SETUP_PREF_KEYBOARD="${MAC_SETUP_PREF_KEYBOARD:-}"       # fast key repeat, no autocorrect
+MAC_SETUP_PREF_TRACKPAD="${MAC_SETUP_PREF_TRACKPAD:-}"       # tap to click
+MAC_SETUP_PREF_FINDER="${MAC_SETUP_PREF_FINDER:-}"           # path bar, extensions, list view, .DS_Store hygiene
+MAC_SETUP_PREF_DOCK="${MAC_SETUP_PREF_DOCK:-}"               # Dock icon size (~20%)
+MAC_SETUP_PREF_SCREENSHOTS="${MAC_SETUP_PREF_SCREENSHOTS:-}" # save screenshots to ~/Screenshots
+MAC_SETUP_PREF_SAFARI="${MAC_SETUP_PREF_SAFARI:-}"           # Safari Develop menu + web inspector
+MAC_SETUP_PREF_PANELS="${MAC_SETUP_PREF_PANELS:-}"           # expanded save/print panels, local saves
+# Security (scripts/security.sh)
+MAC_SETUP_PREF_FIREWALL="${MAC_SETUP_PREF_FIREWALL:-}"         # application firewall on
+MAC_SETUP_PREF_TOUCHID_SUDO="${MAC_SETUP_PREF_TOUCHID_SUDO:-}" # Touch ID for sudo
+MAC_SETUP_PREF_SCREEN_LOCK="${MAC_SETUP_PREF_SCREEN_LOCK:-}"   # password immediately after sleep
+
+export MAC_SETUP_PREF_KEYBOARD MAC_SETUP_PREF_TRACKPAD MAC_SETUP_PREF_FINDER \
+  MAC_SETUP_PREF_DOCK MAC_SETUP_PREF_SCREENSHOTS MAC_SETUP_PREF_SAFARI \
+  MAC_SETUP_PREF_PANELS MAC_SETUP_PREF_FIREWALL MAC_SETUP_PREF_TOUCHID_SUDO \
+  MAC_SETUP_PREF_SCREEN_LOCK
