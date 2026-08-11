@@ -217,6 +217,32 @@ _picker_count_on() {
 }
 
 # ---------------------------------------------------------------------------
+# picker_apply_britx — "Britx choice": tick everything except what
+# config/britx-choice.sh lists in MAC_SETUP_BRITX_EXCLUDE. Locked items are
+# left alone (they're always on). Bound to the 'b' key in picker_run and to
+# `install.sh --britx` for a fully unattended run of the same selection.
+# ---------------------------------------------------------------------------
+_picker_britx_excluded() {
+  local key="$1" ex
+  for ex in "${MAC_SETUP_BRITX_EXCLUDE[@]:-}"; do
+    [[ "${ex}" == "${key}" ]] && return 0
+  done
+  return 1
+}
+
+picker_apply_britx() {
+  local i
+  for i in "${!PICK_TYPE[@]}"; do
+    [[ "${PICK_LOCK[i]}" == "1" ]] && continue
+    if _picker_britx_excluded "${PICK_TYPE[i]}:${PICK_ID[i]}"; then
+      PICK_ON[i]=0
+    else
+      PICK_ON[i]=1
+    fi
+  done
+}
+
+# ---------------------------------------------------------------------------
 # Key reading — one keypress from /dev/tty, decoded to a symbolic name.
 # Arrow keys arrive as ESC [ A/B; a lone ESC therefore waits 1s (bash 3.2
 # only supports integer read timeouts).
@@ -243,6 +269,7 @@ _picker_key() {
     j) echo down ;;
     k) echo up ;;
     a) echo group ;;
+    b) echo britx ;;
     q | Q) echo quit ;;
     *) echo none ;;
   esac
@@ -294,7 +321,7 @@ picker_run() {
     local frame="" idx kind payload line mark ptr
     frame+=$'\033[H'
     frame+="${C_BOLD}${C_MAGENTA}  mac-setup${C_RESET}${C_DIM} — tick what to install, untick what to skip${C_RESET}"$'\033[K\n'
-    frame+="  ${C_DIM}↑/↓ move · space tick/untick · a toggles a whole group${C_RESET}"$'\033[K\n'
+    frame+="  ${C_DIM}↑/↓ move · space tick/untick · a toggles a whole group · b = Britx choice${C_RESET}"$'\033[K\n'
     frame+="  ${C_DIM}enter continue · q cancel${C_RESET}"$'\033[K\n'
     frame+=$'\033[K\n'
 
@@ -387,6 +414,10 @@ picker_run() {
             PICK_ON[i]="${any_off}"
           fi
         done
+        ;;
+      britx)
+        picker_apply_britx
+        flash="Applied Britx choice — your favourites. Review below, then enter to confirm."
         ;;
       enter)
         rc=0

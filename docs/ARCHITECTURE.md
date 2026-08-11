@@ -80,6 +80,28 @@ the selection. Unticked setup steps become module skips. The repo Brewfile
 is never modified. Non-interactive paths (`--yes`, `--only`, `--skip`, CI,
 no TTY) use the repo Brewfile directly.
 
+Ticking off a formula does not just mean `brew.sh` won't install it — the
+downstream modules that used to *self-heal* a missing tool (`node.sh`
+installing `fnm`, `python.sh` installing `uv`/`pipx`, `terminal.sh` and
+`swift.sh` reporting a missing CLI tool as a failure) now check
+`brewfile_formula_selected` (`lib/checks.sh`) first: an unticked formula is
+skipped and reported as such, never silently reinstalled or flagged broken.
+That check reads `$MAC_SETUP_BREWFILE`, so it's a no-op (always selected) on
+the non-interactive paths above, and precise after the picker or `--britx`.
+
+### Britx choice
+
+`config/britx-choice.sh` is a second, smaller personalization file — the one
+to edit for *favourites* the way `config/settings.sh` is the one for
+identity/directories. It declares `MAC_SETUP_BRITX_EXCLUDE`, a list of
+`<type>:<id>` entries (matching the picker's own item keys) to leave
+unticked; everything else in the catalog is ticked. `picker_apply_britx`
+(`lib/picker.sh`) applies it — bound to the `b` key on the selection screen
+(review/adjust, then confirm as usual) and to `install.sh --britx` (applies
+it and skips the screen entirely, for unattended runs). Because the exclude
+list is read fresh from the catalog each time, it never drifts out of sync
+with the Brewfile the way a hardcoded second package list would.
+
 ## The Brewfile is the package database
 
 One annotated file declares taps, formulae, casks, fonts, and Mac App Store

@@ -20,6 +20,8 @@
 #   -o, --only <m,...>   Run only the given module(s), in the given order
 #   -s, --skip <m,...>   Run everything except the given module(s)
 #   -y, --yes            Install everything: skip the selection screen and prompts
+#   -b, --britx          Apply "Britx choice" (config/britx-choice.sh) and skip
+#                         the selection screen — your favourites, no prompts
 #   -h, --help           Show this help
 #
 # Examples:
@@ -27,6 +29,7 @@
 #   ./install.sh --dry-run           # preview everything, change nothing
 #   ./install.sh --only brew,apps    # just Homebrew packages and apps
 #   ./install.sh --skip macos        # everything except system defaults
+#   ./install.sh --britx             # Britx choice, unattended
 
 set -euo pipefail
 
@@ -164,6 +167,7 @@ main() {
       -n | --dry-run) DRY_RUN=1 ;;
       -v | --verbose) VERBOSE=1 ;;
       -y | --yes) MAC_SETUP_YES=1 ;;
+      -b | --britx) MAC_SETUP_BRITX=1 ;;
       -l | --list)
         list_modules
         exit 0
@@ -197,7 +201,8 @@ main() {
     shift
   done
 
-  export DRY_RUN VERBOSE MAC_SETUP_YES="${MAC_SETUP_YES:-0}"
+  export DRY_RUN VERBOSE MAC_SETUP_YES="${MAC_SETUP_YES:-0}" \
+    MAC_SETUP_BRITX="${MAC_SETUP_BRITX:-0}"
 
   require_macos
   require_not_root
@@ -226,27 +231,40 @@ BANNER
   done
 
   # -------------------------------------------------------------------------
-  # Interactive selection — full runs on a real terminal only. Power-user
-  # flags (--only/--skip/--yes) and CI keep the non-interactive path.
+  # Selection — either "Britx choice" applied unattended (--britx), the
+  # interactive screen on a real terminal, or the non-interactive path for
+  # power-user flags (--only/--skip/--yes) and CI.
   # -------------------------------------------------------------------------
-  if [[ ${#only[@]} -eq 0 && ${#skip[@]} -eq 0 && "${MAC_SETUP_YES}" != "1" ]] &&
-    picker_available; then
-    log_info "Loading the selection screen (everything starts ticked)..."
-    picker_catalog
-    if ! picker_run; then
-      log_info "Selection cancelled — nothing was installed."
-      exit 0
-    fi
-    if ! picker_confirm; then
-      log_info "Not confirmed — nothing was installed. Run ./install.sh to start over."
-      exit 0
-    fi
-    MAC_SETUP_BREWFILE="${MAC_SETUP_STATE_DIR}/active-brewfile-${MAC_SETUP_RUN_ID}"
-    picker_write_selection "${MAC_SETUP_BREWFILE}"
-    export MAC_SETUP_BREWFILE
-    if [[ -n "${PICKER_SKIPPED_MODULES}" ]]; then
-      # shellcheck disable=SC2206  # module names never contain spaces
-      skip+=(${PICKER_SKIPPED_MODULES})
+  if [[ ${#only[@]} -eq 0 && ${#skip[@]} -eq 0 && "${MAC_SETUP_YES}" != "1" ]]; then
+    if [[ "${MAC_SETUP_BRITX}" == "1" ]]; then
+      log_info "Applying Britx choice (config/britx-choice.sh) — no prompts."
+      picker_catalog
+      picker_apply_britx
+      MAC_SETUP_BREWFILE="${MAC_SETUP_STATE_DIR}/active-brewfile-${MAC_SETUP_RUN_ID}"
+      picker_write_selection "${MAC_SETUP_BREWFILE}"
+      export MAC_SETUP_BREWFILE
+      if [[ -n "${PICKER_SKIPPED_MODULES}" ]]; then
+        # shellcheck disable=SC2206  # module names never contain spaces
+        skip+=(${PICKER_SKIPPED_MODULES})
+      fi
+    elif picker_available; then
+      log_info "Loading the selection screen (everything starts ticked)..."
+      picker_catalog
+      if ! picker_run; then
+        log_info "Selection cancelled — nothing was installed."
+        exit 0
+      fi
+      if ! picker_confirm; then
+        log_info "Not confirmed — nothing was installed. Run ./install.sh to start over."
+        exit 0
+      fi
+      MAC_SETUP_BREWFILE="${MAC_SETUP_STATE_DIR}/active-brewfile-${MAC_SETUP_RUN_ID}"
+      picker_write_selection "${MAC_SETUP_BREWFILE}"
+      export MAC_SETUP_BREWFILE
+      if [[ -n "${PICKER_SKIPPED_MODULES}" ]]; then
+        # shellcheck disable=SC2206  # module names never contain spaces
+        skip+=(${PICKER_SKIPPED_MODULES})
+      fi
     fi
   fi
 

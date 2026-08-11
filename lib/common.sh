@@ -167,3 +167,5 @@ source "${MAC_SETUP_LIB_DIR}/report.sh"
 source "${MAC_SETUP_LIB_DIR}/progress.sh"
 # shellcheck source=config/settings.sh
 source "${MAC_SETUP_CONFIG_DIR}/settings.sh"
+# shellcheck source=config/britx-choice.sh
+source "${MAC_SETUP_CONFIG_DIR}/britx-choice.sh"

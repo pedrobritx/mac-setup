@@ -92,7 +92,8 @@ mac-setup/
 ├── uninstall.sh          # removes what this repo installed — nothing else
 ├── Brewfile              # ALL packages: taps, formulae, casks, fonts, mas
 ├── config/
-│   └── settings.sh       # the one file to personalize (identity, dirs, …)
+│   ├── settings.sh       # the one file to personalize (identity, dirs, …)
+│   └── britx-choice.sh   # your "Britx choice" favourites profile
 ├── lib/                  # shared foundation (sourced by everything)
 │   ├── common.sh         #   paths, platform detection, guards
 │   ├── log.sh            #   colored leveled logging → terminal + file
@@ -130,15 +131,17 @@ That installs the Xcode Command Line Tools, clones this repo to
 
 1. **Pick** — a checklist of every app, tool, and setup step (with
    explanations). `↑`/`↓` moves, `space` ticks/unticks, `a` toggles a whole
-   group, `enter` continues. Everything starts ticked; your unticks are
-   remembered for next time.
+   group, `b` jumps to your **Britx choice** favourites, `enter` continues.
+   Everything starts ticked; your unticks are remembered for next time.
 2. **Confirm** — a per-group summary plus exactly what will be skipped,
    then one `y` to proceed.
 3. **Relax** — the rest runs by itself, announcing each item before, during,
    and after, with a running `[34/72 · 38 to go]` counter. You may be asked
    for your password (sudo) and App Store sign-in along the way.
 
-Prefer no questions at all? `./install.sh --yes` installs everything.
+Prefer no questions at all? `./install.sh --yes` installs everything, or
+`./install.sh --britx` installs your **Britx choice** favourites
+(`config/britx-choice.sh`) unattended — see [Customization](#customization).
 
 ### From a clone
 
@@ -152,6 +155,7 @@ cd ~/Developer/mac-setup
 
 ```bash
 ./install.sh --yes                 # install everything; skip the selection screen
+./install.sh --britx               # install your Britx choice favourites, unattended
 ./install.sh --dry-run             # preview everything; change nothing
 ./install.sh --list                # list all modules
 ./install.sh --only brew,apps      # run specific modules (skips the selection screen)
@@ -198,6 +202,12 @@ Logs live in `~/.local/state/mac-setup/logs/`.
 - **Remove an app** — delete its line, then
   `brew bundle cleanup --file=Brewfile` (add `--force` to actually uninstall).
 - **Identity & directories** — edit [`config/settings.sh`](config/settings.sh).
+- **Britx choice (your favourites)** — edit
+  [`config/britx-choice.sh`](config/britx-choice.sh): list the apps, tools,
+  setup steps, or preferences you want *left off* that profile
+  (`MAC_SETUP_BRITX_EXCLUDE`); everything else in the catalog stays ticked.
+  Apply it any time with the `b` key on the selection screen (review and
+  adjust before confirming) or unattended with `./install.sh --britx`.
 - **Shell** — edit `dotfiles/.config/zsh/{aliases,functions,exports}.zsh`;
   changes apply instantly because the files are symlinked.
 - **macOS & security tweaks** — every category (keyboard, tap-to-click, Finder

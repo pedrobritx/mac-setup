@@ -44,6 +44,9 @@ verify_tooling() {
       report_ok "${MODULE}" "${tool}" "version $(${tool} --version 2>/dev/null | head -n1)"
     elif [[ "${DRY_RUN}" == "1" ]]; then
       log_debug "${tool} missing (dry-run)"
+    elif ! brewfile_formula_selected "${tool}"; then
+      log_skip "${tool} unticked in the Brewfile selection."
+      report_skip "${MODULE}" "${tool}" "unticked in Brewfile selection"
     else
       report_fail "${MODULE}" "${tool}" "not found — check the brew module output"
     fi

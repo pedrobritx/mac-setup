@@ -29,6 +29,11 @@ install_node() {
       log_dry "fnm install --lts && fnm default lts-latest"
       return 0
     fi
+    if ! brewfile_formula_selected fnm; then
+      log_skip "fnm unticked in the Brewfile selection — skipping the Node.js toolchain."
+      report_skip "${MODULE}" "Node.js" "fnm unticked in Brewfile selection"
+      return 0
+    fi
     # Self-heal: the brew module may have failed partway; install fnm here.
     if ensure_brew_formula fnm && has_command fnm; then
       report_ok "${MODULE}" "fnm" "installed via Homebrew"
@@ -93,7 +98,7 @@ verify_package_managers() {
     else
       formula="${pm}"
     fi
-    if ! has_command "${pm}" && [[ "${DRY_RUN}" != "1" ]]; then
+    if ! has_command "${pm}" && [[ "${DRY_RUN}" != "1" ]] && brewfile_formula_selected "${formula}"; then
       ensure_brew_formula "${formula}" || true
     fi
     if has_command "${pm}"; then
@@ -101,6 +106,9 @@ verify_package_managers() {
       report_ok "${MODULE}" "${pm}" "version $(${pm} --version 2>/dev/null)"
     elif [[ "${DRY_RUN}" == "1" ]]; then
       log_debug "${pm} missing (dry-run)"
+    elif ! brewfile_formula_selected "${formula}"; then
+      log_skip "${pm} unticked in the Brewfile selection."
+      report_skip "${MODULE}" "${pm}" "unticked in Brewfile selection"
     else
       report_fail "${MODULE}" "${pm}" "not found and brew install failed"
     fi

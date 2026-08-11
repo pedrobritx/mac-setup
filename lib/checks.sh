@@ -63,6 +63,7 @@ cask_app_name() {
     obsidian) echo "Obsidian" ;;
     discord) echo "Discord" ;;
     google-drive) echo "Google Drive" ;;
+    libreoffice) echo "LibreOffice" ;;
     appcleaner) echo "AppCleaner" ;;
     caffeine) echo "Caffeine" ;;
     daisydisk) echo "DaisyDisk" ;;
@@ -75,6 +76,16 @@ cask_app_name() {
     stremio) echo "Stremio" ;;
     *) echo "" ;;
   esac
+}
+
+# brewfile_formula_selected <formula> — true when `brew "<formula>"` is
+# present in the active Brewfile ($MAC_SETUP_BREWFILE). On a plain/CI run
+# that's the full repo Brewfile (always true); after the interactive picker
+# it's the filtered "active" Brewfile, so an unticked formula reads false.
+# Used to stop self-heal installs (node/python modules) from reinstalling
+# something the user explicitly unticked.
+brewfile_formula_selected() {
+  grep -qE "^brew \"$1\"" "${MAC_SETUP_BREWFILE}" 2>/dev/null
 }
 
 # mas_app_installed <app_id> — true when a Mac App Store app id is installed.
