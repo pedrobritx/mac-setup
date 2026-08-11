@@ -32,20 +32,38 @@ link_shell_dotfiles() {
   report_ok "${MODULE}" "shell dotfiles" ".zshrc, .zprofile, zsh modules, starship.toml linked"
 }
 
+# _terminal_tool_formula <binary> — the Brewfile formula name behind a
+# binary, for the two tools whose command name differs from the formula
+# (ripgrep -> rg, neovim -> nvim). Everything else maps to itself.
+_terminal_tool_formula() {
+  case "$1" in
+    rg) echo ripgrep ;;
+    nvim) echo neovim ;;
+    *) echo "$1" ;;
+  esac
+}
+
 # ---------------------------------------------------------------------------
 # verify_tools — confirm each terminal tool from the Brewfile is on PATH.
+# Tools unticked in the Brewfile selection are skipped, not failed.
 # ---------------------------------------------------------------------------
 verify_tools() {
   local tools=(starship zoxide fzf eza bat fd rg jq yq tree wget atuin
     btop htop tmux fastfetch nvim)
-  local tool missing=0
+  local tool formula missing=0
 
   ensure_brew_in_path
   for tool in "${tools[@]}"; do
     if has_command "${tool}"; then
       log_debug "${tool} present"
-    elif [[ "${DRY_RUN}" == "1" ]]; then
+      continue
+    fi
+    formula="$(_terminal_tool_formula "${tool}")"
+    if [[ "${DRY_RUN}" == "1" ]]; then
       log_debug "${tool} missing (dry-run — brew module has not run)"
+    elif ! brewfile_formula_selected "${formula}"; then
+      log_debug "${tool} unticked in the Brewfile selection — skipping."
+      report_skip "${MODULE}" "${tool}" "unticked in Brewfile selection"
     else
       log_warn "${tool} not found on PATH."
       report_fail "${MODULE}" "${tool}" "not found — check the brew module output"
@@ -72,18 +90,28 @@ verify_zsh_plugins() {
     "share/zsh-history-substring-search/zsh-history-substring-search.zsh"
   )
 
+  local formula all_present=1
   for plugin in "${plugins[@]}"; do
     if [[ -f "${prefix}/${plugin}" ]]; then
       log_debug "plugin present: ${plugin}"
-    elif [[ "${DRY_RUN}" == "1" ]]; then
+      continue
+    fi
+    formula="${plugin#*/}"
+    formula="${formula%%/*}"
+    if [[ "${DRY_RUN}" == "1" ]]; then
       log_debug "plugin missing (dry-run): ${plugin}"
+    elif ! brewfile_formula_selected "${formula}"; then
+      log_debug "${formula} unticked in the Brewfile selection — skipping."
+      report_skip "${MODULE}" "${formula}" "unticked in Brewfile selection"
     else
       report_fail "${MODULE}" "${plugin##*/}" "plugin file missing under ${prefix}"
-      return 0
+      all_present=0
     fi
   done
-  log_success "zsh plugins present (sourced from the brew prefix by .zshrc)."
-  report_ok "${MODULE}" "zsh plugins" "autosuggestions, syntax-highlighting, history-substring-search"
+  if [[ "${all_present}" -eq 1 ]]; then
+    log_success "zsh plugins present (sourced from the brew prefix by .zshrc)."
+    report_ok "${MODULE}" "zsh plugins" "autosuggestions, syntax-highlighting, history-substring-search"
+  fi
 }
 
 # ---------------------------------------------------------------------------

@@ -27,6 +27,11 @@ install_python() {
       log_dry "uv python install ${MAC_SETUP_PYTHON_VERSION}"
       return 0
     fi
+    if ! brewfile_formula_selected uv; then
+      log_skip "uv unticked in the Brewfile selection — skipping the Python toolchain."
+      report_skip "${MODULE}" "Python" "uv unticked in Brewfile selection"
+      return 0
+    fi
     # Self-heal: the brew module may have failed partway; install uv here.
     if ensure_brew_formula uv && has_command uv; then
       report_ok "${MODULE}" "uv" "installed via Homebrew"
@@ -59,6 +64,11 @@ configure_pipx() {
   if ! has_command pipx; then
     if [[ "${DRY_RUN}" == "1" ]]; then
       log_dry "pipx ensurepath"
+      return 0
+    fi
+    if ! brewfile_formula_selected pipx; then
+      log_skip "pipx unticked in the Brewfile selection."
+      report_skip "${MODULE}" "pipx" "unticked in Brewfile selection"
       return 0
     fi
     # Self-heal: the brew module may have failed partway; install pipx here.

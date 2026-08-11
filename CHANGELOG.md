@@ -35,6 +35,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   config. New helper `pref_enabled` (lib/run.sh) resolves the choice.
 - **Landing page** (`docs/index.html`): a friendly GitHub Pages site with
   the install command and a short tutorial for non-technical users.
+- **"Britx choice" favourites profile** (`config/britx-choice.sh`,
+  `picker_apply_britx` in `lib/picker.sh`): a second, smaller personalization
+  file listing apps/tools/steps/preferences to leave unticked
+  (`MAC_SETUP_BRITX_EXCLUDE`) — everything else in the catalog is ticked.
+  Press `b` on the selection screen to jump to it (still reviewable before
+  confirming), or run `./install.sh --britx` for a fully unattended install
+  of the same selection.
+- `Brewfile`: added `libreoffice` (free office suite) to the productivity
+  casks.
 
 ### Changed — apps & install flow
 
@@ -113,6 +122,20 @@ hot corners, or animations** — and reorganizes the modules around it.
 - `sudo` keep-alive: prompts on `/dev/tty` when the script is piped
   (`curl | bash`), so sudo no longer fails mid-run with
   "a password is required".
+- **Selections are now actually respected end-to-end.** The `node`, `python`,
+  `terminal`, and `swift` modules previously ignored the picker: unticking a
+  formula (e.g. `fnm`, `uv`, `pipx`, `btop`, `swiftformat`, a zsh plugin)
+  still self-healed it via `ensure_brew_formula`, or reported it as a FAILURE
+  in the summary even though it was intentionally skipped. New helper
+  `brewfile_formula_selected` (`lib/checks.sh`) checks the active Brewfile
+  first, so an unticked formula is now skipped (and reported as skipped),
+  never reinstalled or misreported as broken. On the non-interactive paths
+  (`--yes`, `--only`, `--skip`, CI) `$MAC_SETUP_BREWFILE` is the full repo
+  Brewfile, so the check is always true there and behavior is unchanged.
+- Brewfile / docs: documented that mac-setup never installs or enables
+  TeamsTxNDI, Microsoft Teams' built-in NDI production/broadcast add-on —
+  it's a Teams-internal opt-in feature, not a separate package, so there was
+  nothing to actually exclude at the package-manager level.
 
 ## [1.0.0] - 2026-07-08
 

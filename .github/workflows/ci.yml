@@ -39,3 +39,4 @@ jobs:
           ./install.sh --help
           ./install.sh --list
           ./install.sh --dry-run --yes
+          ./install.sh --dry-run --britx

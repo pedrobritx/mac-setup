@@ -29,6 +29,7 @@ What happens, in order:
    | `↑` / `↓` (or `j`/`k`) | move |
    | `space` | tick / untick the highlighted item |
    | `a` | tick / untick the whole group |
+   | `b` | jump to "Britx choice" — your favourites (`config/britx-choice.sh`) |
    | `enter` | continue to the review screen |
    | `q` | cancel — nothing is installed |
 
@@ -61,6 +62,10 @@ passed as an environment variable for a one-off:
 ```bash
 MAC_SETUP_GIT_EMAIL="work@example.com" ./install.sh --only git
 ```
+
+Edit [`config/britx-choice.sh`](../config/britx-choice.sh) to shape your
+"Britx choice" favourites profile (see above) — apps, terminal tools, setup
+steps, or macOS/security preferences to leave off that profile.
 
 ## What runs, in order
 
@@ -100,6 +105,7 @@ stays a cask because the App Store build is sandboxed and limited.
 
 ```bash
 ./install.sh --yes                  # everything, no selection screen, no prompts
+./install.sh --britx                # "Britx choice" favourites, no selection screen
 ./install.sh --list                 # see all modules
 ./install.sh --only terminal        # one module
 ./install.sh --only brew,vscode     # several
@@ -107,9 +113,11 @@ stays a cask because the App Store build is sandboxed and limited.
 ./install.sh --dry-run              # print, don't do — works with all of the above
 ```
 
-`--only`, `--skip`, and `--yes` bypass the selection screen (power-user /
-CI path). To change what's installed interactively, just run `./install.sh`
-again — previous unticks are pre-loaded.
+`--only`, `--skip`, `--yes`, and `--britx` bypass the selection screen
+(power-user / CI path). To change what's installed interactively, just run
+`./install.sh` again — previous unticks are pre-loaded, or press `b` on the
+checklist to jump straight to your Britx choice favourites and fine-tune
+from there before confirming.
 
 Every module is also directly executable: `bash scripts/terminal.sh`.
 

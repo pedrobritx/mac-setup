@@ -37,6 +37,14 @@ exists. To clean up an existing duplicate: quit the app, delete the copy
 you don't want from `/Applications` (keep the App Store one), and empty
 the Trash. `brew list --cask` shows which copy Homebrew owns.
 
+**Microsoft Teams and "TeamsTxNDI"**
+mac-setup only ever installs the standard Microsoft Teams app (App Store).
+It never installs or enables TeamsTxNDI, Teams' built-in NDI
+production/broadcast add-on that streams a meeting's audio/video to
+OBS/vMix over the local network — that's a Teams-internal opt-in feature
+(Settings → App permissions → Production tools), not a separate package.
+If you don't need it, just leave it off there.
+
 ## Homebrew
 
 **`brew: command not found` right after install**

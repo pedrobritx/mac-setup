@@ -112,6 +112,7 @@ cask "notion"       # notes & docs workspace
 cask "obsidian"     # local-first Markdown notes
 cask "discord"      # voice & text communities
 cask "google-drive" # Google Drive file sync
+cask "libreoffice"  # free office suite — open/edit Word, Excel, PowerPoint files
 
 # ----------------------------------------------------------------------------
 # 3. Casks — utilities
@@ -168,7 +169,12 @@ mas "Developer", id: 640199958      # Apple developer news & WWDC
 mas "ColorSlurp", id: 1287239339    # color picker
 mas "Final Cut Pro", id: 424389933  # video editing (paid)
 mas "Compressor", id: 424390742     # Final Cut export encoder (paid)
-mas "Microsoft Teams", id: 1113153706 # work chat & meetings
+# NOT installed/enabled: TeamsTxNDI, Teams' built-in NDI production/broadcast
+# add-on that streams a meeting's audio/video to OBS/vMix over the local
+# network. It's a Teams-internal opt-in feature (Settings → App permissions →
+# Production tools), not a separate Homebrew cask or App Store listing, so
+# there's nothing to tick here — just don't turn it on inside Teams.
+mas "Microsoft Teams", id: 1113153706 # work chat & meetings (App Store)
 mas "WhatsApp", id: 310633997       # WhatsApp Messenger (native Mac app)
 mas "The Unarchiver", id: 425424353 # archive extraction
 
