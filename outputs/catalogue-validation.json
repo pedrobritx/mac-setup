@@ -1,0 +1,472 @@
+{
+  "checkedDate": "2026-10-21",
+  "packages": [
+    {
+      "type": "brew",
+      "token": "git",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "git-lfs",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "gh",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "fnm",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "pnpm",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "oven-sh/bun/bun",
+      "source": "official tap; checked separately"
+    },
+    {
+      "type": "brew",
+      "token": "uv",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "pipx",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "swiftformat",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "swiftlint",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "sqlite",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "ffmpeg",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "imagemagick",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "starship",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "zoxide",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "fzf",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "eza",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "bat",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "fd",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "ripgrep",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "jq",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "yq",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "tree",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "wget",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "atuin",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "btop",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "htop",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "tmux",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "fastfetch",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "neovim",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "zsh-autosuggestions",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "zsh-syntax-highlighting",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "zsh-history-substring-search",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "zsh-navigation-tools",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "mas",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "shellcheck",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "shfmt",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "railway",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "supabase",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "brew",
+      "token": "stripe-cli",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "visual-studio-code",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "antigravity",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "docker-desktop",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "postman",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "figma",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "sf-symbols",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "github",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "codex",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "claude-code",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "1password-cli",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "google-chrome",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "chatgpt",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "claude",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "blender",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "inkscape",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "notion",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "obsidian",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "discord",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "google-drive",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "libreoffice",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "appcleaner",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "caffeine",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "1password",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "bettertouchtool",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "keyboardcleantool",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "anydesk",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "teamviewer",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "zoom",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "dropbox",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "obs",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "transmission",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "daisydisk",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "logi-options+",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "vlc",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "steam",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "stremio",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "font-jetbrains-mono",
+      "disabled": false,
+      "deprecated": false
+    },
+    {
+      "type": "cask",
+      "token": "font-jetbrains-mono-nerd-font",
+      "disabled": false,
+      "deprecated": false
+    }
+  ]
+}

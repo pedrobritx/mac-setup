@@ -2,6 +2,30 @@
 
 How mac-setup is built, and why.
 
+The browser layer is an adapter over this architecture. `web/catalog.py` reads
+the actual Bash picker; `config/web-catalog.json` supplies presentation, profile
+membership and guided follow-ups. `docs/assets/catalog.json` and `docs/CATALOG.md`
+are generated projections checked for drift in CI. Package declarations and
+executable arguments stay in the Brewfile and existing modules.
+
+The public site is still static GitHub Pages. `web.sh` starts the same UI with a
+Python standard-library companion bound to `127.0.0.1`. The browser submits a
+versioned plan of allowlisted IDs after local confirmation; the companion writes
+data-only picker keys and calls `install.sh --selection`. It reads module events
+and append-only reports for real progress. It does not accept shell commands,
+package URLs, arbitrary paths or MCP credentials from the browser.
+
+The [Liquid Acrylic presentation layer](LIQUID_INTERFACE.md) decorates native
+controls with CSS/SVG and small fixed-step springs. Its motion, theme and
+transparency preferences are independent of exported setup plans. Decorative
+animations cannot start installation or advance reported installer progress.
+
+Explicit selections skip global package upgrades, decline macOS/security modules
+when no corresponding preferences were chosen, defer optional full Xcode until
+`mas` is available, and verify only selected packages/modules. The original
+terminal entry points retain their behaviour. See [WEB_SETUP.md](WEB_SETUP.md)
+for the transport boundary, lifecycle and verification limitations.
+
 ## The mental model
 
 ```

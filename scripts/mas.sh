@@ -104,10 +104,14 @@ reconcile_mas_apps() {
 main() {
   require_macos
   ensure_state_dirs
+  ensure_brew_in_path
 
   local signed_in=1
   check_signin || signed_in=0
   reconcile_mas_apps "${signed_in}"
+  if [[ "${MAC_SETUP_EXPLICIT_SELECTION:-0}" == "1" ]] && pref_enabled FULL_XCODE; then
+    MAC_SETUP_XCODE_FINALISE=1 bash "${SCRIPT_DIR}/xcode.sh"
+  fi
 }
 
 main "$@"

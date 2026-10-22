@@ -75,6 +75,7 @@ brew "neovim"    # modern vim editor
 brew "zsh-autosuggestions"          # ghost-text suggestions from your history as you type (→ accepts)
 brew "zsh-syntax-highlighting"      # colors your command green when valid, red when not
 brew "zsh-history-substring-search" # type part of a command, ↑/↓ finds matching history
+brew "zsh-navigation-tools"         # interactive directory, process and history navigation
 
 # ----------------------------------------------------------------------------
 # 2. Formulae — utilities & code quality
@@ -82,7 +83,9 @@ brew "zsh-history-substring-search" # type part of a command, ↑/↓ finds matc
 brew "mas"        # Mac App Store CLI (needed by section 5)
 brew "shellcheck" # shell script linter (used by this repo's CI)
 brew "shfmt"      # shell script formatter
-brew "codex"      # OpenAI Codex CLI
+brew "railway"    # Railway CLI; authenticate separately
+brew "supabase"   # Supabase CLI; authenticate separately
+brew "stripe-cli" # Stripe CLI; authenticate separately
 
 # ----------------------------------------------------------------------------
 # 3. Casks — development
@@ -93,6 +96,10 @@ cask "docker-desktop"     # Docker Desktop (bundles Compose & Buildx)
 cask "postman"            # API client
 cask "figma"              # design
 cask "sf-symbols"         # Apple SF Symbols browser
+cask "github"             # GitHub Desktop
+cask "codex"              # OpenAI Codex CLI (distributed as a cask)
+cask "claude-code"        # Anthropic Claude Code CLI
+cask "1password-cli"      # 1Password command-line tools
 
 # ----------------------------------------------------------------------------
 # 3. Casks — browsers & AI assistants
@@ -100,6 +107,8 @@ cask "sf-symbols"         # Apple SF Symbols browser
 cask "google-chrome" # primary browser
 cask "chatgpt"       # OpenAI ChatGPT desktop
 cask "claude"        # Anthropic Claude desktop
+cask "blender"       # 3D modelling and animation
+cask "inkscape"      # vector illustration
 
 # ----------------------------------------------------------------------------
 # 3. Casks — productivity & communication
@@ -119,6 +128,15 @@ cask "libreoffice"  # free office suite — open/edit Word, Excel, PowerPoint fi
 # ----------------------------------------------------------------------------
 cask "appcleaner"    # clean app uninstalls
 cask "caffeine"      # keep the Mac awake
+cask "1password"     # current 1Password desktop; App Store listing is legacy v7
+cask "bettertouchtool" # configurable input gestures (licence required)
+cask "keyboardcleantool" # temporarily disable the keyboard for cleaning
+cask "anydesk"       # remote desktop; grant permissions yourself
+cask "teamviewer"    # remote support; grant permissions yourself
+cask "zoom"          # video meetings
+cask "dropbox"       # Dropbox file sync
+cask "obs"           # OBS Studio recording and streaming
+cask "transmission"  # BitTorrent client
 cask "daisydisk"     # disk usage visualizer (cask on purpose: the App Store build is sandboxed and can't clean everything)
 cask "logi-options+" # Logitech mouse/keyboard configuration
 cask "vlc"           # media player that opens anything
@@ -159,9 +177,9 @@ cask "font-jetbrains-mono-nerd-font" # same font + icons for the terminal prompt
 #    end up with two copies of Teams/WhatsApp. Known exception: DaisyDisk
 #    (section 3), whose App Store build is limited.
 # ----------------------------------------------------------------------------
-mas "Pages", id: 409201541          # Apple word processor
-mas "Numbers", id: 409203825        # Apple spreadsheets
-mas "Keynote", id: 409183694        # Apple presentations
+mas "Pages", id: 361309726          # Apple word processor (universal listing)
+mas "Numbers", id: 361304891        # Apple spreadsheets (universal listing)
+mas "Keynote", id: 361285480        # Apple presentations (universal listing)
 mas "Shazam", id: 897118787         # identify songs from the menu bar
 mas "Swift Playground", id: 1496833156 # learn/prototype Swift
 mas "TestFlight", id: 899247664     # beta-test iOS/macOS apps
@@ -169,6 +187,15 @@ mas "Developer", id: 640199958      # Apple developer news & WWDC
 mas "ColorSlurp", id: 1287239339    # color picker
 mas "Final Cut Pro", id: 424389933  # video editing (paid)
 mas "Compressor", id: 424390742     # Final Cut export encoder (paid)
+mas "DaVinci Resolve", id: 571213070 # video editing
+mas "Logic Pro", id: 634148309     # music production (paid)
+mas "Motion", id: 434290957        # motion graphics (paid)
+mas "Photomator", id: 1444636541   # photo editing (in-app purchase)
+mas "Slack", id: 803453959         # team messaging
+mas "OneDrive", id: 823766827      # Microsoft file sync
+mas "Tailscale", id: 1475387142    # private networking; sign in separately
+mas "Termius", id: 1176074088      # SSH client
+mas "Canva", id: 897446215         # visual design (universal listing)
 # NOT installed/enabled: TeamsTxNDI, Teams' built-in NDI production/broadcast
 # add-on that streams a meeting's audio/video to OBS/vMix over the local
 # network. It's a Teams-internal opt-in feature (Settings → App permissions →

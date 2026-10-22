@@ -45,15 +45,28 @@ unsetopt BEEP
 if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
   fpath=("${HOMEBREW_PREFIX}/share/zsh/site-functions" $fpath)
 fi
+# Framework choice is machine-local; the repository keeps its fast default.
+[[ -f "${HOME}/.config/mac-setup/shell.zsh" ]] && source "${HOME}/.config/mac-setup/shell.zsh"
+_mac_setup_omz_loaded=0
+if [[ "${MAC_SETUP_USE_OH_MY_ZSH:-0}" == "1" && -f "${HOME}/.oh-my-zsh/oh-my-zsh.sh" ]]; then
+  ZSH="${HOME}/.oh-my-zsh"
+  ZSH_THEME=""
+  plugins=(git)
+  command -v fzf >/dev/null && plugins+=(zsh-interactive-cd)
+  source "${ZSH}/oh-my-zsh.sh"
+  _mac_setup_omz_loaded=1
+fi
 autoload -Uz compinit
 _zcompdump="${HOME}/.zcompdump"
 # Only re-scan completions once a day; -C skips the (slow) security audit.
-if [[ -n ${_zcompdump}(#qN.mh-24) ]]; then
-  compinit -C -d "${_zcompdump}"
-else
-  compinit -d "${_zcompdump}"
+if [[ "${_mac_setup_omz_loaded}" != "1" ]]; then
+  if [[ -n ${_zcompdump}(#qN.mh-24) ]]; then
+    compinit -C -d "${_zcompdump}"
+  else
+    compinit -d "${_zcompdump}"
+  fi
 fi
-unset _zcompdump
+unset _zcompdump _mac_setup_omz_loaded
 zstyle ':completion:*' menu select
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'  # case-insensitive
 
@@ -85,6 +98,9 @@ command -v atuin >/dev/null && eval "$(atuin init zsh --disable-up-arrow)"
 # Order matters: syntax-highlighting must be sourced LAST.
 # ----------------------------------------------------------------------------
 if [[ -n "${HOMEBREW_PREFIX:-}" ]]; then
+  _p="${HOMEBREW_PREFIX}/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh"
+  [[ -f "${_p}" ]] && source "${_p}"
+
   # Suggest commands from history as you type (accept with →)
   _p="${HOMEBREW_PREFIX}/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
   [[ -f "${_p}" ]] && source "${_p}"

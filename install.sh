@@ -22,6 +22,7 @@
 #   -y, --yes            Install everything: skip the selection screen and prompts
 #   -b, --britx          Apply "Britx choice" (config/britx-choice.sh) and skip
 #                         the selection screen — your favourites, no prompts
+#       --selection FILE Use an explicit catalogue-key selection (no shell code)
 #   -h, --help           Show this help
 #
 # Examples:
@@ -145,8 +146,14 @@ run_module() {
   fi
 
   log_step "Module: ${module} — $(module_description "${module}")"
+  if [[ -n "${MAC_SETUP_EVENT_FILE:-}" ]]; then
+    printf 'start\t%s\t0\n' "${module}" >>"${MAC_SETUP_EVENT_FILE}"
+  fi
   local rc=0
   bash "${script}" || rc=$?
+  if [[ -n "${MAC_SETUP_EVENT_FILE:-}" ]]; then
+    printf 'finish\t%s\t%s\n' "${module}" "${rc}" >>"${MAC_SETUP_EVENT_FILE}"
+  fi
   if [[ "${rc}" -eq 0 ]]; then
     log_debug "module ${module} finished"
     return 0
@@ -160,7 +167,7 @@ run_module() {
 # main
 # ---------------------------------------------------------------------------
 main() {
-  local only=() skip=() m
+  local only=() skip=() m selection=""
 
   while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -168,6 +175,14 @@ main() {
       -v | --verbose) VERBOSE=1 ;;
       -y | --yes) MAC_SETUP_YES=1 ;;
       -b | --britx) MAC_SETUP_BRITX=1 ;;
+      --selection)
+        [[ $# -ge 2 ]] || {
+          log_error "--selection requires a file"
+          exit 2
+        }
+        selection="$2"
+        shift
+        ;;
       -l | --list)
         list_modules
         exit 0
@@ -204,6 +219,11 @@ main() {
   export DRY_RUN VERBOSE MAC_SETUP_YES="${MAC_SETUP_YES:-0}" \
     MAC_SETUP_BRITX="${MAC_SETUP_BRITX:-0}"
 
+  if [[ -n "${selection}" && (${#only[@]} -gt 0 || ${#skip[@]} -gt 0 || "${MAC_SETUP_BRITX}" == "1") ]]; then
+    log_error "--selection cannot be combined with --only, --skip, or --britx"
+    exit 2
+  fi
+
   require_macos
   require_not_root
   ensure_state_dirs
@@ -235,7 +255,30 @@ BANNER
   # interactive screen on a real terminal, or the non-interactive path for
   # power-user flags (--only/--skip/--yes) and CI.
   # -------------------------------------------------------------------------
-  if [[ ${#only[@]} -eq 0 && ${#skip[@]} -eq 0 && "${MAC_SETUP_YES}" != "1" ]]; then
+  if [[ -n "${selection}" ]]; then
+    export MAC_SETUP_EXPLICIT_SELECTION=1
+    picker_catalog
+    picker_apply_file "${selection}" || exit 2
+    MAC_SETUP_BREWFILE="${MAC_SETUP_STATE_DIR}/active-brewfile-${MAC_SETUP_RUN_ID}"
+    picker_write_selection "${MAC_SETUP_BREWFILE}"
+    export MAC_SETUP_BREWFILE
+    if [[ -n "${PICKER_SKIPPED_MODULES}" ]]; then
+      # shellcheck disable=SC2206  # module names never contain spaces
+      skip+=(${PICKER_SKIPPED_MODULES})
+    fi
+    # Explicit browser choices can decline all system/security changes.
+    local i selected_macos=0 selected_security=0
+    for i in "${!PICK_TYPE[@]}"; do
+      [[ "${PICK_ON[i]}" == "1" ]] || continue
+      case "${PICK_TYPE[i]}:${PICK_ID[i]}" in
+        pref:macos:*) selected_macos=1 ;;
+        pref:security:*) selected_security=1 ;;
+      esac
+    done
+    [[ "${selected_macos}" == "1" ]] || skip+=(macos)
+    [[ "${selected_security}" == "1" ]] || skip+=(security)
+    export MAC_SETUP_EXPLICIT_SELECTION=1
+  elif [[ ${#only[@]} -eq 0 && ${#skip[@]} -eq 0 && "${MAC_SETUP_YES}" != "1" ]]; then
     if [[ "${MAC_SETUP_BRITX}" == "1" ]]; then
       log_info "Applying Britx choice (config/britx-choice.sh) — no prompts."
       picker_catalog
@@ -287,6 +330,8 @@ BANNER
   fi
 
   # Transparency: announce the plan before touching anything.
+  MAC_SETUP_SELECTED_MODULES=" ${selected[*]} "
+  export MAC_SETUP_SELECTED_MODULES
   log_step "Plan — ${#selected[@]} steps, ${MAC_SETUP_PROGRESS_TOTAL} packages"
   for m in "${selected[@]}"; do
     printf '  %b•%b %-14s %s\n' "${C_CYAN}" "${C_RESET}" "${m}" "$(module_description "${m}")"
@@ -311,7 +356,11 @@ BANNER
   render_manual_report
   print_summary
   if [[ -n "${MAC_SETUP_PROGRESS_TOTAL}" && "${MAC_SETUP_PROGRESS_TOTAL}" != "0" ]]; then
-    log_info "Packages: $(progress_count) of ${MAC_SETUP_PROGRESS_TOTAL} selected items are on this Mac."
+    if [[ "${DRY_RUN}" == "1" ]]; then
+      log_info "Previewed $(progress_count) of ${MAC_SETUP_PROGRESS_TOTAL} selected packages; this run installed nothing."
+    else
+      log_info "Packages: $(progress_count) of ${MAC_SETUP_PROGRESS_TOTAL} selected items are on this Mac."
+    fi
   fi
   log_info "Finished in $(((end_ts - start_ts) / 60))m $(((end_ts - start_ts) % 60))s."
   log_info "Reports: ${MAC_SETUP_REPORT_DIR/#${HOME}/~}"
@@ -323,7 +372,11 @@ BANNER
     log_warn "${fail} item(s) failed — see the install report for details."
     exit 1
   fi
-  log_success "All done. Restart the terminal (or log out/in) to load everything."
+  if [[ "${DRY_RUN}" == "1" ]]; then
+    log_success "Dry-run complete. No apps or system preferences were changed."
+  else
+    log_success "All done. Restart the terminal (or log out/in) to load everything."
+  fi
 }
 
 main "$@"

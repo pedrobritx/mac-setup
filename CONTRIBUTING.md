@@ -30,7 +30,32 @@ shfmt -d -i 2 -ci $(git ls-files '*.sh')                # format check
 CI runs ShellCheck, shfmt, `bash -n`, and a Linux dry-run smoke test on every
 push — PRs must be green.
 
+For browser or catalogue changes, regenerate and verify the projection:
+
+```bash
+python3 -m web.catalog
+npm ci --ignore-scripts             # development/QA only; no frontend runtime dependencies
+npm test                          # selection rules, local API and isolated Bash dry-run
+npm run check:catalog
+npm run check:format
+npx playwright install webkit
+npm run test:browser               # public-to-local flow, responsive layout and axe
+```
+
+Use `./web.sh --dry-run` for visual review. Keep installation tests in isolated
+homes/state directories and never apply a real setup to the developer's Mac.
+Browser plans are untrusted data: validate catalogue versions, prerequisites and
+required items on the server. Keep the API loopback-only, authenticated and
+restricted to its own origin. New official connections should be guided entries
+until their account access can be reviewed explicitly by the person installing.
+
 ## Code style
+
+For interface translations, edit `docs/assets/messages.mjs` with the canonical
+English phrase and all four translations. Keep interpolation slots intact and
+add `requestTranslation()` at new asynchronous render boundaries. Preserve app
+names, command text and plan IDs. See the language contract in
+[`docs/LIQUID_INTERFACE.md`](docs/LIQUID_INTERFACE.md).
 
 - Bash with `set -euo pipefail`; 2-space indent (`shfmt -i 2 -ci`).
 - Every function gets a comment block describing what it does (and why, when

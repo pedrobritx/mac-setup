@@ -61,5 +61,9 @@ progress_tick() {
     return 0
   fi
   printf '%s\n' "${label}" >>"${f}"
+  if [[ "${DRY_RUN:-0}" == "1" ]]; then
+    log_info "${label} — previewed  $(progress_suffix)"
+    return 0
+  fi
   log_success "${label} — ${detail}  $(progress_suffix)"
 }

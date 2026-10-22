@@ -69,9 +69,18 @@ install_command_line_tools() {
 # Optional because of its size; failures degrade to a manual-actions entry.
 # ---------------------------------------------------------------------------
 install_xcode() {
+  if ! pref_enabled FULL_XCODE; then
+    report_skip "${MODULE}" "Xcode" "not selected; Command Line Tools are sufficient"
+    return 0
+  fi
   if app_installed "Xcode"; then
     log_skip "Xcode already installed."
     report_skip "${MODULE}" "Xcode" "already installed"
+    return 0
+  fi
+
+  if [[ "${MAC_SETUP_EXPLICIT_SELECTION:-0}" == "1" && "${MAC_SETUP_XCODE_FINALISE:-0}" != "1" ]]; then
+    log_info "Full Xcode is selected; the App Store module will install it after Homebrew and mas."
     return 0
   fi
 
@@ -167,8 +176,10 @@ main() {
 
   install_command_line_tools
   install_xcode
-  configure_xcode
-  check_companion_apps
+  if pref_enabled FULL_XCODE; then
+    configure_xcode
+    check_companion_apps
+  fi
 }
 
 main "$@"

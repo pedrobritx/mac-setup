@@ -1,6 +1,48 @@
 # mac-setup
 
-> One command turns a brand-new Mac into my complete development workstation.
+> Your apps, your tools, your preferences. One thoughtful Mac setup.
+
+Choose a starting profile at **[mac-setup.britx.me](https://mac-setup.britx.me)**,
+edit every optional choice, and export your plan. The local companion opens the
+same interface on your Mac, asks for confirmation, and follows the real installer
+step by step. **Essentials** is a light default; **BRITX Choice** is Pedro's
+personal recommendation. Developer, Education, Productivity and Creative profiles
+provide other starting points.
+
+From a clone:
+
+```bash
+./web.sh                    # local browser setup; nothing installs before confirmation
+./web.sh --dry-run          # preview the real commands without applying them
+./web.sh --plan ~/Downloads/mac-setup-plan.json
+```
+
+No Node.js, account or hosted backend is required by the interface. The companion
+uses Python 3 (provided with Apple's Command Line Tools), binds only to
+`127.0.0.1`, and keeps logs, reports and credentials on your Mac. Browser plans
+contain catalogue IDs, never executable commands or identity details.
+
+The interface retains mac-setup's mint/blue/lilac identity with a translucent
+Mac window, liquid selection highlights and a floating toolbar. **Fluid** adds
+cohesive hover and spring effects; choose **Calm**
+for static, opaque surfaces; system accessibility preferences are always respected.
+See the [Liquid Acrylic interface notes](docs/LIQUID_INTERFACE.md) and the
+[source-exported design variables](docs/design-tokens.json). The
+[Safety & privacy page](docs/safety.html) explains local storage, installation
+permissions, provider requests and MIT reuse. App artwork is bundled locally;
+category actions can select an entire category with its prerequisites.
+
+Use the round flag control to switch between English (UK), Brazilian Portuguese,
+French, German and Spanish (Spain). The setup flow, catalogue descriptions and
+Safety page use local translation files; your language choice stays in this
+browser. Commands, installer logs and downloaded reports retain their original wording.
+
+See the **[browser setup guide](docs/WEB_SETUP.md)** and the complete
+**[apps, tools and preferences inventory](docs/CATALOG.md)**. Vendor-only
+installers, browser apps and MCP connections have guided follow-ups; account
+sign-ins and purchases are never automated.
+
+The original terminal workflow remains available:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/pedrobritx/mac-setup/main/bootstrap.sh | bash
@@ -13,7 +55,7 @@ and then runs autonomously with a live *"34 of 72 installed · 38 to go"*
 progress readout.
 
 New here? The friendly walkthrough lives on the
-**[landing page](https://pedrobritx.github.io/mac-setup/)**.
+**[setup website](https://mac-setup.britx.me)**.
 
 `mac-setup` is an Infrastructure-as-Code project, not a shell script pile:
 modular, idempotent, logged, verifiable, and safe to run as many times as you
@@ -56,6 +98,8 @@ wiped, restoring it is: clone → one command → coffee.
 
 - ✅ **Interactive selection** — tick/untick every app, tool, and setup step
   before anything installs; per-item explanations; choices remembered
+- 🌐 **Browser setup** — six editable profiles, search, source/category filters,
+  portable JSON plans, explicit local confirmation, live module progress and reports
 - 📊 **Live progress** — each item announced and confirmed, with a running
   `[X/Y · Z to go]` counter across the whole run
 - 🍺 **Homebrew bootstrap** for ~40 formulae, ~20 casks, fonts — installed
@@ -67,7 +111,7 @@ wiped, restoring it is: clone → one command → coffee.
   Swift + SwiftFormat/SwiftLint, Docker Desktop (installed, but only launched
   when you need it — no always-on daemon eating battery)
 - 💻 **Terminal**: zsh + Starship prompt + autosuggestions, syntax highlighting,
-  fzf, zoxide, atuin, eza, bat, ripgrep — no framework, startup stays fast
+  fzf, zoxide, atuin, eza, bat, ripgrep; optionally add Oh My Zsh with Git helpers
 - 🔑 **Git & SSH**: identity, Ed25519 key (never overwrites), SSH commit
   signing, Git LFS, GitHub CLI auth
 - ⚙️ **macOS defaults**: minimal and stock-first — keyboard, tap-to-click,
@@ -161,6 +205,7 @@ cd ~/Developer/mac-setup
 ./install.sh --only brew,apps      # run specific modules (skips the selection screen)
 ./install.sh --skip macos          # run everything except system defaults
 ./install.sh --verbose             # debug output
+./install.sh --selection choices.txt --dry-run --yes # explicit validated picker keys
 ```
 
 See [docs/INSTALL.md](docs/INSTALL.md) for the full walkthrough and
@@ -202,6 +247,8 @@ Logs live in `~/.local/state/mac-setup/logs/`.
 - **Remove an app** — delete its line, then
   `brew bundle cleanup --file=Brewfile` (add `--force` to actually uninstall).
 - **Identity & directories** — edit [`config/settings.sh`](config/settings.sh).
+  Identity defaults are intentionally blank. The local browser review can pass
+  your Git name/email for that run; they are never included in exported plans.
 - **Britx choice (your favourites)** — edit
   [`config/britx-choice.sh`](config/britx-choice.sh): list the apps, tools,
   setup steps, or preferences you want *left off* that profile
@@ -210,6 +257,8 @@ Logs live in `~/.local/state/mac-setup/logs/`.
   adjust before confirming) or unattended with `./install.sh --britx`.
 - **Shell** — edit `dotfiles/.config/zsh/{aliases,functions,exports}.zsh`;
   changes apply instantly because the files are symlinked.
+  Oh My Zsh is a separate optional preference; BRITX Choice selects it. It reuses
+  an existing installation, enables Git helpers, and keeps Starship as the prompt.
 - **macOS & security tweaks** — every category (keyboard, tap-to-click, Finder
   tweaks, Dock icon size, screenshots, Safari, expanded panels, firewall, Touch
   ID for sudo, screen lock) is a **suggestion you tick or untick** on the
@@ -259,7 +308,7 @@ This is a personal setup, but PRs and issues are welcome — see
 
 ## Roadmap
 
-- [ ] Machine profiles (personal vs work) selecting Brewfile subsets
+- [x] Editable browser profiles selecting Brewfile subsets
 - [ ] `defaults` diff tool: capture current settings back into the repo
 - [ ] Nightly scheduled `verify.sh` with notification on drift
 - [ ] Time Machine / restic backup bootstrap

@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="Understand what mac-setup stores, how installation works on your Mac, and how to reuse and contribute to this open source project."
+    />
+    <meta name="referrer" content="no-referrer" />
+    <title>Safety &amp; privacy — mac-setup</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="assets/liquid.css" />
+    <script type="module" src="assets/safety.mjs"></script>
+  </head>
+  <body>
+    <div class="aurora" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">Skip to safety &amp; privacy</a>
+    <header class="site-header">
+      <nav class="wrap top-nav" aria-label="Main navigation">
+        <a class="brand" href="./" aria-label="mac-setup home"
+          ><span class="brand-icon" aria-hidden="true">&gt;_</span
+          ><span>mac-setup</span></a
+        >
+        <div class="nav-actions">
+          <button class="text-button" id="how-button">
+            <span class="nav-wide">How it works</span
+            ><span class="nav-compact">Guide</span>
+          </button>
+          <a class="nav-link" href="safety.html" aria-current="page">Safety</a>
+          <a
+            class="nav-link"
+            aria-label="GitHub repository (opens in a new tab)"
+            href="https://github.com/pedrobritx/mac-setup"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><svg
+              class="nav-github-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M9 19c-4 1-4-2-6-2m12 5v-4a3 3 0 0 0-.8-2.2c2.7-.3 5.5-1.3 5.5-6A4.7 4.7 0 0 0 18.4 6a4.4 4.4 0 0 0-.1-3.8S17.3 2 15 3.5a13 13 0 0 0-6 0C6.7 2 5.7 2.2 5.7 2.2A4.4 4.4 0 0 0 5.6 6a4.7 4.7 0 0 0-1.3 3.3c0 4.7 2.8 5.7 5.5 6A3 3 0 0 0 9 17.5V22"
+              /></svg
+            ><span class="nav-github-label">GitHub</span
+            ><span class="sr-only"
+              >GitHub repository (opens in a new tab)</span
+            ></a
+          >
+          <button
+            class="effects-button"
+            id="effects-button"
+            aria-pressed="true"
+            aria-label="Fluid effects. Use calm appearance"
+            title="Use calm appearance: less motion and solid surfaces"
+          >
+            <span class="effects-label">Fluid</span>
+            <span class="effects-switch" aria-hidden="true"><span></span></span>
+          </button>
+          <button
+            class="icon-button"
+            id="theme-button"
+            aria-label="Switch to light theme"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+              />
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main class="wrap safety-page" id="main">
+      <div class="intro">
+        <p class="eyebrow">Safety &amp; privacy</p>
+        <h1 tabindex="-1">
+          Your Mac. <span class="gradient-text">Your trust.</span>
+        </h1>
+        <p>A little clarity before you make yourself at home.</p>
+      </div>
+      <article
+        class="setup-window safety-window"
+        aria-labelledby="safety-title"
+      >
+        <div class="window-toolbar">
+          <span class="traffic-lights" aria-hidden="true"
+            ><i></i><i></i><i></i
+          ></span>
+          <span>Safety &amp; privacy</span
+          ><span
+            class="window-symbol"
+            data-icon="shield"
+            aria-hidden="true"
+          ></span>
+        </div>
+        <div class="safety-body">
+          <a class="back-button" href="./"
+            ><span data-icon="back" aria-hidden="true"></span>Back to your
+            setup</a
+          >
+          <div class="safety-lead">
+            <span
+              class="safety-emblem"
+              data-icon="shield"
+              aria-hidden="true"
+            ></span>
+            <div>
+              <p class="eyebrow">No account. No analytics. No telemetry.</p>
+              <h2 id="safety-title">Your setup stays with you.</h2>
+              <p>
+                mac-setup has no service collecting your selections, identity or
+                installation reports. Build your plan in your browser, then
+                choose when to run it on your Mac.
+              </p>
+            </div>
+          </div>
+          <ol class="privacy-flow" aria-label="Where your setup goes">
+            <li>
+              <span
+                class="flow-badge"
+                data-icon="sliders"
+                aria-hidden="true"
+              ></span
+              ><span class="eyebrow">1 · Your browser</span>
+              <h3>Choose &amp; review</h3>
+              <p>
+                Your choices stay in this browser. The downloaded plan contains
+                your selected item IDs and profile.
+              </p>
+            </li>
+            <li>
+              <span
+                class="flow-badge"
+                data-icon="laptop"
+                aria-hidden="true"
+              ></span
+              ><span class="eyebrow">2 · Your Mac</span>
+              <h3>Confirm locally</h3>
+              <p>
+                The companion runs on your Mac. It shows real installation
+                progress and keeps reports locally.
+              </p>
+            </li>
+            <li>
+              <span
+                class="flow-badge"
+                data-icon="plug"
+                aria-hidden="true"
+              ></span
+              ><span class="eyebrow">3 · Software providers</span>
+              <h3>Download &amp; sign in</h3>
+              <p>
+                Selected software downloads from its providers. Sign-ins,
+                purchases and connection permissions are yours to complete.
+              </p>
+            </li>
+          </ol>
+          <div class="safety-grid">
+            <section class="safety-card">
+              <h3>What your browser remembers</h3>
+              <p>
+                Your selection, profile, theme and Fluid/Calm preference are
+                saved in this browser’s local storage. The local companion’s
+                temporary session key stays in this tab’s session storage. None
+                of these are analytics.
+              </p>
+              <p>
+                Use “Clear optional” to reset your selection, or clear this
+                site’s browser data to remove saved choices and appearance
+                preferences.
+              </p>
+            </section>
+            <section class="safety-card">
+              <h3>What stays on your Mac</h3>
+              <p>
+                The companion listens only on your Mac’s loopback address and
+                protects private actions with a temporary session key. You
+                review and confirm before it runs. Administrator prompts stay in
+                Terminal.
+              </p>
+              <p>
+                Plans, selections, logs and reports are saved locally. An
+                optional Git name and email are used for your local Git
+                configuration; they are excluded from exported plans. Review
+                reports before sharing them.
+              </p>
+            </section>
+            <section class="safety-card">
+              <h3>When there is a connection</h3>
+              <p>
+                The website’s host receives ordinary page requests and may keep
+                its own access logs. App icons and fonts load with this site;
+                there are no remote icon lookups, analytics scripts or tracking
+                pixels.
+              </p>
+              <p>
+                Homebrew, Apple, GitHub and software providers receive requests
+                when you download, install, sign in or follow their links. Those
+                services have their own privacy policies.
+              </p>
+            </section>
+            <section class="safety-card">
+              <h3>You get the final say</h3>
+              <p>
+                Profiles are starting points. Every optional choice is editable,
+                and required prerequisites are labelled. Paid apps are flagged;
+                the installer does not buy them for you.
+              </p>
+              <p>
+                MCP connections become guided follow-ups. Selecting one does not
+                grant permissions or connect an account. A dry-run preview shows
+                the plan without installing apps or changing preferences.
+              </p>
+            </section>
+          </div>
+          <section class="open-source-note" aria-labelledby="open-source-title">
+            <div>
+              <p class="eyebrow">Open source · MIT licence</p>
+              <h2 id="open-source-title">Make it yours. Pass it on.</h2>
+              <p>
+                You can use, study, change and distribute mac-setup, including
+                making your own version. Keep the copyright and MIT licence
+                notice with copies or substantial portions of the software. The
+                software is provided as is.
+              </p>
+              <p>
+                Created by
+                <a
+                  href="https://github.com/pedrobritx"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >BRITX on GitHub<span class="sr-only">
+                    (opens in a new tab)</span
+                  ></a
+                >
+                ·
+                <a
+                  href="https://www.linkedin.com/in/pedrobritx/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >LinkedIn<span class="sr-only"> (opens in a new tab)</span></a
+                >. A visible mention when you build on it would be appreciated.
+              </p>
+              <p class="small">
+                App names and icons belong to their owners. Third-party assets
+                retain their own licences and do not imply endorsement.
+              </p>
+            </div>
+            <div class="safety-actions">
+              <a
+                class="secondary-button"
+                href="https://github.com/pedrobritx/mac-setup"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Explore the source<span class="sr-only">
+                  (opens in a new tab)</span
+                ></a
+              ><a
+                class="text-button"
+                href="https://github.com/pedrobritx/mac-setup/blob/main/LICENSE"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Read the MIT licence<span class="sr-only">
+                  (opens in a new tab)</span
+                ></a
+              ><a class="text-button" href="#asset-credits"
+                >Asset credits &amp; licences</a
+              >
+            </div>
+          </section>
+          <section
+            class="asset-credits"
+            id="asset-credits"
+            aria-labelledby="asset-credits-title"
+          >
+            <h3 id="asset-credits-title">App icon credits</h3>
+            <p>
+              Application artwork belongs to its respective owners. Additional
+              brand marks come from
+              <a
+                href="https://github.com/homarr-labs/dashboard-icons"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Dashboard Icons<span class="sr-only">
+                  (opens in a new tab)</span
+                ></a
+              >
+              under its
+              <a
+                href="https://github.com/homarr-labs/dashboard-icons/blob/320c819da84048d5a3066e2578bfa83be9019fdf/LICENSE"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Apache-2.0 collection licence<span class="sr-only">
+                  (opens in a new tab)</span
+                ></a
+              >. Brand artwork is used for identification and does not imply
+              endorsement. You can
+              <a
+                href="assets/icons/manifest.json"
+                target="_blank"
+                rel="noopener noreferrer"
+                >inspect the icon sources<span class="sr-only">
+                  (opens in a new tab)</span
+                ></a
+              >.
+            </p>
+          </section>
+          <section class="safety-contribute" aria-labelledby="contribute-title">
+            <span data-icon="code" aria-hidden="true"></span>
+            <div>
+              <h2 id="contribute-title">A better setup, together.</h2>
+              <p>
+                Missing an app? Found something that needs attention? The links
+                below open a suggestion or problem report with a few prompts to
+                help you get started. You can review everything before posting
+                on GitHub.
+              </p>
+            </div>
+          </section>
+        </div>
+      </article>
+    </main>
+    <footer class="wrap footer">
+      <div class="footer-about">
+        <span>No account. No tracking. Just your Mac.</span>
+        <span class="creator-credit"
+          >mac-setup by
+          <a
+            href="https://github.com/pedrobritx"
+            target="_blank"
+            rel="noopener noreferrer"
+            >BRITX<span class="sr-only">
+              on GitHub (opens in a new tab)</span
+            ></a
+          ><span class="footer-dot">·</span
+          ><a
+            href="https://www.linkedin.com/in/pedrobritx/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >LinkedIn<span class="sr-only"> (opens in a new tab)</span></a
+          ></span
+        >
+      </div>
+      <nav class="footer-links" aria-label="Project links">
+        <a href="safety.html">Safety &amp; privacy</a>
+        <a
+          href="https://github.com/pedrobritx/mac-setup"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Open source<span class="sr-only"> (opens in a new tab)</span></a
+        >
+        <a
+          href="https://github.com/pedrobritx/mac-setup/issues/new?title=Software+request%3A+&amp;body=Software+name%3A%0AOfficial+website+or+Mac+App+Store+link%3A%0AWhat+would+it+help+you+do%3F%0ASuggested+category+or+profile+%28optional%29%3A%0A"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Suggest software<span class="sr-only">
+            on GitHub (opens in a new tab)</span
+          ></a
+        >
+        <a
+          href="https://github.com/pedrobritx/mac-setup/issues/new?title=Problem+report%3A+&amp;body=What+happened%3F%0AWhat+did+you+expect%3F%0ASteps+to+reproduce%3A%0ABrowser+and+macOS+version%3A%0APublic+site+or+local+companion%3F%0A%0APlease+remove+personal+details+and+secrets+before+attaching+logs+or+screenshots.%0A"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Report a problem<span class="sr-only">
+            on GitHub (opens in a new tab)</span
+          ></a
+        >
+        <a
+          class="support-link"
+          href="https://buymeacoffee.com/pedrobritx"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M4 8h13v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Zm13 1h2a3 3 0 0 1 0 6h-2M7 3v2m4-2v2m4-2v2"
+            /></svg
+          >Buy me a coffee<span class="sr-only"> (opens in a new tab)</span></a
+        >
+      </nav>
+    </footer>
+    <dialog id="info-dialog" class="t-modal" aria-labelledby="dialog-title">
+      <div class="dialog-heading">
+        <h2 id="dialog-title"></h2>
+        <button
+          class="icon-button"
+          id="close-dialog"
+          aria-label="Close details"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m6 6 12 12M6 18 18 6" />
+          </svg>
+        </button>
+      </div>
+      <div id="dialog-content"></div>
+    </dialog>
+  </body>
+</html>

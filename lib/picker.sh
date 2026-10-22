@@ -153,6 +153,10 @@ picker_catalog() {
     "SwiftFormat + SwiftLint checks" "${g}" 0
   _picker_add step vscode "VS Code config" \
     "settings, snippets, and extensions" "${g}" 0
+  _picker_add pref xcode:full_xcode "Xcode" \
+    "full Apple IDE from the App Store; a large optional download" "${g}" 0
+  _picker_add pref terminal:ohmyzsh "Oh My Zsh" \
+    "optional shell framework with git helpers; keeps the Starship prompt" "Terminal" 0
 
   # macOS preferences — each is a single suggested `defaults` tweak the module
   # applies. Stock-first: window management, Mission Control, magnification and
@@ -240,6 +244,34 @@ picker_apply_britx() {
       PICK_ON[i]=1
     fi
   done
+}
+
+# picker_apply_file <path> — accept catalogue keys as data, never shell code.
+# Unknown keys abort before any installation or selection file is written.
+picker_apply_file() {
+  local path="$1" key i found
+  [[ -f "${path}" ]] || {
+    log_error "Selection file not found: ${path}"
+    return 1
+  }
+  for i in "${!PICK_TYPE[@]}"; do
+    PICK_ON[i]="${PICK_LOCK[i]}"
+  done
+  while IFS= read -r key || [[ -n "${key}" ]]; do
+    [[ -n "${key}" ]] || continue
+    found=0
+    for i in "${!PICK_TYPE[@]}"; do
+      if [[ "${key}" == "${PICK_TYPE[i]}:${PICK_ID[i]}" ]]; then
+        PICK_ON[i]=1
+        found=1
+        break
+      fi
+    done
+    if [[ "${found}" != "1" ]]; then
+      log_error "Unknown selection key: ${key}"
+      return 1
+    fi
+  done <"${path}"
 }
 
 # ---------------------------------------------------------------------------
@@ -481,7 +513,7 @@ picker_confirm() {
 #   * fills PICKER_SKIPPED_MODULES for install.sh.
 # ---------------------------------------------------------------------------
 picker_write_selection() {
-  local active="$1" i line id
+  local active="$1" i line id tap needed
 
   # Remember what was unticked (not what was ticked) so brand-new Brewfile
   # entries still default to ON next time.
@@ -498,6 +530,20 @@ picker_write_selection() {
   : >"${active}"
   while IFS= read -r line; do
     case "${line}" in
+      tap\ \"*)
+        if [[ "${MAC_SETUP_EXPLICIT_SELECTION:-0}" == "1" ]]; then
+          tap="${line#tap \"}"
+          tap="${tap%%\"*}"
+          needed=0
+          for i in "${!PICK_TYPE[@]}"; do
+            if [[ "${PICK_ON[i]}" == "1" && "${PICK_ID[i]}" == "${tap}/"* ]]; then
+              needed=1
+              break
+            fi
+          done
+          [[ "${needed}" == "1" ]] || continue
+        fi
+        ;;
       brew\ \"*)
         id="${line#brew \"}"
         id="${id%%\"*}"

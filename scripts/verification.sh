@@ -77,6 +77,59 @@ _link() {
   [[ -L "$1" && "$(readlink "$1")" == "${MAC_SETUP_ROOT}"* ]] && echo "linked"
 }
 
+# _selected_formula / _selected_cask / _selected_mas — verify the reviewed
+# package set, including applications originally installed outside Homebrew.
+_selected_formula() {
+  brew_formula_installed "$1" && echo "installed"
+}
+
+_selected_cask() {
+  local app
+  app="$(cask_app_name "$1")"
+  if brew_cask_installed "$1" || { [[ -n "${app}" ]] && app_installed "${app}"; }; then
+    echo "installed"
+  fi
+}
+
+_selected_mas() {
+  if mas_app_installed "$1" || app_installed "$2"; then
+    echo "installed"
+  fi
+}
+
+# run_selected_checks — explicit plans must not fail over declined tools.
+# Manual App Store/vendor follow-ups remain warnings in verification.
+run_selected_checks() {
+  check "core" "Xcode CLT" bash -c 'xcode-select -p'
+  check "core" "Homebrew" _version brew --version
+  local token name
+  while IFS= read -r token; do
+    check "packages" "${token}" _selected_formula "${token##*/}"
+  done < <(sed -nE 's/^brew "([^"]+)".*/\1/p' "${MAC_SETUP_BREWFILE}")
+  while IFS= read -r token; do
+    check_warn "apps" "${token}" _selected_cask "${token}"
+  done < <(sed -nE 's/^cask "([^"]+)".*/\1/p' "${MAC_SETUP_BREWFILE}")
+  while IFS=$'\t' read -r token name; do
+    check_warn "mas" "${name}" _selected_mas "${token}" "${name}"
+  done < <(sed -nE 's/^mas "([^"]+)", id: ([0-9]+).*/\2\t\1/p' "${MAC_SETUP_BREWFILE}")
+  if [[ "${MAC_SETUP_SELECTED_MODULES:-}" == *" node "* ]]; then
+    check "lang" "node" _version node --version
+  fi
+  if [[ "${MAC_SETUP_SELECTED_MODULES:-}" == *" python "* ]]; then
+    check "lang" "Python manager" _version uv --version
+  fi
+  if [[ "${MAC_SETUP_SELECTED_MODULES:-}" == *" terminal "* ]]; then
+    check "dotfiles" ".zshrc" _link "${HOME}/.zshrc"
+    check "dotfiles" ".zprofile" _link "${HOME}/.zprofile"
+  fi
+  if [[ "${MAC_SETUP_SELECTED_MODULES:-}" == *" git "* ]]; then
+    check "dotfiles" "git config" _link "${HOME}/.config/git/config"
+  fi
+  if pref_enabled FULL_XCODE; then
+    check_warn "apps" "Xcode" _app "Xcode"
+  fi
+}
+
 # ---------------------------------------------------------------------------
 # run_checks — every probe, grouped by category.
 # ---------------------------------------------------------------------------
@@ -204,7 +257,11 @@ main() {
   fi
 
   log_info "Verifying installation..."
-  run_checks
+  if [[ "${MAC_SETUP_EXPLICIT_SELECTION:-0}" == "1" ]]; then
+    run_selected_checks
+  else
+    run_checks
+  fi
   print_table
   write_report
 

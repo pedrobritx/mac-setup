@@ -1,0 +1,137 @@
+{
+  "date": "2026-10-22",
+  "state": "local-uncommitted",
+  "sourceCommit": "5ac4db8a10bdfc5675f53ebb224978d4e1624d5d",
+  "catalogVersion": "766706b33939aab4",
+  "items": 139,
+  "mcpGuides": 10,
+  "tests": {
+    "node": 15,
+    "python": 17,
+    "webkit": 14
+  },
+  "desktopViewport": [
+    1536,
+    1024
+  ],
+  "mobileViewport": [
+    390,
+    844
+  ],
+  "automatedAxeViolations": 0,
+  "realMacInstallationPerformed": false,
+  "published": false,
+  "remaining": [
+    "fresh Mac installation",
+    "real sudo and App Store flows",
+    "licences and compatibility",
+    "vendor and MCP authentication",
+    "human screen-reader review",
+    "remote CI and deployment",
+    "physical touch hardware",
+    "Firefox and Chromium rendering",
+    "production FPS profiling",
+    "native-language editorial review"
+  ],
+  "tabletViewport": [
+    923,
+    932
+  ],
+  "designVersion": "liquid-acrylic-v3-languages-soft-motion",
+  "runtime": {
+    "node": "24.21.0",
+    "python": "3.9.6"
+  },
+  "visualQA": {
+    "builtInBrowserFirst": true,
+    "conceptsAndFinalRendersInspected": true,
+    "nativeConceptViewportChecked": [
+      1536,
+      1024
+    ],
+    "comparisonLedger": "outputs/DESIGN_REVIEW.md",
+    "motionRecording": "outputs/liquid-preview.webm",
+    "calmAndSystemReducedMotionVerified": true,
+    "chromiumFallbackUsed": false,
+    "newSafetyAndGuideRendersInspected": true
+  },
+  "verifiedAt": "2026-10-22T11:48:50.508779+00:00",
+  "annotationPass": {
+    "requestedComments": 20,
+    "addressedComments": 20,
+    "viewport": [
+      932,
+      932
+    ],
+    "safetyViewports": [
+      [
+        932,
+        932
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        320,
+        760
+      ]
+    ],
+    "publicSafetyRouteTested": true,
+    "customSourceKeyboardAndPointerTested": true,
+    "bulkSelectionWithHiddenItemsTested": true,
+    "backdropAndFocusRestorationTested": true,
+    "externalAssetRequestsInCheckedNavigation": 0,
+    "realAppOrBrandIconEntries": 88,
+    "bundledIconFiles": 77,
+    "iconAssetBytes": 733273,
+    "iconChecksumsVerified": true,
+    "nativePreview": "outputs/preview-interactions-in-app.png",
+    "creatorPreferenceSaved": true,
+    "elevatedMaterialContrastRechecked": true
+  },
+  "languageAndMotionPass": {
+    "locales": [
+      "en-GB",
+      "pt-BR",
+      "fr-FR",
+      "de-DE",
+      "es-ES"
+    ],
+    "sourcePhrases": 471,
+    "catalogueDescriptionsTranslated": 139,
+    "translationProviderRequests": 0,
+    "nativeLanguageEditorialReview": false,
+    "keyboardSelectionAndDismissalTested": true,
+    "languagePersistenceAcrossSafetyTested": true,
+    "canonicalPlansPreserved": true,
+    "translatedSearchTested": true,
+    "setupViewports": [
+      [
+        932,
+        932
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        320,
+        844
+      ]
+    ],
+    "setupAxeViolationsAcrossFiveLocales": 0,
+    "wholeWindowAndNavMotionTested": true,
+    "springBoundPixels": 4,
+    "fixedSummaryViewportPositionTested": true,
+    "summaryReparentBreakpointPixels": 1050,
+    "summaryStackBreakpointPixels": 360,
+    "sidebarActionInlinePaddingPixels": 12,
+    "cursorSheenOpacity": 0.45,
+    "windowWashOpacity": 0.4,
+    "toolbarSheenOpacity": 0.3,
+    "nativePreview": "outputs/preview-languages-in-app.png",
+    "nativeProgressPreview": "outputs/preview-portuguese-progress-in-app.png",
+    "nativeSidebarPreview": "outputs/preview-sidebar-spacing-in-app.png"
+  }
+}

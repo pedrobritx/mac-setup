@@ -1,0 +1,135 @@
+"""Project the existing Bash picker into a static, versioned browser catalogue."""
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import tempfile
+
+ROOT = Path(__file__).resolve().parent.parent
+OUTPUT = ROOT / "docs/assets/catalog.json"
+INVENTORY = ROOT / "docs/CATALOG.md"
+PROFILES = [
+    {"id": "essentials", "name": "Essentials", "description": "A lighter starting point", "icon": "leaf"},
+    {"id": "developer", "name": "Developer", "description": "Build something good", "icon": "code"},
+    {"id": "education", "name": "Education", "description": "Learn, teach, create", "icon": "book"},
+    {"id": "productivity", "name": "Productivity", "description": "Space to get things done", "icon": "layers"},
+    {"id": "creative", "name": "Creative", "description": "From idea to finished work", "icon": "pen"},
+    {"id": "britx", "name": "BRITX Choice", "description": "Pedro’s personal setup", "icon": "spark"},
+]
+CATEGORIES = [
+    ("development", "Development", "code"), ("ai-design", "AI & design", "pen"),
+    ("productivity", "Productivity", "layers"), ("communication", "Communication", "chat"),
+    ("utilities", "Utilities", "sliders"), ("media", "Media & games", "play"),
+    ("terminal", "Terminal", "terminal"), ("preferences", "Mac preferences", "settings"),
+    ("connections", "Connections", "plug"),
+]
+
+
+def build_catalog():
+    """Read authoritative catalogue keys and BRITX exclusions without user state."""
+    script = r'''
+set -eu
+source lib/common.sh
+source lib/picker.sh
+picker_catalog
+picker_apply_britx
+for i in "${!PICK_TYPE[@]}"; do
+  printf '%s\t%s\t%s\t%s\t%s\t%s\t%s\n' "${PICK_TYPE[i]}" "${PICK_ID[i]}" "${PICK_LABEL[i]}" "${PICK_DESC[i]}" "${PICK_GROUP[i]}" "${PICK_LOCK[i]}" "${PICK_ON[i]}"
+done
+'''
+    with tempfile.TemporaryDirectory() as state:
+        env = {k: v for k, v in os.environ.items() if not k.startswith("MAC_SETUP_")}
+        env.update({"MAC_SETUP_ROOT": str(ROOT), "MAC_SETUP_STATE_DIR": state})
+        rows = subprocess.run(["bash", "-c", script], cwd=ROOT, env=env,
+                              capture_output=True, text=True, check=True).stdout
+    metadata = json.loads((ROOT / "config/web-catalog.json").read_text())
+    items = []
+    for row in rows.splitlines():
+        kind, token, label, description, group, locked, britx = row.split("\t")
+        key = f"{kind}:{token}"
+        if kind == "brew":
+            category = "development" if group in ("version control", "languages & toolchains", "data & media processing") else "terminal"
+        elif kind == "cask":
+            category = {"development": "development", "browsers & AI assistants": "ai-design",
+                        "productivity & communication": "productivity", "entertainment": "media"}.get(group, "utilities")
+        elif kind == "mas":
+            category = "productivity"
+        elif kind == "pref":
+            category = "terminal" if token.startswith("terminal:") else "preferences"
+        else:
+            category = "development"
+        item = {"id": key, "type": kind, "token": token, "name": label,
+                "description": description, "category": category, "locked": locked == "1",
+                "profiles": ["britx"] if britx == "1" else [], "dependencies": []}
+        item.update(metadata["items"].get(key, {}))
+        if item["type"] == "mas":
+            item["url"] = f"https://apps.apple.com/app/id{token}?platform=mac"
+        elif item["type"] in ("brew", "cask"):
+            item.setdefault("url", f"https://formulae.brew.sh/{'formula' if kind == 'brew' else 'cask'}/{token}")
+        items.append(item)
+    for manual in metadata["manual"]:
+        items.append({"locked": False, "dependencies": [], **manual})
+    keys = {item["id"] for item in items}
+    if len(keys) != len(items):
+        raise ValueError("Duplicate catalogue IDs")
+    for item in items:
+        if not set(item["dependencies"]) <= keys:
+            raise ValueError(f"Unknown dependency for {item['id']}")
+    for profile, selected in metadata["profiles"].items():
+        if not set(selected) <= keys:
+            raise ValueError(f"Unknown item in {profile}")
+        for item in items:
+            if item["id"] in selected and profile not in item["profiles"]:
+                item["profiles"].append(profile)
+    result = {"schema": 1, "profiles": PROFILES,
+              "categories": [{"id": k, "name": n, "icon": i} for k, n, i in CATEGORIES], "items": items}
+    result["version"] = hashlib.sha256(json.dumps(result, sort_keys=True).encode()).hexdigest()[:16]
+    return result
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--check", action="store_true", help="fail if the shipped catalogue is stale")
+    args = parser.parse_args()
+    catalog = build_catalog()
+    content = json.dumps(catalog, ensure_ascii=False, indent=2) + "\n"
+    inventory = ["# Apps, tools and preferences", "",
+                 "Generated by `python3 -m web.catalog` from the Bash picker, Brewfile and browser metadata.",
+                 "Do not edit this inventory directly. BRITX Choice follows `config/britx-choice.sh` for installer items;",
+                 "the browser metadata adds the explicitly guided web and connection items.", "",
+                 "App Store availability, hardware requirements, licences and account entitlements are checked by the vendor at installation.",
+                 "Paid labels do not authorise purchases. MCP, web and vendor-only entries create manual follow-ups.", "",
+                 f"Catalogue version: `{catalog['version']}`. {len(catalog['items'])} selectable items.", ""]
+    methods = {"brew": "Homebrew formula", "cask": "Homebrew cask", "mas": "Mac App Store",
+               "step": "Configuration step", "pref": "Preference", "manual": "Official guide",
+               "web": "Browser app", "mcp": "MCP guide"}
+    for group in catalog["categories"]:
+        inventory.extend([f"## {group['name']}", "", "| Item | Source | Notes |", "| --- | --- | --- |"])
+        for item in catalog["items"]:
+            if item["category"] != group["id"]:
+                continue
+            name = f"[{item['name']}]({item['url']})" if item.get("url") else item["name"]
+            note = item["description"].replace("|", "\\|")
+            if item.get("paid"):
+                note += "; **paid licence or prior purchase required**"
+            if item.get("locked"):
+                note += "; **required**"
+            inventory.append(f"| {name} | {item.get('methodLabel', methods[item['type']])} | {note} |")
+        inventory.append("")
+    inventory = "\n".join(inventory)
+    if args.check:
+        if not OUTPUT.exists() or OUTPUT.read_text() != content or not INVENTORY.exists() or INVENTORY.read_text() != inventory:
+            parser.exit(1, "Browser catalogue is stale; run python3 -m web.catalog\n")
+        print("Browser catalogue matches the installer.")
+    else:
+        OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+        OUTPUT.write_text(content)
+        INVENTORY.write_text(inventory)
+        print(f"Wrote {OUTPUT}")
+
+
+if __name__ == "__main__":
+    main()

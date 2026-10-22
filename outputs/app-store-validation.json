@@ -1,0 +1,138 @@
+{
+  "checkedDate": "2026-10-21",
+  "country": "br",
+  "apps": [
+    {
+      "name": "Pages",
+      "id": "361309726",
+      "available": true,
+      "storeName": "Pages: crie documentos"
+    },
+    {
+      "name": "Numbers",
+      "id": "361304891",
+      "available": true,
+      "storeName": "Numbers: crie planilhas"
+    },
+    {
+      "name": "Keynote",
+      "id": "361285480",
+      "available": true,
+      "storeName": "Keynote: crie apresentações"
+    },
+    {
+      "name": "Shazam",
+      "id": "897118787",
+      "available": true,
+      "storeName": "Shazam: qual é a música"
+    },
+    {
+      "name": "Swift Playground",
+      "id": "1496833156",
+      "available": true,
+      "storeName": "Swift Playgrounds"
+    },
+    {
+      "name": "TestFlight",
+      "id": "899247664",
+      "available": true,
+      "storeName": "TestFlight"
+    },
+    {
+      "name": "Developer",
+      "id": "640199958",
+      "available": true,
+      "storeName": "Apple Developer"
+    },
+    {
+      "name": "ColorSlurp",
+      "id": "1287239339",
+      "available": true,
+      "storeName": "ColorSlurp"
+    },
+    {
+      "name": "Final Cut Pro",
+      "id": "424389933",
+      "available": true,
+      "storeName": "Final Cut Pro"
+    },
+    {
+      "name": "Compressor",
+      "id": "424390742",
+      "available": true,
+      "storeName": "Compressor"
+    },
+    {
+      "name": "DaVinci Resolve",
+      "id": "571213070",
+      "available": true,
+      "storeName": "DaVinci Resolve"
+    },
+    {
+      "name": "Logic Pro",
+      "id": "634148309",
+      "available": true,
+      "storeName": "Logic Pro"
+    },
+    {
+      "name": "Motion",
+      "id": "434290957",
+      "available": true,
+      "storeName": "Motion"
+    },
+    {
+      "name": "Photomator",
+      "id": "1444636541",
+      "available": true,
+      "storeName": "Photomator – Photo Editor"
+    },
+    {
+      "name": "Slack",
+      "id": "803453959",
+      "available": true,
+      "storeName": "Slack for Desktop"
+    },
+    {
+      "name": "OneDrive",
+      "id": "823766827",
+      "available": true,
+      "storeName": "OneDrive"
+    },
+    {
+      "name": "Tailscale",
+      "id": "1475387142",
+      "available": true,
+      "storeName": "Tailscale"
+    },
+    {
+      "name": "Termius",
+      "id": "1176074088",
+      "available": true,
+      "storeName": "Termius: SSH Client & Terminal"
+    },
+    {
+      "name": "Canva",
+      "id": "897446215",
+      "available": true,
+      "storeName": "Canva: editor de fotos e vídeo"
+    },
+    {
+      "name": "Microsoft Teams",
+      "id": "1113153706",
+      "available": true,
+      "storeName": "Microsoft Teams"
+    },
+    {
+      "name": "WhatsApp",
+      "id": "310633997",
+      "available": true,
+      "storeName": "WhatsApp Messenger"
+    },
+    {
+      "name": "The Unarchiver",
+      "id": "425424353",
+      "available": true,
+      "storeName": "The Unarchiver"
+    }
+  ]
+}

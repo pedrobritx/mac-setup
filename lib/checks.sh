@@ -56,6 +56,18 @@ cask_app_name() {
     postman) echo "Postman" ;;
     figma) echo "Figma" ;;
     sf-symbols) echo "SF Symbols" ;;
+    github) echo "GitHub Desktop" ;;
+    blender) echo "Blender" ;;
+    inkscape) echo "Inkscape" ;;
+    1password) echo "1Password" ;;
+    bettertouchtool) echo "BetterTouchTool" ;;
+    keyboardcleantool) echo "KeyboardCleanTool" ;;
+    anydesk) echo "AnyDesk" ;;
+    teamviewer) echo "TeamViewer" ;;
+    zoom) echo "zoom.us" ;;
+    dropbox) echo "Dropbox" ;;
+    obs) echo "OBS" ;;
+    transmission) echo "Transmission" ;;
     google-chrome) echo "Google Chrome" ;;
     chatgpt) echo "ChatGPT" ;;
     claude) echo "Claude" ;;
