@@ -1,14 +1,14 @@
 {
   "date": "2026-10-22",
-  "state": "local-uncommitted",
-  "sourceCommit": "5ac4db8a10bdfc5675f53ebb224978d4e1624d5d",
+  "state": "published-branch",
+  "sourceCommit": "5b9bc761d6e82aed23013805509762c3d2e682d3",
   "catalogVersion": "766706b33939aab4",
   "items": 139,
   "mcpGuides": 10,
   "tests": {
     "node": 15,
     "python": 17,
-    "webkit": 14
+    "webkit": 15
   },
   "desktopViewport": [
     1536,
@@ -20,18 +20,18 @@
   ],
   "automatedAxeViolations": 0,
   "realMacInstallationPerformed": false,
-  "published": false,
+  "published": true,
   "remaining": [
     "fresh Mac installation",
     "real sudo and App Store flows",
     "licences and compatibility",
     "vendor and MCP authentication",
     "human screen-reader review",
-    "remote CI and deployment",
     "physical touch hardware",
     "Firefox and Chromium rendering",
     "production FPS profiling",
-    "native-language editorial review"
+    "native-language editorial review",
+    "production deployment verification"
   ],
   "tabletViewport": [
     923,
@@ -133,5 +133,23 @@
     "nativePreview": "outputs/preview-languages-in-app.png",
     "nativeProgressPreview": "outputs/preview-portuguese-progress-in-app.png",
     "nativeSidebarPreview": "outputs/preview-sidebar-spacing-in-app.png"
+  },
+  "designHandoff": {
+    "figmaFile": "https://www.figma.com/design/OU3tjfPMFYA2Sz3QtpVWqu",
+    "team": "Projects",
+    "editableDesktopLayouts": 5,
+    "componentFamilies": 8,
+    "componentVariants": 10,
+    "variables": 119,
+    "textStyles": 5,
+    "automaticTwoWaySync": false,
+    "editablePhoneLayout": false,
+    "notes": "outputs/figma/README.md",
+    "runtimeCi": "https://github.com/pedrobritx/mac-setup/actions/runs/39886266290",
+    "runtimeCiConclusion": "success",
+    "originalPr": "https://github.com/pedrobritx/mac-setup/pull/7",
+    "originalPrMergedCommit": "621136f4346593d0a5fff5dc048a4579cb322509",
+    "springFixMergePending": true,
+    "followUpPr": "https://github.com/pedrobritx/mac-setup/pull/8"
   }
 }

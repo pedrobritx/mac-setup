@@ -72,6 +72,9 @@ export function createLiquidUI() {
     let moving = false;
     for (const rail of rails.values()) {
       if (!rail.visible) continue;
+      // Under sustained frame starvation, finish the decorative response in wall time.
+      // Fixed-step integration still caps each frame, so it cannot jump or explode.
+      if (time - rail.targetChangedAt >= 1200) snap(rail);
       let unsettled = false;
       for (const key of ["x", "y", "width", "height"]) {
         rail.body[key] = advanceSpring(
@@ -211,12 +214,20 @@ export function createLiquidUI() {
     if (!rail.visible) return;
     if (!rail.svg.isConnected) rail.root.prepend(rail.svg);
     const rect = active.getBoundingClientRect();
-    rail.target = {
+    const nextTarget = {
       x: rect.left - bounds.left + rail.root.scrollLeft + rect.width / 2,
       y: rect.top - bounds.top + rail.root.scrollTop + rect.height / 2,
       width: rect.width - 2,
       height: rect.height - 2,
     };
+    if (
+      !rail.target ||
+      Object.keys(nextTarget).some(
+        (key) => Math.abs(nextTarget[key] - rail.target[key]) > 0.1,
+      )
+    )
+      rail.targetChangedAt = performance.now();
+    rail.target = nextTarget;
     const width = Math.max(
       rail.root.clientWidth,
       ...[...rail.root.children]

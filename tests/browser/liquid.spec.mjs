@@ -172,3 +172,29 @@ test("calm appearance persists and system reduced motion cannot be overridden", 
     page.getByRole("button", { name: "How it works", exact: true }),
   ).toBeFocused();
 });
+
+test("selection surfaces settle under sustained frame starvation", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    const requestFrame = window.requestAnimationFrame.bind(window);
+    window.requestAnimationFrame = (callback) =>
+      requestFrame(() => {
+        setTimeout(() => callback(performance.now()), 240);
+      });
+  });
+  await page.goto("/");
+  await expect(page.locator("#profiles")).toHaveAttribute(
+    "data-liquid-state",
+    "settled",
+  );
+  await page.getByRole("radio", { name: "BRITX Choice", exact: true }).check();
+  await expect(page.locator("#profiles")).toHaveAttribute(
+    "data-liquid-state",
+    "settled",
+    { timeout: 2500 },
+  );
+  await expect(
+    page.getByRole("radio", { name: "BRITX Choice", exact: true }),
+  ).toBeChecked();
+});
