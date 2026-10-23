@@ -74,6 +74,10 @@ update_homebrew() {
     report_fail "${MODULE}" "brew update" "failed after retries"
   fi
 
+  if [[ "${MAC_SETUP_EXPLICIT_SELECTION:-0}" == "1" ]]; then
+    report_skip "${MODULE}" "global upgrades" "explicit selection; unrelated packages are left alone"
+    return 0
+  fi
   log_info "Upgrading outdated formulae and casks..."
   if run brew upgrade; then
     report_ok "${MODULE}" "brew upgrade" "upgraded"

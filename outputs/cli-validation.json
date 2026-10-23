@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-21",
+  "isolatedHome": true,
+  "checks": [
+    {
+      "command": "bash install.sh --help",
+      "exitCode": 0
+    },
+    {
+      "command": "bash install.sh --list",
+      "exitCode": 0
+    },
+    {
+      "command": "bash install.sh --dry-run --yes",
+      "exitCode": 0
+    },
+    {
+      "command": "bash install.sh --dry-run --britx",
+      "exitCode": 0
+    }
+  ]
+}

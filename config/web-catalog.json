@@ -1,0 +1,619 @@
+{
+  "items": {
+    "step:xcode": {
+      "name": "Command Line Tools",
+      "category": "development",
+      "description": "Apple compilers and Git; required by Homebrew"
+    },
+    "step:brew": {
+      "name": "Homebrew",
+      "category": "development",
+      "description": "The package manager behind your setup"
+    },
+    "step:node": {
+      "name": "Node.js",
+      "description": "Latest LTS, managed with fnm",
+      "dependencies": ["brew:fnm"]
+    },
+    "step:python": {
+      "name": "Python",
+      "description": "Managed Python with uv and isolated CLI tools",
+      "dependencies": ["brew:uv", "brew:pipx"]
+    },
+    "step:git": {
+      "name": "Git configuration",
+      "description": "Your identity, Git LFS and GitHub sign-in guidance",
+      "dependencies": ["brew:git", "brew:git-lfs", "brew:gh"]
+    },
+    "step:ssh": {
+      "name": "SSH key",
+      "description": "Create a key only if missing; existing keys are preserved"
+    },
+    "step:swift": {
+      "name": "Swift extras",
+      "dependencies": ["brew:swiftformat", "brew:swiftlint"]
+    },
+    "step:vscode": {
+      "name": "VS Code settings & extensions",
+      "dependencies": ["cask:visual-studio-code"]
+    },
+    "step:terminal": {
+      "name": "Zsh & Starship setup",
+      "category": "terminal",
+      "description": "Shell configuration, smart navigation and plugin hooks",
+      "dependencies": ["brew:starship"]
+    },
+    "step:directories": {
+      "name": "Workspace folders",
+      "category": "preferences",
+      "description": "Developer, Screenshots and Downloads/Installers folders"
+    },
+    "pref:xcode:full_xcode": {
+      "category": "development",
+      "description": "Full Apple IDE from the App Store; large download",
+      "dependencies": ["brew:mas"],
+      "methodLabel": "App Store",
+      "url": "https://apps.apple.com/app/id497799835?platform=mac"
+    },
+    "pref:terminal:ohmyzsh": {
+      "name": "Oh My Zsh",
+      "dependencies": ["step:terminal"],
+      "description": "Optional framework and Git helpers; Starship remains your prompt"
+    },
+    "cask:visual-studio-code": {
+      "name": "Visual Studio Code",
+      "description": "An editor that makes room for your workflow",
+      "color": "#287cbb",
+      "initial": "V"
+    },
+    "cask:github": {
+      "name": "GitHub Desktop",
+      "color": "#5b3d84",
+      "initial": "Gh",
+      "description": "A familiar Git workflow for your Mac"
+    },
+    "brew:gh": {
+      "name": "GitHub CLI",
+      "description": "Pull requests, issues and releases in your terminal"
+    },
+    "brew:git": {
+      "name": "Git",
+      "description": "Version control, up to date"
+    },
+    "cask:docker-desktop": {
+      "name": "Docker Desktop",
+      "description": "Containers, Docker CLI, Compose and Buildx",
+      "color": "#237dce",
+      "initial": "D"
+    },
+    "cask:postman": {
+      "name": "Postman",
+      "description": "Build and test APIs",
+      "color": "#ce5834",
+      "initial": "P"
+    },
+    "cask:figma": {
+      "name": "Figma",
+      "category": "ai-design",
+      "description": "Design together, from first idea to handoff",
+      "color": "#7552bd",
+      "initial": "Fi"
+    },
+    "cask:antigravity": {
+      "name": "Google Antigravity",
+      "category": "ai-design",
+      "description": "Google’s agent-focused development environment",
+      "color": "#39705a",
+      "initial": "A"
+    },
+    "cask:chatgpt": {
+      "name": "ChatGPT",
+      "category": "ai-design",
+      "description": "OpenAI’s desktop assistant; Apple Silicon required",
+      "architectures": ["arm64"],
+      "color": "#387d69",
+      "initial": "Ch"
+    },
+    "cask:claude": {
+      "name": "Claude",
+      "category": "ai-design",
+      "description": "Anthropic’s desktop assistant",
+      "color": "#b66e52",
+      "initial": "Cl"
+    },
+    "cask:claude-code": {
+      "name": "Claude Code",
+      "category": "ai-design",
+      "description": "Anthropic’s coding agent in your terminal",
+      "color": "#b66e52",
+      "initial": "Cc"
+    },
+    "cask:codex": {
+      "name": "Codex CLI",
+      "category": "ai-design",
+      "description": "OpenAI’s coding agent in your terminal",
+      "color": "#387d69",
+      "initial": "Cx"
+    },
+    "cask:blender": {
+      "name": "Blender",
+      "category": "ai-design",
+      "description": "3D modelling, animation and rendering",
+      "color": "#b66b2b",
+      "initial": "B"
+    },
+    "cask:inkscape": {
+      "name": "Inkscape",
+      "category": "ai-design",
+      "description": "An open canvas for vector illustration",
+      "color": "#454751",
+      "initial": "I"
+    },
+    "cask:google-chrome": {
+      "name": "Google Chrome",
+      "category": "productivity",
+      "description": "Your browser, bookmarks and Google workspace",
+      "color": "#367c5d",
+      "initial": "G"
+    },
+    "cask:notion": {
+      "category": "productivity",
+      "color": "#34363d",
+      "initial": "N"
+    },
+    "cask:obsidian": {
+      "category": "productivity",
+      "color": "#7751ac",
+      "initial": "Ob"
+    },
+    "cask:discord": {
+      "category": "communication",
+      "color": "#5865b2",
+      "initial": "Di"
+    },
+    "cask:google-drive": {
+      "name": "Google Drive",
+      "category": "productivity",
+      "color": "#3e8356",
+      "initial": "Dr"
+    },
+    "cask:libreoffice": {
+      "name": "LibreOffice",
+      "category": "productivity",
+      "color": "#418748",
+      "initial": "L"
+    },
+    "cask:1password": {
+      "category": "utilities",
+      "description": "Current desktop app; sign in to your own account",
+      "color": "#356aaa",
+      "initial": "1P"
+    },
+    "cask:1password-cli": {
+      "name": "1Password CLI",
+      "category": "terminal",
+      "description": "Access your vault from the terminal; sign-in is separate"
+    },
+    "cask:bettertouchtool": {
+      "paid": true,
+      "description": "Custom gestures and input shortcuts; licence required"
+    },
+    "cask:zoom": {
+      "category": "communication",
+      "color": "#3971bb",
+      "initial": "Z",
+      "name": "Zoom"
+    },
+    "cask:dropbox": {
+      "category": "productivity",
+      "color": "#2e66b8",
+      "initial": "Db"
+    },
+    "cask:obs": {
+      "name": "OBS Studio",
+      "category": "media",
+      "description": "Record and stream your screen"
+    },
+    "cask:transmission": {
+      "name": "Transmission",
+      "category": "media"
+    },
+    "cask:vlc": {
+      "name": "VLC",
+      "category": "media",
+      "color": "#b76a29",
+      "initial": "V"
+    },
+    "cask:steam": {
+      "category": "media"
+    },
+    "cask:stremio": {
+      "category": "media"
+    },
+    "mas:803453959": {
+      "name": "Slack",
+      "category": "communication",
+      "dependencies": ["brew:mas"],
+      "color": "#724566",
+      "initial": "S"
+    },
+    "mas:1113153706": {
+      "name": "Microsoft Teams",
+      "category": "communication",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:310633997": {
+      "category": "communication",
+      "dependencies": ["brew:mas"],
+      "color": "#348354",
+      "initial": "W"
+    },
+    "mas:823766827": {
+      "name": "OneDrive",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:1475387142": {
+      "name": "Tailscale",
+      "category": "utilities",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:1176074088": {
+      "name": "Termius",
+      "category": "development",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:897446215": {
+      "name": "Canva",
+      "category": "ai-design",
+      "dependencies": ["brew:mas"],
+      "color": "#337d95",
+      "initial": "Ca"
+    },
+    "mas:424389933": {
+      "paid": true,
+      "category": "media",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:424390742": {
+      "paid": true,
+      "category": "media",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:634148309": {
+      "paid": true,
+      "category": "media",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:434290957": {
+      "paid": true,
+      "category": "media",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:1444636541": {
+      "category": "ai-design",
+      "purchaseNote": "In-app purchases",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:571213070": {
+      "category": "media",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:1496833156": {
+      "name": "Swift Playgrounds",
+      "category": "development",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:899247664": {
+      "category": "development",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:640199958": {
+      "name": "Apple Developer",
+      "category": "development",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:897118787": {
+      "category": "media",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:361309726": {
+      "dependencies": ["brew:mas"]
+    },
+    "mas:361304891": {
+      "dependencies": ["brew:mas"]
+    },
+    "mas:361285480": {
+      "dependencies": ["brew:mas"]
+    },
+    "mas:425424353": {
+      "category": "utilities",
+      "dependencies": ["brew:mas"]
+    },
+    "mas:1287239339": {
+      "category": "ai-design",
+      "dependencies": ["brew:mas"]
+    },
+    "brew:supabase": {
+      "name": "Supabase CLI",
+      "description": "Local development and database migrations",
+      "category": "development"
+    },
+    "brew:railway": {
+      "name": "Railway CLI",
+      "description": "Manage Railway projects from your terminal",
+      "category": "development"
+    },
+    "brew:stripe-cli": {
+      "name": "Stripe CLI",
+      "description": "Test payments and forward webhooks",
+      "category": "development"
+    },
+    "cask:logi-options+": {
+      "name": "Logi Options+",
+      "category": "utilities"
+    },
+    "cask:font-jetbrains-mono": {
+      "name": "JetBrains Mono",
+      "category": "terminal"
+    },
+    "cask:font-jetbrains-mono-nerd-font": {
+      "name": "JetBrains Mono Nerd Font",
+      "category": "terminal"
+    },
+    "cask:daisydisk": {
+      "paid": true,
+      "category": "utilities"
+    },
+    "brew:oven-sh/bun/bun": {
+      "url": "https://github.com/oven-sh/homebrew-bun"
+    }
+  },
+  "profiles": {
+    "essentials": [
+      "cask:google-chrome",
+      "cask:1password",
+      "cask:appcleaner",
+      "cask:vlc",
+      "mas:425424353"
+    ],
+    "developer": [
+      "cask:google-chrome",
+      "cask:1password",
+      "cask:visual-studio-code",
+      "cask:github",
+      "cask:docker-desktop",
+      "cask:postman",
+      "cask:codex",
+      "cask:claude-code",
+      "step:node",
+      "step:python",
+      "step:git",
+      "step:terminal",
+      "step:vscode",
+      "step:directories",
+      "brew:fzf",
+      "brew:zoxide",
+      "brew:zsh-autosuggestions",
+      "brew:zsh-syntax-highlighting",
+      "brew:zsh-history-substring-search",
+      "pref:macos:finder",
+      "pref:macos:screenshots",
+      "brew:supabase",
+      "brew:railway",
+      "brew:stripe-cli"
+    ],
+    "education": [
+      "cask:google-chrome",
+      "cask:libreoffice",
+      "cask:obsidian",
+      "cask:zoom",
+      "cask:google-drive",
+      "mas:361309726",
+      "mas:361304891",
+      "mas:361285480",
+      "mas:897446215",
+      "web:google-docs",
+      "web:google-sheets",
+      "web:google-slides",
+      "mas:1496833156",
+      "pref:macos:finder"
+    ],
+    "productivity": [
+      "cask:google-chrome",
+      "cask:1password",
+      "cask:notion",
+      "cask:obsidian",
+      "cask:libreoffice",
+      "cask:google-drive",
+      "cask:dropbox",
+      "mas:823766827",
+      "mas:803453959",
+      "mas:1113153706",
+      "cask:zoom",
+      "mas:361309726",
+      "mas:361304891",
+      "mas:361285480",
+      "web:google-docs",
+      "web:google-sheets",
+      "web:google-slides",
+      "pref:macos:finder",
+      "pref:macos:screenshots"
+    ],
+    "creative": [
+      "cask:google-chrome",
+      "cask:figma",
+      "cask:blender",
+      "cask:inkscape",
+      "cask:obs",
+      "mas:897446215",
+      "mas:571213070",
+      "mas:1444636541",
+      "cask:google-drive",
+      "cask:vlc",
+      "pref:macos:finder",
+      "pref:macos:screenshots"
+    ]
+  },
+  "manual": [
+    {
+      "id": "manual:vmware",
+      "type": "manual",
+      "name": "VMware Fusion",
+      "category": "utilities",
+      "description": "Download from Broadcom; account and licence steps stay with you",
+      "url": "https://support.broadcom.com/group/ecx/free-downloads",
+      "profiles": ["britx"]
+    },
+    {
+      "id": "manual:gemini-cli",
+      "type": "manual",
+      "name": "Gemini CLI",
+      "category": "ai-design",
+      "description": "Official Node-based installer; the Homebrew formula is deprecated",
+      "url": "https://github.com/google-gemini/gemini-cli#installation",
+      "profiles": ["britx"]
+    },
+    {
+      "id": "manual:vercel-cli",
+      "type": "manual",
+      "name": "Vercel CLI",
+      "category": "development",
+      "description": "Official CLI setup and account sign-in",
+      "url": "https://vercel.com/docs/cli",
+      "profiles": ["britx", "developer"]
+    },
+    {
+      "id": "manual:figma-code-connect",
+      "type": "manual",
+      "name": "Figma Code Connect CLI",
+      "category": "development",
+      "description": "Optional code-to-design mappings; configure inside your project",
+      "url": "https://developers.figma.com/docs/code-connect/quickstart-guide/",
+      "profiles": ["britx"]
+    },
+    {
+      "id": "web:google-docs",
+      "type": "web",
+      "name": "Google Docs",
+      "category": "productivity",
+      "description": "Browser app; add to your Dock from your browser if you like",
+      "url": "https://docs.google.com/",
+      "profiles": ["britx"]
+    },
+    {
+      "id": "web:google-sheets",
+      "type": "web",
+      "name": "Google Sheets",
+      "category": "productivity",
+      "description": "Browser spreadsheets; no desktop package is installed",
+      "url": "https://sheets.google.com/",
+      "profiles": ["britx"]
+    },
+    {
+      "id": "web:google-slides",
+      "type": "web",
+      "name": "Google Slides",
+      "category": "productivity",
+      "description": "Browser presentations; sign in with your own Google account",
+      "url": "https://slides.google.com/",
+      "profiles": ["britx"]
+    },
+    {
+      "id": "mcp:github",
+      "type": "mcp",
+      "name": "GitHub MCP",
+      "category": "connections",
+      "description": "Connect your coding agent to GitHub; choose account permissions",
+      "url": "https://github.com/github/github-mcp-server",
+      "profiles": ["britx"],
+      "endpoint": "https://api.githubcopilot.com/mcp/"
+    },
+    {
+      "id": "mcp:figma",
+      "type": "mcp",
+      "name": "Figma MCP",
+      "category": "connections",
+      "description": "Bring design context into your editor; sign in through Figma",
+      "url": "https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/",
+      "profiles": ["britx"],
+      "endpoint": "https://mcp.figma.com/mcp"
+    },
+    {
+      "id": "mcp:docker",
+      "type": "mcp",
+      "name": "Docker MCP Toolkit",
+      "category": "connections",
+      "description": "Enable and review servers inside Docker Desktop",
+      "url": "https://docs.docker.com/ai/mcp-catalog-and-toolkit/",
+      "profiles": ["britx"]
+    },
+    {
+      "id": "mcp:notion",
+      "type": "mcp",
+      "name": "Notion MCP",
+      "category": "connections",
+      "description": "Connect your workspace using Notion’s official OAuth flow",
+      "url": "https://developers.notion.com/guides/mcp/overview",
+      "profiles": ["britx"],
+      "endpoint": "https://mcp.notion.com/mcp"
+    },
+    {
+      "id": "mcp:vercel",
+      "type": "mcp",
+      "name": "Vercel MCP",
+      "category": "connections",
+      "description": "Review deployment access and authenticate in your agent",
+      "url": "https://vercel.com/docs/agent-resources/vercel-mcp",
+      "profiles": ["britx"],
+      "endpoint": "https://mcp.vercel.com"
+    },
+    {
+      "id": "mcp:supabase",
+      "type": "mcp",
+      "name": "Supabase MCP",
+      "category": "connections",
+      "description": "Scope to a development project; prefer read-only access",
+      "url": "https://supabase.com/docs/guides/ai-tools/mcp",
+      "profiles": ["britx"],
+      "endpoint": "https://mcp.supabase.com/mcp?read_only=true"
+    },
+    {
+      "id": "mcp:railway",
+      "type": "mcp",
+      "name": "Railway MCP",
+      "category": "connections",
+      "description": "Use the current Railway CLI or remote OAuth server",
+      "url": "https://docs.railway.com/ai/mcp-server",
+      "profiles": ["britx"],
+      "endpoint": "https://mcp.railway.com"
+    },
+    {
+      "id": "mcp:stripe",
+      "type": "mcp",
+      "name": "Stripe MCP",
+      "category": "connections",
+      "description": "Use the official agent setup; review payment access",
+      "url": "https://docs.stripe.com/mcp",
+      "profiles": ["britx"],
+      "endpoint": "https://mcp.stripe.com"
+    },
+    {
+      "id": "mcp:slack",
+      "type": "mcp",
+      "name": "Slack MCP",
+      "category": "connections",
+      "description": "Review workspace access with your Slack admin, then connect your agent",
+      "url": "https://docs.slack.dev/ai/slack-mcp-server/",
+      "profiles": ["britx"]
+    },
+    {
+      "id": "mcp:canva-dev",
+      "type": "mcp",
+      "name": "Canva Dev MCP",
+      "category": "connections",
+      "description": "Developer assistance for Canva apps; separate from access to your Canva designs",
+      "url": "https://www.canva.dev/docs/apps/dev-mcp-server/",
+      "profiles": ["britx"]
+    }
+  ]
+}

@@ -1,479 +1,511 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>mac-setup — a brand-new Mac, ready in one command</title>
-<meta name="description" content="Turn a fresh Mac into a complete workstation: run one command, tick what you want, confirm once, relax.">
-<style>
-  /* ------------------------------------------------------------------ */
-  /* britx design — liquid glass, organic shapes, easy-on-the-eyes tones */
-  /* ------------------------------------------------------------------ */
-  :root {
-    --bg: #10131a;            /* deep blue-charcoal, never pure black */
-    --bg-soft: #161a24;
-    --ink: #e7eaf3;           /* soft off-white, never pure white */
-    --ink-dim: #9aa3b5;
-    --line: rgba(231, 234, 243, 0.09);
-    --glass: rgba(231, 234, 243, 0.055);
-    --glass-strong: rgba(231, 234, 243, 0.09);
-    --mint: #7ee8c7;
-    --sky: #7fb5ff;
-    --lilac: #c5a6ff;
-    --peach: #ffb99a;
-    --accent-grad: linear-gradient(115deg, var(--mint), var(--sky) 48%, var(--lilac));
-    --shadow: 0 18px 50px rgba(4, 6, 12, 0.55);
-    --shadow-soft: 0 8px 28px rgba(4, 6, 12, 0.35);
-    --code-bg: rgba(10, 12, 18, 0.72);
-    color-scheme: dark;
-  }
-  html[data-theme="light"] {
-    --bg: #eef1f7;
-    --bg-soft: #e5e9f2;
-    --ink: #262b38;
-    --ink-dim: #5d6577;
-    --line: rgba(38, 43, 56, 0.10);
-    --glass: rgba(255, 255, 255, 0.55);
-    --glass-strong: rgba(255, 255, 255, 0.75);
-    --mint: #23b28a;
-    --sky: #3874d8;
-    --lilac: #8a5fe0;
-    --peach: #e0784a;
-    --accent-grad: linear-gradient(115deg, #35c79d, #4b86e8 48%, #9a71ea);
-    --shadow: 0 18px 50px rgba(90, 100, 130, 0.28);
-    --shadow-soft: 0 8px 28px rgba(90, 100, 130, 0.18);
-    --code-bg: rgba(22, 26, 36, 0.92);
-    color-scheme: light;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.65;
-    overflow-x: hidden;
-    transition: background .4s ease, color .4s ease;
-  }
-  ::selection { background: var(--sky); color: var(--bg); }
-
-  /* ---- floating gradient blobs ------------------------------------- */
-  .blobs { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
-  .blob {
-    position: absolute; border-radius: 50%;
-    filter: blur(90px); opacity: .5;
-    animation: drift 26s ease-in-out infinite alternate;
-  }
-  html[data-theme="light"] .blob { opacity: .38; }
-  .blob.a { width: 46vw; height: 46vw; top: -14vw; left: -10vw;
-            background: radial-gradient(circle, var(--sky), transparent 65%); }
-  .blob.b { width: 40vw; height: 40vw; top: 22vh; right: -14vw;
-            background: radial-gradient(circle, var(--lilac), transparent 65%);
-            animation-delay: -8s; }
-  .blob.c { width: 34vw; height: 34vw; bottom: -12vw; left: 24vw;
-            background: radial-gradient(circle, var(--mint), transparent 65%);
-            animation-delay: -16s; }
-  @keyframes drift {
-    from { transform: translate(0, 0) scale(1); }
-    to   { transform: translate(5vw, 4vh) scale(1.12); }
-  }
-
-  /* ---- layout ------------------------------------------------------- */
-  /* .wrap only constrains width and side padding — vertical rhythm comes
-     from the header/section rules, so no padding shorthand here. */
-  .wrap { max-width: 1040px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
-  section { padding-top: 88px; padding-bottom: 20px; }
-
-  /* ---- nav pill ------------------------------------------------------ */
-  nav {
-    position: fixed; top: 18px; left: 50%; transform: translateX(-50%);
-    z-index: 50; display: flex; align-items: center; gap: 4px;
-    padding: 7px 10px; border-radius: 999px;
-    background: var(--glass-strong);
-    -webkit-backdrop-filter: blur(22px) saturate(1.5);
-    backdrop-filter: blur(22px) saturate(1.5);
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-soft);
-    white-space: nowrap;
-  }
-  nav a {
-    color: var(--ink-dim); text-decoration: none; font-size: 14px;
-    font-weight: 500; padding: 7px 14px; border-radius: 999px;
-    transition: color .25s, background .25s, transform .2s;
-  }
-  nav a:hover { color: var(--ink); transform: translateY(-1px); }
-  nav a.active { color: var(--ink); background: var(--glass-strong); }
-  #theme-btn {
-    cursor: pointer; border: none; font: inherit; font-size: 15px;
-    background: transparent; color: var(--ink-dim);
-    padding: 6px 10px; border-radius: 999px; line-height: 1;
-    transition: transform .3s ease, color .25s;
-  }
-  #theme-btn:hover { color: var(--ink); transform: rotate(24deg) scale(1.15); }
-
-  /* ---- hero ----------------------------------------------------------- */
-  header { padding-top: 168px; padding-bottom: 40px; text-align: center; }
-  .hello {
-    display: inline-block; font-size: 13.5px; font-weight: 600;
-    letter-spacing: .04em; color: var(--ink-dim);
-    padding: 7px 16px; border-radius: 999px;
-    background: var(--glass); border: 1px solid var(--line);
-    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-    margin-bottom: 26px;
-  }
-  h1 {
-    font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.12;
-    font-weight: 750; letter-spacing: -0.02em; margin-bottom: 18px;
-  }
-  h1 .grad {
-    background: var(--accent-grad);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .sub {
-    color: var(--ink-dim); font-size: clamp(1.02rem, 2vw, 1.2rem);
-    max-width: 620px; margin: 0 auto 40px;
-  }
-
-  /* ---- the command card ---------------------------------------------- */
-  .cmd-card {
-    max-width: 720px; margin: 0 auto; text-align: left;
-    border-radius: 26px; border: 1px solid var(--line);
-    background: var(--glass);
-    -webkit-backdrop-filter: blur(22px) saturate(1.4);
-    backdrop-filter: blur(22px) saturate(1.4);
-    box-shadow: var(--shadow); overflow: hidden;
-  }
-  .cmd-head {
-    display: flex; align-items: center; gap: 8px;
-    padding: 13px 18px; border-bottom: 1px solid var(--line);
-    font-size: 13px; color: var(--ink-dim);
-  }
-  .dot { width: 11px; height: 11px; border-radius: 50%; opacity: .85; }
-  .dot.r { background: #ff8a80; } .dot.y { background: #ffd180; } .dot.g { background: #9ce6a8; }
-  .cmd-head span { margin-left: 8px; }
-  .cmd-body { display: flex; align-items: center; gap: 12px; padding: 20px 18px; background: var(--code-bg); }
-  .cmd-body code {
-    flex: 1; font-family: "SF Mono", ui-monospace, Menlo, monospace;
-    font-size: clamp(11.5px, 1.6vw, 14px); color: #d9e6ff;
-    overflow-x: auto; white-space: nowrap; scrollbar-width: none;
-  }
-  .cmd-body code::-webkit-scrollbar { display: none; }
-  .cmd-body code .p { color: #8ef0cf; }
-  #copy-btn {
-    cursor: pointer; border: none; font: inherit; font-size: 13.5px; font-weight: 600;
-    color: #10131a; padding: 10px 18px; border-radius: 999px;
-    background: var(--accent-grad); background-size: 160% 160%;
-    transition: transform .2s ease, box-shadow .2s ease, background-position .4s;
-    box-shadow: 0 6px 18px rgba(127, 181, 255, .25);
-    flex-shrink: 0;
-  }
-  #copy-btn:hover { transform: translateY(-2px) scale(1.03); background-position: 100% 0; }
-  #copy-btn:active { transform: scale(.97); }
-  .cmd-note { text-align: center; font-size: 13.5px; color: var(--ink-dim); padding: 12px 16px 14px; }
-
-  /* ---- section titles -------------------------------------------------- */
-  h2 {
-    font-size: clamp(1.7rem, 3.6vw, 2.3rem); font-weight: 720;
-    letter-spacing: -0.015em; margin-bottom: 10px;
-  }
-  .lead { color: var(--ink-dim); max-width: 640px; margin-bottom: 40px; }
-  .eyebrow {
-    font-size: 12.5px; font-weight: 700; letter-spacing: .12em;
-    text-transform: uppercase; margin-bottom: 12px;
-    background: var(--accent-grad);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-
-  /* ---- glass cards ------------------------------------------------------ */
-  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
-  .card {
-    border-radius: 24px; padding: 26px 24px;
-    background: var(--glass); border: 1px solid var(--line);
-    -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
-    box-shadow: var(--shadow-soft);
-    transition: transform .3s ease, box-shadow .3s ease, background .3s ease;
-  }
-  .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); background: var(--glass-strong); }
-  .card .ico {
-    display: inline-grid; place-items: center; width: 46px; height: 46px;
-    font-size: 21px; margin-bottom: 14px;
-    border-radius: 42% 58% 55% 45% / 52% 44% 56% 48%;  /* organic squircle */
-    background: var(--accent-grad); color: #10131a;
-    box-shadow: 0 8px 20px rgba(127, 181, 255, .3);
-  }
-  .card h3 { font-size: 1.06rem; font-weight: 650; margin-bottom: 6px; }
-  .card p { font-size: .93rem; color: var(--ink-dim); }
-
-  /* ---- steps -------------------------------------------------------------- */
-  .steps { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); counter-reset: step; }
-  .step { position: relative; padding: 30px 24px 26px; border-radius: 24px;
-          background: var(--glass); border: 1px solid var(--line);
-          -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
-          box-shadow: var(--shadow-soft); transition: transform .3s ease; }
-  .step:hover { transform: translateY(-5px); }
-  .step::before {
-    counter-increment: step; content: counter(step);
-    position: absolute; top: -18px; left: 22px;
-    width: 40px; height: 40px; display: grid; place-items: center;
-    font-weight: 750; font-size: 17px; color: #10131a;
-    background: var(--accent-grad);
-    border-radius: 46% 54% 52% 48% / 55% 48% 52% 45%;
-    box-shadow: 0 8px 18px rgba(127, 181, 255, .35);
-  }
-  .step h3 { font-size: 1.05rem; margin: 4px 0 8px; }
-  .step p { font-size: .93rem; color: var(--ink-dim); }
-  .step kbd {
-    font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .8rem;
-    background: var(--glass-strong); border: 1px solid var(--line);
-    border-radius: 7px; padding: 2px 7px; color: var(--ink);
-  }
-
-  /* ---- terminal mock ------------------------------------------------------- */
-  .term {
-    margin-top: 42px; border-radius: 24px; overflow: hidden;
-    border: 1px solid var(--line); box-shadow: var(--shadow);
-    background: var(--code-bg);
-    -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
-  }
-  .term-head { display: flex; align-items: center; gap: 8px; padding: 12px 16px;
-               background: var(--glass-strong); border-bottom: 1px solid var(--line);
-               font-size: 12.5px; color: var(--ink-dim); }
-  .term pre {
-    padding: 20px 22px; overflow-x: auto;
-    font-family: "SF Mono", ui-monospace, Menlo, monospace;
-    font-size: 12.8px; line-height: 1.75; color: #c7d3ea;
-  }
-  .term .tk-h { color: #c5a6ff; font-weight: 600; }
-  .term .tk-g { color: #8ef0cf; }
-  .term .tk-d { color: #77809599; }
-  .term .tk-c { color: #7fb5ff; }
-
-  /* ---- FAQ ---------------------------------------------------------------- */
-  details {
-    border-radius: 20px; border: 1px solid var(--line);
-    background: var(--glass); margin-bottom: 12px;
-    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-    transition: background .3s ease;
-  }
-  details[open] { background: var(--glass-strong); }
-  summary {
-    cursor: pointer; list-style: none; font-weight: 600; font-size: .98rem;
-    padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;
-  }
-  summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; font-size: 1.25rem; color: var(--ink-dim); transition: transform .3s; }
-  details[open] summary::after { transform: rotate(45deg); }
-  details p { padding: 0 22px 18px; font-size: .93rem; color: var(--ink-dim); }
-  details code { font-family: "SF Mono", ui-monospace, Menlo, monospace; font-size: .85em;
-                 background: var(--glass-strong); padding: 1px 6px; border-radius: 6px; }
-
-  /* ---- footer ---------------------------------------------------------------- */
-  footer { text-align: center; padding: 70px 24px 46px; color: var(--ink-dim); font-size: 14px; }
-  footer a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--line); }
-  footer a:hover { border-color: var(--ink); }
-
-  /* ---- reveal on scroll -------------------------------------------------------- */
-  .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s ease; }
-  .reveal.in { opacity: 1; transform: none; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .blob { animation: none; }
-    .reveal { opacity: 1; transform: none; transition: none; }
-    html { scroll-behavior: auto; }
-  }
-  @media (max-width: 560px) {
-    nav { gap: 0; padding: 6px; }
-    nav a { padding: 7px 9px; font-size: 12.5px; }
-    header { padding-top: 138px; }
-    .cmd-body { flex-direction: column; align-items: stretch; }
-    #copy-btn { width: 100%; }
-  }
-</style>
-<noscript><style>.reveal { opacity: 1; transform: none; }</style></noscript>
-</head>
-<body>
-
-<div class="blobs" aria-hidden="true">
-  <div class="blob a"></div><div class="blob b"></div><div class="blob c"></div>
-</div>
-
-<nav aria-label="Sections">
-  <a href="#install" class="active">Install</a>
-  <a href="#inside">What you get</a>
-  <a href="#how">How it works</a>
-  <a href="#faq">FAQ</a>
-  <button id="theme-btn" title="Toggle light/dark" aria-label="Toggle light or dark theme">☾</button>
-</nav>
-
-<header id="install" class="wrap">
-  <span class="hello">👋 for brand-new Macs (and freshly formatted ones)</span>
-  <h1>One command.<br>Your Mac, <span class="grad">ready to work.</span></h1>
-  <p class="sub">
-    mac-setup installs your apps, developer tools, and a beautiful terminal —
-    but only after <strong>you tick exactly what you want</strong>. No mystery
-    scripts, no gimmicks, nothing that touches how macOS looks and feels.
-  </p>
-
-  <div class="cmd-card reveal">
-    <div class="cmd-head"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>Terminal</span></div>
-    <div class="cmd-body">
-      <code id="cmd"><span class="p">curl</span> -fsSL https://raw.githubusercontent.com/pedrobritx/mac-setup/main/bootstrap.sh | <span class="p">bash</span></code>
-      <button id="copy-btn">Copy</button>
-    </div>
-    <div class="cmd-note">Paste it into Terminal and press <b>return</b> — the checklist appears before anything installs.</div>
-  </div>
-</header>
-
-<section id="inside" class="wrap">
-  <div class="reveal">
-    <div class="eyebrow">What you get</div>
-    <h2>Everything a workstation needs, nothing it doesn't</h2>
-    <p class="lead">Every item is optional and explained on the selection screen. Untick anything — your choices are remembered.</p>
-  </div>
-  <div class="grid">
-    <div class="card reveal"><div class="ico">📦</div><h3>Your apps</h3>
-      <p>Chrome, VS Code, Docker, Figma, Notion, Obsidian, WhatsApp, Teams, Discord, Steam… installed from the right source, exactly one copy of each.</p></div>
-    <div class="card reveal"><div class="ico">✨</div><h3>A lovely terminal</h3>
-      <p>zsh with a fast Starship prompt, history search, smart <code>cd</code>, syntax colors, and ghost-text suggestions — each one explained before you say yes.</p></div>
-    <div class="card reveal"><div class="ico">🛠️</div><h3>Developer toolchains</h3>
-      <p>Git + SSH keys + GitHub login, Node (fnm), Python (uv), Swift extras, VS Code settings & extensions.</p></div>
-    <div class="card reveal"><div class="ico">🍃</div><h3>A Mac that stays a Mac</h3>
-      <p>Stock-first: no animation hacks, no hot corners, no window-management overrides. Just a few tasteful defaults like tap-to-click and the Finder path bar.</p></div>
-    <div class="card reveal"><div class="ico">🔒</div><h3>Sensible security</h3>
-      <p>Firewall on, Touch&nbsp;ID for <code>sudo</code>, instant screen lock — and clear pointers for the choices only you should make, like FileVault.</p></div>
-    <div class="card reveal"><div class="ico">🧾</div><h3>Total transparency</h3>
-      <p>It says what it <em>will</em> do, what it <em>is</em> doing, and what it <em>did</em> — with reports and logs you can read afterwards.</p></div>
-  </div>
-</section>
-
-<section id="how" class="wrap">
-  <div class="reveal">
-    <div class="eyebrow">How it works</div>
-    <h2>Three steps, one confirmation</h2>
-    <p class="lead">You stay in charge until you press <b>y</b> — after that, it runs itself and shows its progress.</p>
-  </div>
-  <div class="steps">
-    <div class="step reveal"><h3>Open Terminal & paste</h3>
-      <p>Terminal lives in <kbd>Applications → Utilities</kbd> (or press <kbd>⌘ space</kbd> and type “Terminal”). Paste the command above, press <kbd>return</kbd>, and approve the Xcode tools dialog if it appears.</p></div>
-    <div class="step reveal"><h3>Tick what you want</h3>
-      <p>A checklist appears with everything pre-ticked. <kbd>↑</kbd><kbd>↓</kbd> to move, <kbd>space</kbd> to tick or untick, <kbd>a</kbd> for a whole group, <kbd>enter</kbd> to review. Every item has a plain-English explanation.</p></div>
-    <div class="step reveal"><h3>Confirm & relax</h3>
-      <p>Check the summary, press <kbd>y</kbd>, and watch the counter climb — <em>“34 of 72 · 38 to go”</em>. It may ask for your password or App Store sign-in; everything else is automatic. Re-running is always safe.</p></div>
-  </div>
-
-  <div class="term reveal" aria-label="Preview of the selection screen">
-    <div class="term-head"><i class="dot r"></i><i class="dot y"></i><i class="dot g"></i><span>mac-setup — selection screen</span></div>
-    <pre>
-<span class="tk-h">mac-setup</span> <span class="tk-d">— tick what to install, untick what to skip</span>
-<span class="tk-d">↑/↓ move · space tick/untick · a toggles a whole group · enter continue</span>
-
-<span class="tk-c">Terminal environment</span>
-   <span class="tk-g">[✓]</span> starship     <span class="tk-d">pretty, fast shell prompt (git branch, language versions)</span>
- <span class="tk-c">❯</span> <span class="tk-g">[✓]</span> zoxide       <span class="tk-d">smarter cd — 'z proj' jumps to your most-used folders</span>
-   <span class="tk-g">[✓]</span> fzf          <span class="tk-d">fuzzy finder — Ctrl-R searches history, Ctrl-T finds files</span>
-   [ ] tmux         <span class="tk-d">split the terminal into panes; sessions survive disconnects</span>
-
-<span class="tk-c">Browsers &amp; AI assistants</span>
-   <span class="tk-g">[✓]</span> Google Chrome <span class="tk-d">primary browser</span>
-   <span class="tk-g">[✓]</span> Claude        <span class="tk-d">Anthropic Claude desktop</span>
-
-<span class="tk-g">83</span> of 84 selected <span class="tk-d">· enter to review &amp; confirm</span></pre>
-  </div>
-</section>
-
-<section id="faq" class="wrap">
-  <div class="reveal">
-    <div class="eyebrow">FAQ</div>
-    <h2>Good questions</h2>
-  </div>
-  <div class="reveal">
-    <details>
-      <summary>Is it safe? What does it change on my Mac?</summary>
-      <p>It installs the apps and tools you ticked (via Homebrew and the Mac App Store — official sources only) and applies a small set of documented preferences. It never overrides window management, Mission Control, or animations, never overwrites SSH keys, and backs up any dotfile before touching it. Everything it does is logged and reported.</p>
-    </details>
-    <details>
-      <summary>Can I run it again later?</summary>
-      <p>Yes — that's the design. Re-running skips everything already installed and pre-loads your previous selection. It's also how you add something you unticked the first time.</p>
-    </details>
-    <details>
-      <summary>Do I need to know the terminal?</summary>
-      <p>No. If you can paste one line and press a few arrow keys, you're qualified. The screen tells you which keys do what at every step.</p>
-    </details>
-    <details>
-      <summary>Will it ask for my password?</summary>
-      <p>Once, near the start (for system-level steps like the firewall), and macOS may ask you to sign in to the App Store for those apps. It never sees or stores your password — that's the standard <code>sudo</code> prompt.</p>
-    </details>
-    <details>
-      <summary>What if something can't be installed automatically?</summary>
-      <p>It lands in a <em>manual actions</em> report with the official link and the exact steps — for example paid App Store apps you haven't purchased yet. Nothing fails silently.</p>
-    </details>
-    <details>
-      <summary>How do I undo it?</summary>
-      <p><code>./uninstall.sh</code> removes exactly what was installed — after showing you the list and asking. Your files are never touched.</p>
-    </details>
-  </div>
-</section>
-
-<footer>
-  <p>Built with care by <a href="https://github.com/pedrobritx">Pedro Brito</a> ·
-     <a href="https://github.com/pedrobritx/mac-setup">source on GitHub</a> ·
-     <a href="https://github.com/pedrobritx/mac-setup/blob/main/docs/INSTALL.md">full install guide</a></p>
-</footer>
-
-<script>
-  // Theme: dark is the default; the choice persists.
-  var root = document.documentElement;
-  var btn = document.getElementById('theme-btn');
-  function setTheme(t) {
-    if (t === 'light') { root.setAttribute('data-theme', 'light'); btn.textContent = '☀'; }
-    else { root.removeAttribute('data-theme'); btn.textContent = '☾'; }
-    try { localStorage.setItem('theme', t); } catch (e) {}
-  }
-  var saved = null;
-  try { saved = localStorage.getItem('theme'); } catch (e) {}
-  setTheme(saved === 'light' ? 'light' : 'dark');
-  btn.addEventListener('click', function () {
-    setTheme(root.hasAttribute('data-theme') ? 'dark' : 'light');
-  });
-
-  // Copy the install command.
-  var copyBtn = document.getElementById('copy-btn');
-  copyBtn.addEventListener('click', function () {
-    var text = document.getElementById('cmd').textContent;
-    function done() {
-      copyBtn.textContent = 'Copied ✓';
-      setTimeout(function () { copyBtn.textContent = 'Copy'; }, 1800);
-    }
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done);
-    } else {
-      var ta = document.createElement('textarea');
-      ta.value = text; document.body.appendChild(ta);
-      ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
-      done();
-    }
-  });
-
-  // Reveal-on-scroll + active nav link.
-  var reveals = document.querySelectorAll('.reveal');
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, { threshold: 0.12 });
-  reveals.forEach(function (el) { io.observe(el); });
-
-  var links = document.querySelectorAll('nav a');
-  var sections = ['install', 'inside', 'how', 'faq'].map(function (id) { return document.getElementById(id); });
-  var so = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) {
-      if (e.isIntersecting) {
-        links.forEach(function (l) {
-          l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
-        });
-      }
-    });
-  }, { rootMargin: '-40% 0px -55% 0px' });
-  sections.forEach(function (s) { if (s) so.observe(s); });
-</script>
-</body>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="Choose your Mac apps, tools and preferences. Start with a thoughtful profile, make it yours, and follow a guided installation."
+    />
+    <meta name="referrer" content="no-referrer" />
+    <title>mac-setup — Make this Mac yours.</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/style.css" />
+    <link rel="stylesheet" href="assets/liquid.css" />
+    <script type="module" src="assets/app.mjs"></script>
+  </head>
+  <body>
+    <div class="aurora" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">Skip to setup</a>
+    <header class="site-header">
+      <nav class="wrap top-nav" aria-label="Main navigation">
+        <a class="brand" href="./" aria-label="mac-setup home"
+          ><span class="brand-icon" aria-hidden="true">&gt;_</span
+          ><span>mac-setup</span></a
+        >
+        <div class="nav-actions">
+          <button class="text-button" id="how-button">
+            <span class="nav-wide">How it works</span
+            ><span class="nav-compact">Guide</span>
+          </button>
+          <a class="nav-link" href="safety.html">Safety</a>
+          <a
+            class="nav-link"
+            aria-label="GitHub repository (opens in a new tab)"
+            href="https://github.com/pedrobritx/mac-setup"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><svg
+              class="nav-github-icon"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                d="M9 19c-4 1-4-2-6-2m12 5v-4a3 3 0 0 0-.8-2.2c2.7-.3 5.5-1.3 5.5-6A4.7 4.7 0 0 0 18.4 6a4.4 4.4 0 0 0-.1-3.8S17.3 2 15 3.5a13 13 0 0 0-6 0C6.7 2 5.7 2.2 5.7 2.2A4.4 4.4 0 0 0 5.6 6a4.7 4.7 0 0 0-1.3 3.3c0 4.7 2.8 5.7 5.5 6A3 3 0 0 0 9 17.5V22"
+              /></svg
+            ><span class="nav-github-label">GitHub</span
+            ><span class="sr-only"
+              >GitHub repository (opens in a new tab)</span
+            ></a
+          >
+          <button
+            class="effects-button"
+            id="effects-button"
+            aria-pressed="true"
+            aria-label="Fluid effects. Use calm appearance"
+            title="Use calm appearance: less motion and solid surfaces"
+          >
+            <span class="effects-label">Fluid</span>
+            <span class="effects-switch" aria-hidden="true"><span></span></span>
+          </button>
+          <button
+            class="icon-button"
+            id="theme-button"
+            aria-label="Switch to light theme"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+              />
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+    <main class="wrap" id="main">
+      <div class="intro">
+        <div>
+          <h1 id="page-title" tabindex="-1">
+            Make this <span class="gradient-text">Mac yours.</span>
+          </h1>
+          <p id="page-description">
+            Your apps, your tools, your preferences. One thoughtful setup.
+          </p>
+        </div>
+        <p class="compatibility" id="environment">
+          Built for macOS · Apple Silicon &amp; Intel
+        </p>
+      </div>
+      <div class="setup-window" id="setup-window">
+        <div class="window-toolbar">
+          <span class="traffic-lights" aria-hidden="true"
+            ><i></i><i></i><i></i
+          ></span>
+          <span>Your Mac setup</span>
+          <span class="window-mark" aria-hidden="true"
+            ><span data-icon="laptop"></span
+          ></span>
+        </div>
+        <div class="window-body">
+          <ol class="stepper" aria-label="Setup progress">
+            <li aria-current="step">
+              <span class="step-number">1</span
+              ><span>Choose &amp; customise</span>
+            </li>
+            <li>
+              <span class="step-number">2</span><span>Review your setup</span>
+            </li>
+            <li>
+              <span class="step-number">3</span><span>Guided installation</span>
+            </li>
+          </ol>
+          <div class="notice" id="connection-notice" role="alert" hidden></div>
+          <div class="notice" id="app-error" role="alert" hidden></div>
+          <p
+            class="sr-only"
+            id="announcement"
+            role="status"
+            aria-live="polite"
+          ></p>
+          <section id="choose-view" aria-label="Choose your setup">
+            <fieldset class="profiles">
+              <legend class="sr-only">Choose a starting profile</legend>
+              <div id="profiles" class="profile-grid"></div>
+            </fieldset>
+            <div class="workspace">
+              <aside class="category-panel" aria-label="Browse categories">
+                <p class="panel-caption">Browse</p>
+                <div id="categories" class="categories"></div>
+                <div class="catalog-actions">
+                  <button class="text-button" id="import-button">
+                    Import plan</button
+                  ><button class="text-button" id="clear-button">
+                    Clear optional
+                  </button>
+                </div>
+                <input
+                  id="plan-file"
+                  type="file"
+                  accept="application/json,.json"
+                  hidden
+                />
+              </aside>
+              <section
+                class="catalog-panel"
+                aria-label="Apps, tools and preferences"
+              >
+                <div class="catalog-toolbar">
+                  <label class="search-field"
+                    ><svg viewBox="0 0 24 24" aria-hidden="true">
+                      <circle cx="10.5" cy="10.5" r="6.5" />
+                      <path d="m16 16 5 5" /></svg
+                    ><span class="sr-only">Find an app or tool</span
+                    ><input
+                      id="search"
+                      type="search"
+                      placeholder="Find an app or tool…"
+                      autocomplete="off" /></label
+                  ><button
+                    class="filter-button"
+                    id="selected-filter"
+                    aria-pressed="false"
+                  >
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                      <path d="M3 5h18M6 11h12m-8 6h4" /></svg
+                    ><span>Selected only</span>
+                  </button>
+                </div>
+                <div class="catalog-meta">
+                  <span id="result-count"
+                    >Loading the installer catalogue…</span
+                  >
+                  <div class="source-picker" id="source-picker">
+                    <span id="source-label">Source</span>
+                    <select id="source-filter" aria-label="Source">
+                      <option value="all">All sources</option>
+                      <option value="mas">App Store</option>
+                      <option value="homebrew">Homebrew</option>
+                      <option value="guided">Guided follow-up</option>
+                    </select>
+                  </div>
+                </div>
+                <div id="catalog" aria-busy="true">
+                  <div class="loading-state">Getting your options ready…</div>
+                </div>
+                <noscript
+                  ><p>
+                    This catalogue needs JavaScript to keep your choices in
+                    sync. You can also use the
+                    <a
+                      href="https://github.com/pedrobritx/mac-setup#installation"
+                      >terminal installer</a
+                    >.
+                  </p></noscript
+                >
+              </section>
+              <aside class="selection-column" aria-label="Your setup summary">
+                <section class="summary-panel">
+                  <div class="summary-title">
+                    <h2>Your setup</h2>
+                    <span id="selected-profile"></span>
+                  </div>
+                  <dl class="counts">
+                    <div>
+                      <dt><span data-icon="laptop"></span>Apps &amp; tools</dt>
+                      <dd id="apps-count">—</dd>
+                    </div>
+                    <div>
+                      <dt><span data-icon="settings"></span>Preferences</dt>
+                      <dd id="preferences-count">—</dd>
+                    </div>
+                    <div>
+                      <dt><span data-icon="plug"></span>Connections</dt>
+                      <dd id="connections-count">—</dd>
+                    </div>
+                  </dl>
+                  <div class="selection-preview">
+                    <p id="selection-label">Selected items</p>
+                    <div id="selected-chips" class="chips"></div>
+                    <p id="more-count" class="quiet"></p>
+                  </div>
+                  <p class="store-note">
+                    <span data-icon="info"></span
+                    ><span
+                      >App Store apps may need your Apple Account. Paid apps
+                      require an existing purchase.</span
+                    >
+                  </p>
+                  <button class="primary-button" id="review-button" disabled>
+                    Review setup <span data-icon="arrow"></span>
+                  </button>
+                  <p class="button-caption">
+                    Nothing installs until you confirm.
+                  </p>
+                </section>
+                <p class="trust-note">
+                  <span data-icon="shield"></span>Official sources. Your choice.
+                  Always.
+                </p>
+              </aside>
+            </div>
+          </section>
+          <section id="review-view" hidden aria-label="Review your setup">
+            <button class="back-button" id="back-button">
+              <span data-icon="back"></span>Back to choices
+            </button>
+            <div class="review-layout">
+              <div>
+                <div class="review-heading">
+                  <h2>Everything you’ve chosen</h2>
+                  <span id="review-total" class="quiet"></span>
+                </div>
+                <div class="notice" id="paid-notice" hidden></div>
+                <div id="review-list" class="review-list"></div>
+              </div>
+              <aside class="review-side">
+                <section class="summary-panel">
+                  <h2>Ready when you are.</h2>
+                  <p id="review-explanation">
+                    Download your plan, then open the local companion on your
+                    Mac for a guided installation.
+                  </p>
+                  <div id="git-identity" hidden>
+                    <h3>Git identity <span class="quiet">optional</span></h3>
+                    <p class="quiet">
+                      Use your own details, or leave both empty to configure
+                      later. These stay on this Mac.
+                    </p>
+                    <label class="field"
+                      >Name<input
+                        id="git-name"
+                        autocomplete="name"
+                        maxlength="200" /></label
+                    ><label class="field"
+                      >Email<input
+                        id="git-email"
+                        type="email"
+                        autocomplete="email"
+                        maxlength="200"
+                    /></label>
+                  </div>
+                  <label class="confirmation" id="confirmation-label" hidden
+                    ><input type="checkbox" id="confirm-install" /><span
+                      >I’ve reviewed this setup and want to continue.</span
+                    ></label
+                  ><button class="primary-button" id="continue-button">
+                    Download plan &amp; continue
+                    <span data-icon="arrow"></span></button
+                  ><button class="secondary-button" id="export-button">
+                    Export JSON plan
+                  </button>
+                  <p class="button-caption" id="review-caption">
+                    Your plan contains choices, never credentials.
+                  </p>
+                </section>
+                <p class="trust-note">
+                  <span data-icon="shield"></span>Your passwords stay with you.
+                </p>
+              </aside>
+            </div>
+          </section>
+          <section id="guide-view" hidden aria-label="Continue on your Mac">
+            <button class="back-button" id="guide-back">
+              <span data-icon="back"></span>Back to review
+            </button>
+            <div class="guide-panel">
+              <h2>A small handoff to your Mac.</h2>
+              <p>
+                The public website makes your plan. The local companion installs
+                it and shows real progress.
+              </p>
+              <ol class="handoff-steps">
+                <li>
+                  <span class="step-number">1</span>
+                  <div>
+                    <h3>Keep your downloaded plan</h3>
+                    <p>
+                      Save <code>mac-setup-plan.json</code> somewhere you can
+                      find it.
+                    </p>
+                    <button class="text-button" id="download-again">
+                      Download again
+                    </button>
+                  </div>
+                </li>
+                <li>
+                  <span class="step-number">2</span>
+                  <div>
+                    <h3>Open the companion from Terminal</h3>
+                    <p>
+                      Open Terminal (⌘ Space, then “Terminal”), paste this
+                      command and press Return. Apple’s Command Line Tools may
+                      need a first-time installation.
+                    </p>
+                    <div class="command-box">
+                      <code id="launch-command"
+                        >curl -fsSL
+                        https://raw.githubusercontent.com/pedrobritx/mac-setup/main/bootstrap.sh
+                        | bash -s -- --web</code
+                      ><button id="copy-command" class="secondary-button">
+                        Copy
+                      </button>
+                    </div>
+                    <p class="quiet">
+                      You can
+                      <a
+                        href="https://github.com/pedrobritx/mac-setup/blob/main/bootstrap.sh"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >read the launcher first</a
+                      >. Already have a clone? Run <code>./web.sh</code>.
+                    </p>
+                  </div>
+                </li>
+                <li>
+                  <span class="step-number">3</span>
+                  <div>
+                    <h3>Import, review, install</h3>
+                    <p>
+                      The companion opens in your browser. Choose “Import plan”,
+                      select your JSON file, review your choices and confirm.
+                      Keep Terminal open for password prompts.
+                    </p>
+                  </div>
+                </li>
+              </ol>
+              <p class="notice">
+                This website cannot inspect or change your Mac. Live progress
+                appears after you launch the local companion.
+              </p>
+            </div>
+          </section>
+          <section id="progress-view" hidden aria-label="Guided installation">
+            <div class="progress-layout">
+              <section class="progress-panel">
+                <div class="progress-heading">
+                  <h2>Installation progress</h2>
+                  <span id="run-mode" class="mode-label"></span>
+                </div>
+                <p id="progress-description"></p>
+                <progress
+                  id="run-progress"
+                  max="1"
+                  value="0"
+                  aria-label="Installation steps processed"
+                ></progress>
+                <div class="progress-caption">
+                  <span id="progress-count">Preparing your setup…</span
+                  ><span>Following the real installer</span>
+                </div>
+                <p class="notice" id="run-error" role="alert" hidden></p>
+                <ol id="module-list" class="module-list"></ol>
+                <details class="output-details">
+                  <summary>Installer output</summary>
+                  <pre
+                    id="installer-output"
+                    tabindex="0"
+                    aria-label="Installer output"
+                  ></pre>
+                </details>
+                <p class="quiet">Commands and reports stay on this Mac.</p>
+                <button class="secondary-button" id="new-plan" hidden>
+                  Return to choices
+                </button>
+              </section>
+              <aside>
+                <section class="summary-panel followup-panel">
+                  <h2 id="followup-title">A few things may need you</h2>
+                  <p class="quiet">
+                    Account sign-ins, purchases and MCP permissions remain yours
+                    to approve.
+                  </p>
+                  <ul id="followups" class="followups"></ul>
+                  <button class="secondary-button" id="report-button" disabled>
+                    Download install report</button
+                  ><button
+                    class="text-button"
+                    id="manual-report-button"
+                    disabled
+                  >
+                    Download manual actions
+                  </button>
+                  <p class="button-caption" id="report-caption">
+                    Available when the run finishes.
+                  </p>
+                </section>
+                <p class="trust-note">
+                  <span data-icon="shield"></span>Your passwords stay with you.
+                </p>
+              </aside>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer class="wrap footer">
+      <div class="footer-about">
+        <span>No account. No tracking. Just your Mac.</span>
+        <span class="creator-credit"
+          >mac-setup by
+          <a
+            href="https://github.com/pedrobritx"
+            target="_blank"
+            rel="noopener noreferrer"
+            >BRITX<span class="sr-only">
+              on GitHub (opens in a new tab)</span
+            ></a
+          ><span class="footer-dot">·</span
+          ><a
+            href="https://www.linkedin.com/in/pedrobritx/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >LinkedIn<span class="sr-only"> (opens in a new tab)</span></a
+          ></span
+        >
+      </div>
+      <nav class="footer-links" aria-label="Project links">
+        <a href="safety.html">Safety &amp; privacy</a>
+        <a
+          href="https://github.com/pedrobritx/mac-setup"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Open source<span class="sr-only"> (opens in a new tab)</span></a
+        >
+        <a
+          href="https://github.com/pedrobritx/mac-setup/issues/new?title=Software+request%3A+&amp;body=Software+name%3A%0AOfficial+website+or+Mac+App+Store+link%3A%0AWhat+would+it+help+you+do%3F%0ASuggested+category+or+profile+%28optional%29%3A%0A"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Suggest software<span class="sr-only">
+            on GitHub (opens in a new tab)</span
+          ></a
+        >
+        <a
+          href="https://github.com/pedrobritx/mac-setup/issues/new?title=Problem+report%3A+&amp;body=What+happened%3F%0AWhat+did+you+expect%3F%0ASteps+to+reproduce%3A%0ABrowser+and+macOS+version%3A%0APublic+site+or+local+companion%3F%0A%0APlease+remove+personal+details+and+secrets+before+attaching+logs+or+screenshots.%0A"
+          target="_blank"
+          rel="noopener noreferrer"
+          >Report a problem<span class="sr-only">
+            on GitHub (opens in a new tab)</span
+          ></a
+        >
+        <a
+          class="support-link"
+          href="https://buymeacoffee.com/pedrobritx"
+          target="_blank"
+          rel="noopener noreferrer"
+          ><svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M4 8h13v8a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4V8Zm13 1h2a3 3 0 0 1 0 6h-2M7 3v2m4-2v2m4-2v2"
+            /></svg
+          >Buy me a coffee<span class="sr-only"> (opens in a new tab)</span></a
+        >
+      </nav>
+    </footer>
+    <dialog id="info-dialog" class="t-modal" aria-labelledby="dialog-title">
+      <div class="dialog-heading">
+        <h2 id="dialog-title"></h2>
+        <button
+          class="icon-button"
+          id="close-dialog"
+          aria-label="Close details"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="m6 6 12 12M6 18 18 6" />
+          </svg>
+        </button>
+      </div>
+      <div id="dialog-content"></div>
+    </dialog>
+  </body>
 </html>

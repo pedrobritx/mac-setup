@@ -66,6 +66,8 @@ reconcile_casks() {
 # These always land in the manual-actions report with official links.
 # ---------------------------------------------------------------------------
 report_unautomatable_apps() {
+  # The browser runner records only explicitly selected manual items.
+  [[ "${MAC_SETUP_EXPLICIT_SELECTION:-0}" == "1" ]] && return 0
   if app_installed "VMware Fusion"; then
     log_skip "VMware Fusion already installed."
     report_skip "${MODULE}" "VMware Fusion" "already installed"

@@ -90,8 +90,13 @@ main() {
   install_clt
   clone_repo
 
-  info "Handing off to install.sh..."
   cd "${CLONE_DIR}"
+  if [[ "${1:-}" == "--web" ]]; then
+    shift
+    info "Opening the guided browser setup..."
+    exec ./web.sh "$@"
+  fi
+  info "Handing off to install.sh..."
   exec ./install.sh "$@"
 }
 

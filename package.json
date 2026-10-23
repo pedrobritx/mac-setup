@@ -1,0 +1,18 @@
+{
+  "name": "mac-setup-browser",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "catalog": "python3 -m web.catalog",
+    "check:catalog": "python3 -m web.catalog --check",
+    "test": "node --test tests/*.test.mjs && python3 -m unittest discover -s tests -p 'test_*.py'",
+    "test:browser": "playwright test",
+    "format": "prettier --write docs/*.html docs/assets/*.{css,mjs} config/web-catalog.json tests/*.mjs tests/browser/*.mjs playwright.config.mjs package.json",
+    "check:format": "prettier --check docs/*.html docs/assets/*.{css,mjs} config/web-catalog.json tests/*.mjs tests/browser/*.mjs playwright.config.mjs package.json"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@playwright/test": "1.64.1",
+    "prettier": "3.9.10"
+  }
+}

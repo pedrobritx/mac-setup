@@ -1,0 +1,639 @@
+{
+  "retrievedAt": "2026-10-22T05:23:06.986326+00:00",
+  "purpose": "Software identification only; trademarks remain with their owners.",
+  "dashboardIconsRevision": "320c819da84048d5a3066e2578bfa83be9019fdf",
+  "appleLookup": "https://itunes.apple.com/lookup?country=br&entity=macSoftware&id=361309726,361304891,361285480,897118787,1496833156,899247664,640199958,1287239339,424389933,424390742,571213070,634148309,434290957,1444636541,803453959,823766827,1475387142,1176074088,897446215,1113153706,310633997,425424353,497799835",
+  "items": {
+    "cask:visual-studio-code": "mac-visual-studio-code.png",
+    "cask:antigravity": "mac-antigravity.png",
+    "cask:docker-desktop": "mac-docker-desktop.png",
+    "cask:postman": "mac-postman.png",
+    "cask:figma": "mac-figma.png",
+    "cask:github": "mac-github.png",
+    "cask:chatgpt": "mac-chatgpt.png",
+    "cask:claude": "mac-claude.png",
+    "cask:notion": "mac-notion.png",
+    "cask:obsidian": "mac-obsidian.png",
+    "cask:discord": "mac-discord.png",
+    "cask:google-drive": "mac-google-drive.png",
+    "cask:libreoffice": "mac-libreoffice.png",
+    "cask:appcleaner": "mac-appcleaner.png",
+    "cask:caffeine": "mac-caffeine.png",
+    "cask:1password": "mac-1password.png",
+    "cask:bettertouchtool": "mac-bettertouchtool.png",
+    "cask:keyboardcleantool": "mac-keyboardcleantool.png",
+    "cask:transmission": "mac-transmission.png",
+    "cask:daisydisk": "mac-daisydisk.png",
+    "cask:vlc": "mac-vlc.png",
+    "cask:steam": "mac-steam.png",
+    "cask:stremio": "mac-stremio.png",
+    "brew:git": "git.svg",
+    "brew:git-lfs": "git.svg",
+    "brew:gh": "github.svg",
+    "brew:neovim": "neovim.svg",
+    "brew:railway": "railway.svg",
+    "brew:supabase": "supabase.svg",
+    "brew:stripe-cli": "stripe.svg",
+    "cask:sf-symbols": "sf-symbols.png",
+    "cask:codex": "codex.svg",
+    "cask:claude-code": "claude-ai.svg",
+    "cask:1password-cli": "1password.svg",
+    "cask:google-chrome": "google-chrome.svg",
+    "cask:blender": "blender.svg",
+    "cask:inkscape": "inkscape.svg",
+    "cask:anydesk": "anydesk.svg",
+    "cask:teamviewer": "teamviewer.png",
+    "cask:zoom": "zoom.svg",
+    "cask:dropbox": "dropbox.svg",
+    "cask:obs": "obs-studio.png",
+    "cask:logi-options+": "logitech.svg",
+    "mas:897118787": "apple-897118787.png",
+    "mas:1496833156": "apple-1496833156.png",
+    "mas:424389933": "apple-424389933.png",
+    "mas:424390742": "apple-424390742.png",
+    "mas:571213070": "apple-571213070.png",
+    "mas:634148309": "apple-634148309.png",
+    "mas:434290957": "apple-434290957.png",
+    "mas:803453959": "apple-803453959.png",
+    "mas:823766827": "apple-823766827.png",
+    "mas:1475387142": "apple-1475387142.png",
+    "mas:1176074088": "apple-1176074088.png",
+    "mas:425424353": "apple-425424353.png",
+    "step:brew": "homebrew.svg",
+    "step:git": "git.svg",
+    "step:node": "nodejs.svg",
+    "step:python": "python.svg",
+    "step:vscode": "mac-visual-studio-code.png",
+    "pref:xcode:full_xcode": "apple-497799835.png",
+    "manual:vmware": "vmware.svg",
+    "manual:gemini-cli": "google-gemini.svg",
+    "manual:vercel-cli": "vercel.svg",
+    "manual:figma-code-connect": "mac-figma.png",
+    "web:google-docs": "google-docs.svg",
+    "web:google-sheets": "google-sheets.svg",
+    "web:google-slides": "google-slides.svg",
+    "mcp:github": "github.svg",
+    "mcp:figma": "figma.svg",
+    "mcp:docker": "docker.svg",
+    "mcp:notion": "notion.svg",
+    "mcp:vercel": "vercel.svg",
+    "mcp:supabase": "supabase.svg",
+    "mcp:railway": "railway.svg",
+    "mcp:stripe": "stripe.svg",
+    "mcp:slack": "apple-803453959.png",
+    "mas:361309726": "apple-361309726.png",
+    "mas:361304891": "apple-361304891.png",
+    "mas:361285480": "apple-361285480.png",
+    "mas:899247664": "apple-899247664.png",
+    "mas:640199958": "apple-640199958.png",
+    "mas:1287239339": "apple-1287239339.png",
+    "mas:1444636541": "apple-1444636541.png",
+    "mas:897446215": "apple-897446215.png",
+    "mas:1113153706": "apple-1113153706.png",
+    "mas:310633997": "apple-310633997.png",
+    "mcp:canva": "apple-897446215.png"
+  },
+  "assets": {
+    "git": {
+      "file": "git.svg",
+      "sha256": "85e3e8c8e95285f4f4007fb29e3adb1ea85a6c0390aa706389e5c1aa9e6ac31b",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/git.svg",
+      "kind": "Dashboard Icons"
+    },
+    "github": {
+      "file": "github.svg",
+      "sha256": "cdfb82ff14c8c2484eacba9d211d86cd0c993c933855cad2b03633414fa10ddb",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/github.svg",
+      "kind": "Dashboard Icons"
+    },
+    "codex": {
+      "file": "codex.svg",
+      "sha256": "6c5ce3d5a8763408a8daaf396fbd9c5ef8219c87b7a20d3f0b3b240aa2e500f1",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/codex.svg",
+      "kind": "Dashboard Icons"
+    },
+    "claude-ai": {
+      "file": "claude-ai.svg",
+      "sha256": "9e6623e9c03462c51f0cf71f24e38bec8e6e1b93092363e63df580a6f0a4dbe0",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/claude-ai.svg",
+      "kind": "Dashboard Icons"
+    },
+    "1password": {
+      "file": "1password.svg",
+      "sha256": "3c4fb99b438b5bcd93bd198104b6311cf4786c413293894f3574602852551a7a",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/1password.svg",
+      "kind": "Dashboard Icons"
+    },
+    "homebrew": {
+      "file": "homebrew.svg",
+      "sha256": "3a7b1a46a597962ae72ca65ac5e6b4c3fe61067fedf7b14ebba3a73272e120f4",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/homebrew.svg",
+      "kind": "Dashboard Icons"
+    },
+    "nodejs": {
+      "file": "nodejs.svg",
+      "sha256": "a38f1f19900a97d0e89b6210ab1c901aacf0148d580379cbb9d0706132b3fadd",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/nodejs.svg",
+      "kind": "Dashboard Icons"
+    },
+    "python": {
+      "file": "python.svg",
+      "sha256": "38a2dbbae6c06ef6d2dcf9d02a11338505d0a0c7c3f2c376b8d86908d81cfbc5",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/python.svg",
+      "kind": "Dashboard Icons"
+    },
+    "blender": {
+      "file": "blender.svg",
+      "sha256": "88c58ce2a8b40fe3502ffbafc76fe07287ff5d5cf8307c61faa27dcbde5d5ac2",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/blender.svg",
+      "kind": "Dashboard Icons"
+    },
+    "notion": {
+      "file": "notion.svg",
+      "sha256": "b98fea4bc3f3259c6907a40dae994c959c3240d7ee4b4afea144a555c638f6c2",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/notion.svg",
+      "kind": "Dashboard Icons"
+    },
+    "anydesk": {
+      "file": "anydesk.svg",
+      "sha256": "2256a0e1855a499045259cc50a423b7debd0d96e3b15c6e80c03aab48d981c04",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/anydesk.svg",
+      "kind": "Dashboard Icons"
+    },
+    "zoom": {
+      "file": "zoom.svg",
+      "sha256": "02a7a0b2028eb5ab7a9259ec0f9e59e8293244691b535aefdeb2b106023f760c",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/zoom.svg",
+      "kind": "Dashboard Icons"
+    },
+    "dropbox": {
+      "file": "dropbox.svg",
+      "sha256": "16fd819b4f0deac21770d225828f8e0789492f9209a0984a850169776778a43f",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/dropbox.svg",
+      "kind": "Dashboard Icons"
+    },
+    "google-chrome": {
+      "file": "google-chrome.svg",
+      "sha256": "4748547bb1d1cca359b67d3b164e57efb11eaeb41d2ac9cc3f97fccabfa05b0b",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/google-chrome.svg",
+      "kind": "Dashboard Icons"
+    },
+    "figma": {
+      "file": "figma.svg",
+      "sha256": "59f327ef3ae14b09c1c96ed5696f890c92efde2a5e6e52779e0515166385b6b9",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/figma.svg",
+      "kind": "Dashboard Icons"
+    },
+    "docker": {
+      "file": "docker.svg",
+      "sha256": "7de45e1ea203da32a040c257f47cd39a5711b3a200d27ec72dbccbc5efb1590b",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/docker.svg",
+      "kind": "Dashboard Icons"
+    },
+    "vmware": {
+      "file": "vmware.svg",
+      "sha256": "f27d789a27bcb5b4ab1560fca847d1d876a6dbce782d895d1785274790f38780",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/vmware.svg",
+      "kind": "Dashboard Icons"
+    },
+    "google-gemini": {
+      "file": "google-gemini.svg",
+      "sha256": "cda2df6631d5fa227de3fa04ed78cf354f910ba92a9f086e7455655c10ad9d09",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/google-gemini.svg",
+      "kind": "Dashboard Icons"
+    },
+    "google-docs": {
+      "file": "google-docs.svg",
+      "sha256": "ca36a864e5cf2a2621b26ba98f9ad6bae49301520f3aa119b4693b53fcafa462",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/google-docs.svg",
+      "kind": "Dashboard Icons"
+    },
+    "google-sheets": {
+      "file": "google-sheets.svg",
+      "sha256": "d5b7a4ac78701b87069182b5780d5c966ffcb7715119618ffc215ae429b46898",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/google-sheets.svg",
+      "kind": "Dashboard Icons"
+    },
+    "google-slides": {
+      "file": "google-slides.svg",
+      "sha256": "7dd0da473d39b45005d7d6a10a257252f4e78c63d54561629664e08c954c92b6",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/google-slides.svg",
+      "kind": "Dashboard Icons"
+    },
+    "supabase": {
+      "file": "supabase.svg",
+      "sha256": "f705be332477efbb8fd3a9b84bd0a64de5c64d0e0fb424320114a0eb313d7f8c",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/supabase.svg",
+      "kind": "Dashboard Icons"
+    },
+    "vercel": {
+      "file": "vercel.svg",
+      "sha256": "9dc4d2041230985253f057289ad492aa27796d36af945fbb3de2f6d7ca7839ac",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/vercel.svg",
+      "kind": "Dashboard Icons"
+    },
+    "railway": {
+      "file": "railway.svg",
+      "sha256": "c4b555ecd61236b762bba66aa4ca6c27ba92651e4c5b944dfd10d0709c699db6",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/railway.svg",
+      "kind": "Dashboard Icons"
+    },
+    "stripe": {
+      "file": "stripe.svg",
+      "sha256": "7576775bf9915b696bbb9162268f5c56147d2b4221a76ac6a9ca92835239b7e9",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/stripe.svg",
+      "kind": "Dashboard Icons"
+    },
+    "neovim": {
+      "file": "neovim.svg",
+      "sha256": "01f016e1e393f67ed60c8a51de8d3c73b66599ebd3faaf32f5f1c05bb89fad1f",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/neovim.svg",
+      "kind": "Dashboard Icons"
+    },
+    "logitech": {
+      "file": "logitech.svg",
+      "sha256": "820ec8615b40768a7eba669834268fd8f31202a5fdd9aea22cf2bf5ea133b113",
+      "source": "https://raw.githubusercontent.com/homarr-labs/dashboard-icons/320c819da84048d5a3066e2578bfa83be9019fdf/svg/logitech.svg",
+      "kind": "Dashboard Icons"
+    },
+    "apple-897118787": {
+      "file": "apple-897118787.png",
+      "sha256": "092bdf54418062eb16f9f538e044a335bdf7e741299eccbbc81963365f3cbe2d",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple112/v4/43/45/57/43455704-9c03-6f53-adf2-9784073d657a/AppIcon-0-0-85-220-0-0-0-0-4-0-0-0-2x-sRGB-0-0-0-0-0.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-1496833156": {
+      "file": "apple-1496833156.png",
+      "sha256": "bb292e2ff7b6ea3f1c454962e1af1f141d0da8748cfc8937ed6a9efdf95c320b",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d0/67/54/d0675413-8acd-a375-d0f4-77552ef34b95/PlaygroundsAppIcon-0-1x_U007euniversal-0-0-0-1-0-0-85-220-0.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-424389933": {
+      "file": "apple-424389933.png",
+      "sha256": "c08cd77fb7c0002b847c7060f66110dc3875847066859b4b9ccd694b25b29255",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/86/33/92/863392e0-3489-acb0-6b7d-6f78020531ed/AppIcon-0-85-220-0-6-0-0-2x-sRGB-0-0.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-424390742": {
+      "file": "apple-424390742.png",
+      "sha256": "6551775dcd022a3d029504325136ec0cd18ea5ad5db3ee78026b2ad311d9ec22",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/5a/58/14/5a581482-768e-eb9a-0ecf-644a7ebb21dc/AppIcon-0-85-220-0-6-0-0-2x-sRGB-0-0.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-571213070": {
+      "file": "apple-571213070.png",
+      "sha256": "a76b9f4f0c4aed41f02a3e2c3e7bcc54cd3e0c1906582205c90e6fc1305fdc98",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/9e/d6/45/9ed6457a-79a7-f2ee-1bbd-b172a3ae2151/Resolve.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-634148309": {
+      "file": "apple-634148309.png",
+      "sha256": "634255ba9feb4a6326195be3c1ece4e91a00490692c99615a0e4b1811ab68064",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ab/ad/6f/abad6fff-cdec-45d3-5eae-4c443b1da652/AppIcon-0-85-220-0-6-0-0-2x-0-0-0-0-0.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-434290957": {
+      "file": "apple-434290957.png",
+      "sha256": "b4fc4fc648b39088bad4271a55db988ce518cff75d01a876833c5d994956d9ff",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/ec/49/ab/ec49abe9-f6db-a9c6-4076-69a0fb632571/AppIcon-0-85-220-0-6-0-0-2x-P3-0-0.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-803453959": {
+      "file": "apple-803453959.png",
+      "sha256": "c71cfadbb8f33d7276f8641f8071bf688772257e66bafc0304d430ea0e379b5f",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/53/ab/c7/53abc748-c140-3331-e07e-9b12029c9cbd/electron.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-823766827": {
+      "file": "apple-823766827.png",
+      "sha256": "ef45d613298f2441e5bdc3dc77377ae6a67b9d575f4093728836802b2d90bd15",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/8d/c5/8f/8dc58fe8-a436-532f-086b-355200fd1516/OneDrive.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-1475387142": {
+      "file": "apple-1475387142.png",
+      "sha256": "7cdbd11be148f17e62ee1ddfce63b87b0b73c7578b56b78ad74f5e409eec4072",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/80/88/8a/80888acd-a98a-69d0-f830-4bc6a3ace422/AppIcon-0-0-85-220-0-0-5-0-2x-0-0-0.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-1176074088": {
+      "file": "apple-1176074088.png",
+      "sha256": "27c376e4b272990e5169e2b56a860c4289de5f387db09a948e18559deea617b9",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/bc/06/7f/bc067fab-7f57-e9e6-acf9-d94be4fd8fed/icon.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-425424353": {
+      "file": "apple-425424353.png",
+      "sha256": "fa1c7d29a9b72278fff2478b14bde4bed9541466fd0fee3a6fc8fe5e9bd064be",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/21/94/1e/21941eec-38e5-c8dd-4ecb-60f67cbf9e50/unarchiver.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "apple-497799835": {
+      "file": "apple-497799835.png",
+      "sha256": "b9672243ba29bcfab31442e9ae08a2c23e933018529894bd4f4e48c06716ef57",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/93/e1/c7/93e1c7a1-85e9-dfce-851e-d74172e2b132/Xcode-0-85-220-0-6-0-0-2x-P3-0-0.png/100x100bb.png",
+      "kind": "Apple App Store"
+    },
+    "obs-studio": {
+      "file": "obs-studio.png",
+      "sha256": "cc4b94efae24b4a571131526361352787a9193c01ffe09ce5bb018710ce666c9",
+      "source": "https://obsproject.com/assets/images/new_icon_small-r.png",
+      "kind": "Vendor website"
+    },
+    "inkscape": {
+      "file": "inkscape.svg",
+      "sha256": "9d3a87da6920eeb4cf02cd29535276692d77982ff940cb5ee1f89d8445f1e051",
+      "source": "https://media.inkscape.org/static/images/inkscape-logo.svg",
+      "kind": "Vendor website"
+    },
+    "teamviewer": {
+      "file": "teamviewer.png",
+      "sha256": "afc0af0bb90865b76c0d03cb9cb9913b5a759120d6cd2040b47a1a4e8def88b8",
+      "source": "https://www.teamviewer.com/etc.clientlibs/teamviewer/clientlibs/clientlib-resources/resources/favicon.png",
+      "kind": "Vendor website"
+    },
+    "sf-symbols": {
+      "file": "sf-symbols.png",
+      "sha256": "200df459301a295aa4c8c248c44ae7e31da3a16a6d321591f6754149a50b9344",
+      "source": "https://developer.apple.com/assets/elements/icons/sf-symbols/sf-symbols-96x96_2x.png",
+      "kind": "Vendor website"
+    },
+    "mac-visual-studio-code": {
+      "file": "mac-visual-studio-code.png",
+      "sha256": "f53cf5dab668141e911ccf9ec652332d3b15767b5842fd54b176485d72933a60",
+      "source": "https://formulae.brew.sh/cask/visual-studio-code",
+      "kind": "Application bundle icon",
+      "application": "Visual Studio Code",
+      "version": "1.142.0",
+      "resource": "Code.icns"
+    },
+    "mac-antigravity": {
+      "file": "mac-antigravity.png",
+      "sha256": "6f2c2084f0f894314c6f51af4606b0ad6a2f99d66d89833a792b2d20a77c119c",
+      "source": "https://formulae.brew.sh/cask/antigravity",
+      "kind": "Application bundle icon",
+      "application": "Antigravity",
+      "version": "2.24.0",
+      "resource": "icon.icns"
+    },
+    "mac-docker-desktop": {
+      "file": "mac-docker-desktop.png",
+      "sha256": "c42670069a6b65c1e4bc340f706c104923ad8abb2dca6d0291b7f274c255e758",
+      "source": "https://formulae.brew.sh/cask/docker-desktop",
+      "kind": "Application bundle icon",
+      "application": "Docker",
+      "version": "4.96.0",
+      "resource": "AppIcon.icns"
+    },
+    "mac-postman": {
+      "file": "mac-postman.png",
+      "sha256": "ef87720aa26dd54aae8a64de1ea4176654b6d344195dcad9b4b9539afae44291",
+      "source": "https://formulae.brew.sh/cask/postman",
+      "kind": "Application bundle icon",
+      "application": "Postman",
+      "version": "12.33.0",
+      "resource": "app.icns"
+    },
+    "mac-figma": {
+      "file": "mac-figma.png",
+      "sha256": "18547880e1687e6ce86eb38cb1cef257e92726e6366daa1cddeceb2039023627",
+      "source": "https://formulae.brew.sh/cask/figma",
+      "kind": "Application bundle icon",
+      "application": "Figma",
+      "version": "126.9.13",
+      "resource": "electron.icns"
+    },
+    "mac-github": {
+      "file": "mac-github.png",
+      "sha256": "2627f0c4e435d1f8cc68714a5d3b215169fcfa6f53e6e682aa919c159255ce62",
+      "source": "https://formulae.brew.sh/cask/github",
+      "kind": "Application bundle icon",
+      "application": "GitHub Desktop",
+      "version": "3.6.7",
+      "resource": "electron.icns"
+    },
+    "mac-chatgpt": {
+      "file": "mac-chatgpt.png",
+      "sha256": "979ea53ec0bb72bb53d9cca16b54386702eea2ac36be647f73d9160697cbacd3",
+      "source": "https://formulae.brew.sh/cask/chatgpt",
+      "kind": "Application bundle icon",
+      "application": "ChatGPT",
+      "version": "26.1016.51333",
+      "resource": "electron.icns"
+    },
+    "mac-claude": {
+      "file": "mac-claude.png",
+      "sha256": "f3889e0ac9a0010c7d13bba6798fc855e7997aba672b5fbb59fe1256387671b1",
+      "source": "https://formulae.brew.sh/cask/claude",
+      "kind": "Application bundle icon",
+      "application": "Claude",
+      "version": "2.42304.2",
+      "resource": "electron.icns"
+    },
+    "mac-notion": {
+      "file": "mac-notion.png",
+      "sha256": "de55a0a11fbce162b5c55c64c1491b0096ee62d384c16bb23fbe05aa42192af5",
+      "source": "https://formulae.brew.sh/cask/notion",
+      "kind": "Application bundle icon",
+      "application": "Notion",
+      "version": "7.39.0",
+      "resource": "electron.icns"
+    },
+    "mac-obsidian": {
+      "file": "mac-obsidian.png",
+      "sha256": "d74d35ad9c956ad7d0161814040fdd923db13003a85e675617cf59b2c31dca49",
+      "source": "https://formulae.brew.sh/cask/obsidian",
+      "kind": "Application bundle icon",
+      "application": "Obsidian",
+      "version": "1.14.4",
+      "resource": "icon.icns"
+    },
+    "mac-discord": {
+      "file": "mac-discord.png",
+      "sha256": "ce6325feadc0cac92ed2cf7e62651e47516a296daacf1bc0b6cde95ec0f82473",
+      "source": "https://formulae.brew.sh/cask/discord",
+      "kind": "Application bundle icon",
+      "application": "Discord",
+      "version": "0.0.416",
+      "resource": "electron.icns"
+    },
+    "mac-google-drive": {
+      "file": "mac-google-drive.png",
+      "sha256": "21a467c7d6b2e1d829ff5ecb67453c67f5588d20ab1221a8d46edc9bc3dda618",
+      "source": "https://formulae.brew.sh/cask/google-drive",
+      "kind": "Application bundle icon",
+      "application": "Google Drive",
+      "version": "133.0",
+      "resource": "drive_fs.icns"
+    },
+    "mac-libreoffice": {
+      "file": "mac-libreoffice.png",
+      "sha256": "5082c7566dcd25c23d77eb0dd67c0cc9c936cce17bcc051cf8172607b77622f1",
+      "source": "https://formulae.brew.sh/cask/libreoffice",
+      "kind": "Application bundle icon",
+      "application": "LibreOffice",
+      "version": "26.8.1.1",
+      "resource": "main.icns"
+    },
+    "mac-appcleaner": {
+      "file": "mac-appcleaner.png",
+      "sha256": "020eb08d5e223bf9c9fbf079a4c8249f1a0576edeb626597b28c3c4a482c2d5d",
+      "source": "https://formulae.brew.sh/cask/appcleaner",
+      "kind": "Application bundle icon",
+      "application": "AppCleaner",
+      "version": "3.7.0",
+      "resource": "AppIcon.icns"
+    },
+    "mac-caffeine": {
+      "file": "mac-caffeine.png",
+      "sha256": "ca9e3624e085c9cdd8466645f0b516ef883b2e77fc22f5af97a64ae3cc37ea76",
+      "source": "https://formulae.brew.sh/cask/caffeine",
+      "kind": "Application bundle icon",
+      "application": "Caffeine",
+      "version": "1.1.4",
+      "resource": "Caffeine.icns"
+    },
+    "mac-1password": {
+      "file": "mac-1password.png",
+      "sha256": "fac1157606bf0a585391f79821444a1db19eafa37929466560f14fc889aef9be",
+      "source": "https://formulae.brew.sh/cask/1password",
+      "kind": "Application bundle icon",
+      "application": "1Password",
+      "version": "8.12.42",
+      "resource": "icon.icns"
+    },
+    "mac-bettertouchtool": {
+      "file": "mac-bettertouchtool.png",
+      "sha256": "d108c90bd5379b4b57f8363166bc215ad2a3a64f694a1c2a5556d2d43a4853ac",
+      "source": "https://formulae.brew.sh/cask/bettertouchtool",
+      "kind": "Application bundle icon",
+      "application": "BetterTouchTool",
+      "version": "6.954",
+      "resource": "BTT.icns"
+    },
+    "mac-keyboardcleantool": {
+      "file": "mac-keyboardcleantool.png",
+      "sha256": "8e2e2e3d3a94453b2ae245e3d6b579dfeac6843eba0964d9e36ee10659ea52e8",
+      "source": "https://formulae.brew.sh/cask/keyboardcleantool",
+      "kind": "Application bundle icon",
+      "application": "KeyboardCleanTool",
+      "version": "8.3",
+      "resource": "AppIcon.icns"
+    },
+    "mac-transmission": {
+      "file": "mac-transmission.png",
+      "sha256": "6515765d3605a95a3f102d0a339e66e1080253ef95f0c7069bb035fcfb0e2577",
+      "source": "https://formulae.brew.sh/cask/transmission",
+      "kind": "Application bundle icon",
+      "application": "Transmission",
+      "version": "4.1.3",
+      "resource": "Transmission_Tahoe.icns"
+    },
+    "mac-daisydisk": {
+      "file": "mac-daisydisk.png",
+      "sha256": "e1c63e46d8675df74d2f83fee39d48d6b1a22c06308c41e253a3413683093788",
+      "source": "https://formulae.brew.sh/cask/daisydisk",
+      "kind": "Application bundle icon",
+      "application": "DaisyDisk",
+      "version": "4.34.2",
+      "resource": "DaisyDisk.icns"
+    },
+    "mac-vlc": {
+      "file": "mac-vlc.png",
+      "sha256": "137d717c8836f6edcdb250979227518886f1d03fa1e2501507484478ffa93c5f",
+      "source": "https://formulae.brew.sh/cask/vlc",
+      "kind": "Application bundle icon",
+      "application": "VLC",
+      "version": "3.0.24",
+      "resource": "VLC.icns"
+    },
+    "mac-steam": {
+      "file": "mac-steam.png",
+      "sha256": "89b5a4451ac44154dd05eaee822baddee6682689341aa6f36c733e590e37f296",
+      "source": "https://formulae.brew.sh/cask/steam",
+      "kind": "Application bundle icon",
+      "application": "Steam",
+      "version": "",
+      "resource": "Steam.icns"
+    },
+    "mac-stremio": {
+      "file": "mac-stremio.png",
+      "sha256": "b31114dd660ca5f28e6144148e83bf941a0f88cdfcd70f8fb72d0fbd7459e3bb",
+      "source": "https://formulae.brew.sh/cask/stremio",
+      "kind": "Application bundle icon",
+      "application": "Stremio",
+      "version": "5.1.26",
+      "resource": "stremio-dock.icns"
+    },
+    "apple-361309726": {
+      "file": "apple-361309726.png",
+      "sha256": "5377914a137929f4bd1e3a0b8c3e1c12f7b596cd78ef6db31a5cc098cc05b373",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/e4/d1/99/e4d19916-72b3-3559-72da-d4c43d26c525/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-P3-0-0-85-220-0.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    },
+    "apple-361304891": {
+      "file": "apple-361304891.png",
+      "sha256": "0266c80fbd4dc06e08ce1b18ef31359681de8c43eab5b4d529fb5208134ddb3b",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/ca/f2/53/caf253e3-c61a-7606-b270-e263cac05534/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-P3-0-0-85-220-0.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    },
+    "apple-361285480": {
+      "file": "apple-361285480.png",
+      "sha256": "ace6f0b378232cfe4e6f8a25e2183c89f87292a9cb004f2d85afd45fb21a9a1c",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/86/eb/64/86eb64db-d97c-f697-92fb-60b30b9b3d9d/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-P3-0-0-85-220-0.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    },
+    "apple-899247664": {
+      "file": "apple-899247664.png",
+      "sha256": "9ce9420472780b2e74476a8644cf462135782fad503fc23facce91ca91f6524b",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c8/6c/6c/c86c6c53-c1aa-37a2-580b-092b3cff7f80/AppIcon-0-1x_U007epad-0-1-0-P3-85-220-0.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    },
+    "apple-640199958": {
+      "file": "apple-640199958.png",
+      "sha256": "c66c71c977b38771cd6ee7818b31adccfdb22df02cbd4d9d641a12509d6316f3",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/72/93/f0/7293f0ed-249c-f6f4-0bd1-3dbabdbd8d1c/AppIcon-Release-0-1x_U007epad-0-0-0-1-0-sRGB-85-220-0.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    },
+    "apple-1287239339": {
+      "file": "apple-1287239339.png",
+      "sha256": "11c4ab9b0be6f53d3be2e1357d87e8ad8e42956baee2bd7b73488d2179f7d907",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple126/v4/ef/51/fc/ef51fc8c-ef5d-beb2-5ffe-8644a0041835/AppIcon-iOS-0-1x_U007emarketing-0-6-0-85-220.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    },
+    "apple-1444636541": {
+      "file": "apple-1444636541.png",
+      "sha256": "b47b8085a8ec84b24231010681e7c449a3fc3d8028875025da2998ad89c20afa",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d6/f1/e0/d6f1e04a-c39a-cacb-e84e-c6838878f65c/AppIcon-0-0-1x_U007epad-0-0-0-11-0-0-sRGB-85-220.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    },
+    "apple-897446215": {
+      "file": "apple-897446215.png",
+      "sha256": "f94196d7bcae3bf770a3742694abb078126e8121ba731a656f1c28ab37721c9c",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/54/f2/7b/54f27b60-a3a3-62bc-8bc7-2cf1ce516731/AppIcon-0-0-1x_U007epad-0-11-0-85-220.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    },
+    "apple-1113153706": {
+      "file": "apple-1113153706.png",
+      "sha256": "f02a1d07676beb8e2f60d6c03e75f1f313bc38047d8ce1d6e5a07b3231add285",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/e2/e6/f6/e2e6f64f-129a-d117-d3e3-9a0d608d2e0e/AppIcon-0-0-1x_U007epad-0-1-0-0-85-220.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    },
+    "apple-310633997": {
+      "file": "apple-310633997.png",
+      "sha256": "5bfb07327acd2867f77cebe39040bdfa6f418d9d03010704aecb866f0becef9e",
+      "source": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/0b/bc/10/0bbc1033-a2d4-700c-31c7-02ac62c19fc9/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-0-85-220.png/100x100bb.jpg",
+      "kind": "Apple App Store",
+      "note": "Artwork decoded and converted to PNG; visual content unchanged."
+    }
+  }
+}

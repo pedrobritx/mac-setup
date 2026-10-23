@@ -7,6 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — languages and softer window motion
+
+- Added a keyboard-operable round flag picker for English (UK), Brazilian
+  Portuguese, French, German and Spanish (Spain). Bundled translations cover the
+  setup flow, catalogue descriptions and Safety page; language persists locally.
+- Extended catalogue search to translated descriptions, preserved canonical plan
+  IDs and commands, and added translation completeness/interpolation checks.
+- Balanced sidebar import/reset padding, matched the whole setup window's spring
+  to the floating navigation, and kept the compact summary outside its moving
+  container. Spread and dimmed the cursor-following highlights.
+
+### Changed — cohesive Fluid interactions and participation
+
+- Renamed the appearance control to Fluid and extended rounded hover/focus bodies
+  and elastic surface response across navigation, secondary, back and text actions.
+  Added subtler window/titlebar response, native-scroll elastic shading and
+  hover-only animated gradient headings; accessibility preferences still win.
+- Replaced the native source popup with a keyboard-operable glass listbox that
+  flips above the floating summary when needed. Added dependency-aware category
+  selection, including choices hidden by filters, with persistent focus.
+- Added genuine local app artwork and brand icons for 88 catalogue entries,
+  with source/checksum provenance and symbol fallbacks. No remote icon lookup runs
+  in the browser.
+- Added a visual three-step guide, fixed circular close geometry, backdrop
+  dismissal and explicit opener focus restoration.
+- Added a Safety & privacy page, GitHub/LinkedIn creator credits, Buy Me a Coffee,
+  and prefilled GitHub suggestion/problem links. Extended only the exact public
+  HTML allowlist; private local APIs remain authenticated.
+
+### Changed — Liquid Acrylic browser interface
+
+- Restored the original mint/blue/lilac identity with a generated aurora wallpaper,
+  gradient headings, floating translucent toolbar and rounded Mac window chrome.
+- Added spring-driven, shared liquid silhouettes for profiles and categories,
+  pointer-following sheen, deforming button surfaces, drawn checkbox checks,
+  smooth view navigation and Transitions.dev modal motion.
+- Added a persistent Calm appearance and system motion/transparency fallbacks.
+  Native controls and immediate Escape dismissal preserve keyboard operation.
+- Retained catalogue controls during selection updates and preserved focus after
+  category changes and selected-chip removal. Browser plans and local installation
+  boundaries are unchanged.
+
+### Added — guided browser setup
+
+- Static, responsive setup workspace with Essentials, Developer, Education,
+  Productivity, Creative and BRITX Choice profiles; editable selections,
+  category/source/search filters, local persistence, JSON import/export and review.
+- Python standard-library local companion with explicit confirmation, real module
+  progress, installer output, downloadable reports and official manual/MCP guides.
+  No hosted backend or Node dependency is needed to run the interface.
+- Validated `install.sh --selection FILE` path. Explicit selections leave unrelated
+  packages alone, respect declined preferences, and verify only chosen components.
+- Requested desktop and CLI additions, App Store creative apps, current universal
+  Apple office listings, and App Store sources for Slack, Canva, OneDrive,
+  Tailscale and Termius. Codex now uses its supported Homebrew cask.
+- Optional Oh My Zsh alongside the existing Starship prompt and Homebrew plugins.
+- Catalogue drift checks, selection/API/security tests, isolated installer tests,
+  and WebKit workflow/responsive/accessibility checks.
+- Shared Git identity defaults are blank; local review supplies the installer's
+  own identity without putting it in an exported plan.
+
 ### Added — choose-what-you-install
 
 - **Interactive selection screen** (`lib/picker.sh`): a full run now starts

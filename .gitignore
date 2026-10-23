@@ -13,3 +13,13 @@ reports/
 
 # Local-only overrides (never commit personal secrets)
 config/settings.local.sh
+
+# Browser QA dependencies and disposable evidence (curated handoff evidence is in outputs/).
+node_modules/
+test-results/
+playwright-report/
+__pycache__/
+*.pyc
+
+# Local usage-limit handoff contains chat-specific progress notes.
+outputs/PENDING-languages.md

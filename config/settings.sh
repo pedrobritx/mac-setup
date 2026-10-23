@@ -19,9 +19,9 @@ _MAC_SETUP_SETTINGS_LOADED=1
 # Identity — used by scripts/git.sh and scripts/ssh.sh.
 # Leave empty to be prompted interactively during install.
 # ---------------------------------------------------------------------------
-MAC_SETUP_GIT_NAME="${MAC_SETUP_GIT_NAME:-Pedro Brito}"
-MAC_SETUP_GIT_EMAIL="${MAC_SETUP_GIT_EMAIL:-pedrohbrito@me.com}"
-MAC_SETUP_GITHUB_USER="${MAC_SETUP_GITHUB_USER:-pedrobritx}"
+MAC_SETUP_GIT_NAME="${MAC_SETUP_GIT_NAME:-}"
+MAC_SETUP_GIT_EMAIL="${MAC_SETUP_GIT_EMAIL:-}"
+MAC_SETUP_GITHUB_USER="${MAC_SETUP_GITHUB_USER:-}"
 
 # Default branch name for new repositories.
 MAC_SETUP_GIT_DEFAULT_BRANCH="${MAC_SETUP_GIT_DEFAULT_BRANCH:-main}"
@@ -114,8 +114,10 @@ MAC_SETUP_PREF_PANELS="${MAC_SETUP_PREF_PANELS:-}"           # expanded save/pri
 MAC_SETUP_PREF_FIREWALL="${MAC_SETUP_PREF_FIREWALL:-}"         # application firewall on
 MAC_SETUP_PREF_TOUCHID_SUDO="${MAC_SETUP_PREF_TOUCHID_SUDO:-}" # Touch ID for sudo
 MAC_SETUP_PREF_SCREEN_LOCK="${MAC_SETUP_PREF_SCREEN_LOCK:-}"   # password immediately after sleep
+MAC_SETUP_PREF_FULL_XCODE="${MAC_SETUP_PREF_FULL_XCODE:-1}"    # full IDE remains optional in the picker
+MAC_SETUP_PREF_OHMYZSH="${MAC_SETUP_PREF_OHMYZSH:-0}"          # standalone Starship is the default
 
 export MAC_SETUP_PREF_KEYBOARD MAC_SETUP_PREF_TRACKPAD MAC_SETUP_PREF_FINDER \
   MAC_SETUP_PREF_DOCK MAC_SETUP_PREF_SCREENSHOTS MAC_SETUP_PREF_SAFARI \
   MAC_SETUP_PREF_PANELS MAC_SETUP_PREF_FIREWALL MAC_SETUP_PREF_TOUCHID_SUDO \
-  MAC_SETUP_PREF_SCREEN_LOCK
+  MAC_SETUP_PREF_SCREEN_LOCK MAC_SETUP_PREF_FULL_XCODE MAC_SETUP_PREF_OHMYZSH

@@ -19,6 +19,33 @@ source "${SCRIPT_DIR}/../lib/common.sh"
 
 readonly MODULE="terminal"
 
+# configure_framework — opt into Oh My Zsh without replacing its config or
+# hiding the choice in the shared dotfiles. Existing installations are reused.
+configure_framework() {
+  local mode=0 config="${HOME}/.config/mac-setup/shell.zsh"
+  if pref_enabled OHMYZSH; then
+    mode=1
+    if [[ ! -f "${HOME}/.oh-my-zsh/oh-my-zsh.sh" ]]; then
+      if [[ -e "${HOME}/.oh-my-zsh" ]]; then
+        report_manual "${MODULE}" "Oh My Zsh" \
+          "https://ohmyz.sh/" \
+          "an existing .oh-my-zsh directory is incomplete; it was preserved" \
+          "Review that directory, then repair your installation or deselect Oh My Zsh"
+        return 0
+      fi
+      if ! run_retry 2 git clone --depth 1 \
+        https://github.com/ohmyzsh/ohmyzsh.git "${HOME}/.oh-my-zsh"; then
+        report_fail "${MODULE}" "Oh My Zsh" "official repository could not be cloned"
+        return 0
+      fi
+    fi
+  fi
+  local choice="shell-starship.zsh"
+  [[ "${mode}" == "1" ]] && choice="shell-ohmyzsh.zsh"
+  link_file "${MAC_SETUP_DOTFILES_DIR}/.config/mac-setup/${choice}" "${config}"
+  report_ok "${MODULE}" "shell framework" "Oh My Zsh enabled: ${mode}; Starship prompt retained"
+}
+
 # ---------------------------------------------------------------------------
 # link_shell_dotfiles — symlink zsh + starship configuration into $HOME.
 # Existing real files are backed up automatically by link_file.
@@ -88,6 +115,7 @@ verify_zsh_plugins() {
     "share/zsh-autosuggestions/zsh-autosuggestions.zsh"
     "share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
     "share/zsh-history-substring-search/zsh-history-substring-search.zsh"
+    "share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh"
   )
 
   local formula all_present=1
@@ -139,6 +167,7 @@ main() {
   ensure_state_dirs
 
   link_shell_dotfiles
+  configure_framework
   verify_tools
   verify_zsh_plugins
   ensure_default_shell

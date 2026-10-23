@@ -1,0 +1,2206 @@
+{
+  "schema": 1,
+  "profiles": [
+    {
+      "id": "essentials",
+      "name": "Essentials",
+      "description": "A lighter starting point",
+      "icon": "leaf"
+    },
+    {
+      "id": "developer",
+      "name": "Developer",
+      "description": "Build something good",
+      "icon": "code"
+    },
+    {
+      "id": "education",
+      "name": "Education",
+      "description": "Learn, teach, create",
+      "icon": "book"
+    },
+    {
+      "id": "productivity",
+      "name": "Productivity",
+      "description": "Space to get things done",
+      "icon": "layers"
+    },
+    {
+      "id": "creative",
+      "name": "Creative",
+      "description": "From idea to finished work",
+      "icon": "pen"
+    },
+    {
+      "id": "britx",
+      "name": "BRITX Choice",
+      "description": "Pedro’s personal setup",
+      "icon": "spark"
+    }
+  ],
+  "categories": [
+    {
+      "id": "development",
+      "name": "Development",
+      "icon": "code"
+    },
+    {
+      "id": "ai-design",
+      "name": "AI & design",
+      "icon": "pen"
+    },
+    {
+      "id": "productivity",
+      "name": "Productivity",
+      "icon": "layers"
+    },
+    {
+      "id": "communication",
+      "name": "Communication",
+      "icon": "chat"
+    },
+    {
+      "id": "utilities",
+      "name": "Utilities",
+      "icon": "sliders"
+    },
+    {
+      "id": "media",
+      "name": "Media & games",
+      "icon": "play"
+    },
+    {
+      "id": "terminal",
+      "name": "Terminal",
+      "icon": "terminal"
+    },
+    {
+      "id": "preferences",
+      "name": "Mac preferences",
+      "icon": "settings"
+    },
+    {
+      "id": "connections",
+      "name": "Connections",
+      "icon": "plug"
+    }
+  ],
+  "items": [
+    {
+      "id": "brew:git",
+      "type": "brew",
+      "token": "git",
+      "name": "Git",
+      "description": "Version control, up to date",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/git"
+    },
+    {
+      "id": "brew:git-lfs",
+      "type": "brew",
+      "token": "git-lfs",
+      "name": "git-lfs",
+      "description": "large file storage",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/git-lfs"
+    },
+    {
+      "id": "brew:gh",
+      "type": "brew",
+      "token": "gh",
+      "name": "GitHub CLI",
+      "description": "Pull requests, issues and releases in your terminal",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/gh"
+    },
+    {
+      "id": "brew:fnm",
+      "type": "brew",
+      "token": "fnm",
+      "name": "fnm",
+      "description": "fast Node.js version manager (Rust; replaces nvm)",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/fnm"
+    },
+    {
+      "id": "brew:pnpm",
+      "type": "brew",
+      "token": "pnpm",
+      "name": "pnpm",
+      "description": "efficient Node package manager",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/pnpm"
+    },
+    {
+      "id": "brew:oven-sh/bun/bun",
+      "type": "brew",
+      "token": "oven-sh/bun/bun",
+      "name": "bun",
+      "description": "Bun JS runtime & toolkit",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://github.com/oven-sh/homebrew-bun"
+    },
+    {
+      "id": "brew:uv",
+      "type": "brew",
+      "token": "uv",
+      "name": "uv",
+      "description": "Python package/version manager (replaces pyenv+pip)",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/uv"
+    },
+    {
+      "id": "brew:pipx",
+      "type": "brew",
+      "token": "pipx",
+      "name": "pipx",
+      "description": "isolated installs for Python CLI tools",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/pipx"
+    },
+    {
+      "id": "brew:swiftformat",
+      "type": "brew",
+      "token": "swiftformat",
+      "name": "swiftformat",
+      "description": "Swift code formatter",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/swiftformat"
+    },
+    {
+      "id": "brew:swiftlint",
+      "type": "brew",
+      "token": "swiftlint",
+      "name": "swiftlint",
+      "description": "Swift linter",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/swiftlint"
+    },
+    {
+      "id": "brew:sqlite",
+      "type": "brew",
+      "token": "sqlite",
+      "name": "sqlite",
+      "description": "embedded SQL database",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/sqlite"
+    },
+    {
+      "id": "brew:ffmpeg",
+      "type": "brew",
+      "token": "ffmpeg",
+      "name": "ffmpeg",
+      "description": "audio/video swiss-army knife",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/ffmpeg"
+    },
+    {
+      "id": "brew:imagemagick",
+      "type": "brew",
+      "token": "imagemagick",
+      "name": "imagemagick",
+      "description": "image conversion & manipulation",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/imagemagick"
+    },
+    {
+      "id": "brew:starship",
+      "type": "brew",
+      "token": "starship",
+      "name": "starship",
+      "description": "pretty, fast shell prompt (git branch, language versions)",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/starship"
+    },
+    {
+      "id": "brew:zoxide",
+      "type": "brew",
+      "token": "zoxide",
+      "name": "zoxide",
+      "description": "smarter cd — 'z proj' jumps to your most-used folders",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/zoxide"
+    },
+    {
+      "id": "brew:fzf",
+      "type": "brew",
+      "token": "fzf",
+      "name": "fzf",
+      "description": "fuzzy finder — Ctrl-R searches history, Ctrl-T finds files",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/fzf"
+    },
+    {
+      "id": "brew:eza",
+      "type": "brew",
+      "token": "eza",
+      "name": "eza",
+      "description": "nicer 'ls' with colors, icons, and git status",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/eza"
+    },
+    {
+      "id": "brew:bat",
+      "type": "brew",
+      "token": "bat",
+      "name": "bat",
+      "description": "nicer 'cat' with syntax highlighting",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/bat"
+    },
+    {
+      "id": "brew:fd",
+      "type": "brew",
+      "token": "fd",
+      "name": "fd",
+      "description": "faster, friendlier 'find'",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/fd"
+    },
+    {
+      "id": "brew:ripgrep",
+      "type": "brew",
+      "token": "ripgrep",
+      "name": "ripgrep",
+      "description": "much faster 'grep' for searching code",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/ripgrep"
+    },
+    {
+      "id": "brew:jq",
+      "type": "brew",
+      "token": "jq",
+      "name": "jq",
+      "description": "query/format JSON on the command line",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/jq"
+    },
+    {
+      "id": "brew:yq",
+      "type": "brew",
+      "token": "yq",
+      "name": "yq",
+      "description": "query/format YAML on the command line",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/yq"
+    },
+    {
+      "id": "brew:tree",
+      "type": "brew",
+      "token": "tree",
+      "name": "tree",
+      "description": "print directory trees",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/tree"
+    },
+    {
+      "id": "brew:wget",
+      "type": "brew",
+      "token": "wget",
+      "name": "wget",
+      "description": "download files from the terminal",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/wget"
+    },
+    {
+      "id": "brew:atuin",
+      "type": "brew",
+      "token": "atuin",
+      "name": "atuin",
+      "description": "searchable shell history, synced across machines",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/atuin"
+    },
+    {
+      "id": "brew:btop",
+      "type": "brew",
+      "token": "btop",
+      "name": "btop",
+      "description": "pretty CPU/RAM/network monitor",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/btop"
+    },
+    {
+      "id": "brew:htop",
+      "type": "brew",
+      "token": "htop",
+      "name": "htop",
+      "description": "classic process viewer",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/htop"
+    },
+    {
+      "id": "brew:tmux",
+      "type": "brew",
+      "token": "tmux",
+      "name": "tmux",
+      "description": "split the terminal into panes; sessions survive disconnects",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/tmux"
+    },
+    {
+      "id": "brew:fastfetch",
+      "type": "brew",
+      "token": "fastfetch",
+      "name": "fastfetch",
+      "description": "show system info with a logo",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/fastfetch"
+    },
+    {
+      "id": "brew:neovim",
+      "type": "brew",
+      "token": "neovim",
+      "name": "neovim",
+      "description": "modern vim editor",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/neovim"
+    },
+    {
+      "id": "brew:zsh-autosuggestions",
+      "type": "brew",
+      "token": "zsh-autosuggestions",
+      "name": "zsh-autosuggestions",
+      "description": "ghost-text suggestions from your history as you type (→ accepts)",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/zsh-autosuggestions"
+    },
+    {
+      "id": "brew:zsh-syntax-highlighting",
+      "type": "brew",
+      "token": "zsh-syntax-highlighting",
+      "name": "zsh-syntax-highlighting",
+      "description": "colors your command green when valid, red when not",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/zsh-syntax-highlighting"
+    },
+    {
+      "id": "brew:zsh-history-substring-search",
+      "type": "brew",
+      "token": "zsh-history-substring-search",
+      "name": "zsh-history-substring-search",
+      "description": "type part of a command, ↑/↓ finds matching history",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/zsh-history-substring-search"
+    },
+    {
+      "id": "brew:zsh-navigation-tools",
+      "type": "brew",
+      "token": "zsh-navigation-tools",
+      "name": "zsh-navigation-tools",
+      "description": "interactive directory, process and history navigation",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/zsh-navigation-tools"
+    },
+    {
+      "id": "brew:mas",
+      "type": "brew",
+      "token": "mas",
+      "name": "mas",
+      "description": "Mac App Store CLI (needed by section 5)",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/mas"
+    },
+    {
+      "id": "brew:shellcheck",
+      "type": "brew",
+      "token": "shellcheck",
+      "name": "shellcheck",
+      "description": "shell script linter (used by this repo's CI)",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/shellcheck"
+    },
+    {
+      "id": "brew:shfmt",
+      "type": "brew",
+      "token": "shfmt",
+      "name": "shfmt",
+      "description": "shell script formatter",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/shfmt"
+    },
+    {
+      "id": "brew:railway",
+      "type": "brew",
+      "token": "railway",
+      "name": "Railway CLI",
+      "description": "Manage Railway projects from your terminal",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/railway"
+    },
+    {
+      "id": "brew:supabase",
+      "type": "brew",
+      "token": "supabase",
+      "name": "Supabase CLI",
+      "description": "Local development and database migrations",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/supabase"
+    },
+    {
+      "id": "brew:stripe-cli",
+      "type": "brew",
+      "token": "stripe-cli",
+      "name": "Stripe CLI",
+      "description": "Test payments and forward webhooks",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/formula/stripe-cli"
+    },
+    {
+      "id": "cask:visual-studio-code",
+      "type": "cask",
+      "token": "visual-studio-code",
+      "name": "Visual Studio Code",
+      "description": "An editor that makes room for your workflow",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "color": "#287cbb",
+      "initial": "V",
+      "url": "https://formulae.brew.sh/cask/visual-studio-code"
+    },
+    {
+      "id": "cask:antigravity",
+      "type": "cask",
+      "token": "antigravity",
+      "name": "Google Antigravity",
+      "description": "Google’s agent-focused development environment",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "color": "#39705a",
+      "initial": "A",
+      "url": "https://formulae.brew.sh/cask/antigravity"
+    },
+    {
+      "id": "cask:docker-desktop",
+      "type": "cask",
+      "token": "docker-desktop",
+      "name": "Docker Desktop",
+      "description": "Containers, Docker CLI, Compose and Buildx",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "color": "#237dce",
+      "initial": "D",
+      "url": "https://formulae.brew.sh/cask/docker-desktop"
+    },
+    {
+      "id": "cask:postman",
+      "type": "cask",
+      "token": "postman",
+      "name": "Postman",
+      "description": "Build and test APIs",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "color": "#ce5834",
+      "initial": "P",
+      "url": "https://formulae.brew.sh/cask/postman"
+    },
+    {
+      "id": "cask:figma",
+      "type": "cask",
+      "token": "figma",
+      "name": "Figma",
+      "description": "Design together, from first idea to handoff",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "creative"
+      ],
+      "dependencies": [],
+      "color": "#7552bd",
+      "initial": "Fi",
+      "url": "https://formulae.brew.sh/cask/figma"
+    },
+    {
+      "id": "cask:sf-symbols",
+      "type": "cask",
+      "token": "sf-symbols",
+      "name": "SF Symbols",
+      "description": "Apple SF Symbols browser",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/sf-symbols"
+    },
+    {
+      "id": "cask:github",
+      "type": "cask",
+      "token": "github",
+      "name": "GitHub Desktop",
+      "description": "A familiar Git workflow for your Mac",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "color": "#5b3d84",
+      "initial": "Gh",
+      "url": "https://formulae.brew.sh/cask/github"
+    },
+    {
+      "id": "cask:codex",
+      "type": "cask",
+      "token": "codex",
+      "name": "Codex CLI",
+      "description": "OpenAI’s coding agent in your terminal",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "color": "#387d69",
+      "initial": "Cx",
+      "url": "https://formulae.brew.sh/cask/codex"
+    },
+    {
+      "id": "cask:claude-code",
+      "type": "cask",
+      "token": "claude-code",
+      "name": "Claude Code",
+      "description": "Anthropic’s coding agent in your terminal",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [],
+      "color": "#b66e52",
+      "initial": "Cc",
+      "url": "https://formulae.brew.sh/cask/claude-code"
+    },
+    {
+      "id": "cask:1password-cli",
+      "type": "cask",
+      "token": "1password-cli",
+      "name": "1Password CLI",
+      "description": "Access your vault from the terminal; sign-in is separate",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/1password-cli"
+    },
+    {
+      "id": "cask:google-chrome",
+      "type": "cask",
+      "token": "google-chrome",
+      "name": "Google Chrome",
+      "description": "Your browser, bookmarks and Google workspace",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "essentials",
+        "developer",
+        "education",
+        "productivity",
+        "creative"
+      ],
+      "dependencies": [],
+      "color": "#367c5d",
+      "initial": "G",
+      "url": "https://formulae.brew.sh/cask/google-chrome"
+    },
+    {
+      "id": "cask:chatgpt",
+      "type": "cask",
+      "token": "chatgpt",
+      "name": "ChatGPT",
+      "description": "OpenAI’s desktop assistant; Apple Silicon required",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "architectures": [
+        "arm64"
+      ],
+      "color": "#387d69",
+      "initial": "Ch",
+      "url": "https://formulae.brew.sh/cask/chatgpt"
+    },
+    {
+      "id": "cask:claude",
+      "type": "cask",
+      "token": "claude",
+      "name": "Claude",
+      "description": "Anthropic’s desktop assistant",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "color": "#b66e52",
+      "initial": "Cl",
+      "url": "https://formulae.brew.sh/cask/claude"
+    },
+    {
+      "id": "cask:blender",
+      "type": "cask",
+      "token": "blender",
+      "name": "Blender",
+      "description": "3D modelling, animation and rendering",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "creative"
+      ],
+      "dependencies": [],
+      "color": "#b66b2b",
+      "initial": "B",
+      "url": "https://formulae.brew.sh/cask/blender"
+    },
+    {
+      "id": "cask:inkscape",
+      "type": "cask",
+      "token": "inkscape",
+      "name": "Inkscape",
+      "description": "An open canvas for vector illustration",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "creative"
+      ],
+      "dependencies": [],
+      "color": "#454751",
+      "initial": "I",
+      "url": "https://formulae.brew.sh/cask/inkscape"
+    },
+    {
+      "id": "cask:notion",
+      "type": "cask",
+      "token": "notion",
+      "name": "Notion",
+      "description": "notes & docs workspace",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "productivity"
+      ],
+      "dependencies": [],
+      "color": "#34363d",
+      "initial": "N",
+      "url": "https://formulae.brew.sh/cask/notion"
+    },
+    {
+      "id": "cask:obsidian",
+      "type": "cask",
+      "token": "obsidian",
+      "name": "Obsidian",
+      "description": "local-first Markdown notes",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "education",
+        "productivity"
+      ],
+      "dependencies": [],
+      "color": "#7751ac",
+      "initial": "Ob",
+      "url": "https://formulae.brew.sh/cask/obsidian"
+    },
+    {
+      "id": "cask:discord",
+      "type": "cask",
+      "token": "discord",
+      "name": "Discord",
+      "description": "voice & text communities",
+      "category": "communication",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "color": "#5865b2",
+      "initial": "Di",
+      "url": "https://formulae.brew.sh/cask/discord"
+    },
+    {
+      "id": "cask:google-drive",
+      "type": "cask",
+      "token": "google-drive",
+      "name": "Google Drive",
+      "description": "Google Drive file sync",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "education",
+        "productivity",
+        "creative"
+      ],
+      "dependencies": [],
+      "color": "#3e8356",
+      "initial": "Dr",
+      "url": "https://formulae.brew.sh/cask/google-drive"
+    },
+    {
+      "id": "cask:libreoffice",
+      "type": "cask",
+      "token": "libreoffice",
+      "name": "LibreOffice",
+      "description": "free office suite — open/edit Word, Excel, PowerPoint files",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "education",
+        "productivity"
+      ],
+      "dependencies": [],
+      "color": "#418748",
+      "initial": "L",
+      "url": "https://formulae.brew.sh/cask/libreoffice"
+    },
+    {
+      "id": "cask:appcleaner",
+      "type": "cask",
+      "token": "appcleaner",
+      "name": "AppCleaner",
+      "description": "clean app uninstalls",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "essentials"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/appcleaner"
+    },
+    {
+      "id": "cask:caffeine",
+      "type": "cask",
+      "token": "caffeine",
+      "name": "Caffeine",
+      "description": "keep the Mac awake",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/caffeine"
+    },
+    {
+      "id": "cask:1password",
+      "type": "cask",
+      "token": "1password",
+      "name": "1Password",
+      "description": "Current desktop app; sign in to your own account",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "essentials",
+        "developer",
+        "productivity"
+      ],
+      "dependencies": [],
+      "color": "#356aaa",
+      "initial": "1P",
+      "url": "https://formulae.brew.sh/cask/1password"
+    },
+    {
+      "id": "cask:bettertouchtool",
+      "type": "cask",
+      "token": "bettertouchtool",
+      "name": "BetterTouchTool",
+      "description": "Custom gestures and input shortcuts; licence required",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "paid": true,
+      "url": "https://formulae.brew.sh/cask/bettertouchtool"
+    },
+    {
+      "id": "cask:keyboardcleantool",
+      "type": "cask",
+      "token": "keyboardcleantool",
+      "name": "KeyboardCleanTool",
+      "description": "temporarily disable the keyboard for cleaning",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/keyboardcleantool"
+    },
+    {
+      "id": "cask:anydesk",
+      "type": "cask",
+      "token": "anydesk",
+      "name": "AnyDesk",
+      "description": "remote desktop; grant permissions yourself",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/anydesk"
+    },
+    {
+      "id": "cask:teamviewer",
+      "type": "cask",
+      "token": "teamviewer",
+      "name": "TeamViewer",
+      "description": "remote support; grant permissions yourself",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/teamviewer"
+    },
+    {
+      "id": "cask:zoom",
+      "type": "cask",
+      "token": "zoom",
+      "name": "Zoom",
+      "description": "video meetings",
+      "category": "communication",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "education",
+        "productivity"
+      ],
+      "dependencies": [],
+      "color": "#3971bb",
+      "initial": "Z",
+      "url": "https://formulae.brew.sh/cask/zoom"
+    },
+    {
+      "id": "cask:dropbox",
+      "type": "cask",
+      "token": "dropbox",
+      "name": "Dropbox",
+      "description": "Dropbox file sync",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "productivity"
+      ],
+      "dependencies": [],
+      "color": "#2e66b8",
+      "initial": "Db",
+      "url": "https://formulae.brew.sh/cask/dropbox"
+    },
+    {
+      "id": "cask:obs",
+      "type": "cask",
+      "token": "obs",
+      "name": "OBS Studio",
+      "description": "Record and stream your screen",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "creative"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/obs"
+    },
+    {
+      "id": "cask:transmission",
+      "type": "cask",
+      "token": "transmission",
+      "name": "Transmission",
+      "description": "BitTorrent client",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/transmission"
+    },
+    {
+      "id": "cask:daisydisk",
+      "type": "cask",
+      "token": "daisydisk",
+      "name": "DaisyDisk",
+      "description": "disk usage visualizer (cask on purpose: the App Store build is sandboxed and can't clean everything)",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "paid": true,
+      "url": "https://formulae.brew.sh/cask/daisydisk"
+    },
+    {
+      "id": "cask:logi-options+",
+      "type": "cask",
+      "token": "logi-options+",
+      "name": "Logi Options+",
+      "description": "Logitech mouse/keyboard configuration",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/logi-options+"
+    },
+    {
+      "id": "cask:vlc",
+      "type": "cask",
+      "token": "vlc",
+      "name": "VLC",
+      "description": "media player that opens anything",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "essentials",
+        "creative"
+      ],
+      "dependencies": [],
+      "color": "#b76a29",
+      "initial": "V",
+      "url": "https://formulae.brew.sh/cask/vlc"
+    },
+    {
+      "id": "cask:steam",
+      "type": "cask",
+      "token": "steam",
+      "name": "Steam",
+      "description": "game library",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/steam"
+    },
+    {
+      "id": "cask:stremio",
+      "type": "cask",
+      "token": "stremio",
+      "name": "Stremio",
+      "description": "streaming media hub",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/stremio"
+    },
+    {
+      "id": "cask:font-jetbrains-mono",
+      "type": "cask",
+      "token": "font-jetbrains-mono",
+      "name": "JetBrains Mono",
+      "description": "primary coding font",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/font-jetbrains-mono"
+    },
+    {
+      "id": "cask:font-jetbrains-mono-nerd-font",
+      "type": "cask",
+      "token": "font-jetbrains-mono-nerd-font",
+      "name": "JetBrains Mono Nerd Font",
+      "description": "same font + icons for the terminal prompt",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [],
+      "url": "https://formulae.brew.sh/cask/font-jetbrains-mono-nerd-font"
+    },
+    {
+      "id": "mas:361309726",
+      "type": "mas",
+      "token": "361309726",
+      "name": "Pages",
+      "description": "Apple word processor (universal listing)",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "education",
+        "productivity"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id361309726?platform=mac"
+    },
+    {
+      "id": "mas:361304891",
+      "type": "mas",
+      "token": "361304891",
+      "name": "Numbers",
+      "description": "Apple spreadsheets (universal listing)",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "education",
+        "productivity"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id361304891?platform=mac"
+    },
+    {
+      "id": "mas:361285480",
+      "type": "mas",
+      "token": "361285480",
+      "name": "Keynote",
+      "description": "Apple presentations (universal listing)",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "education",
+        "productivity"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id361285480?platform=mac"
+    },
+    {
+      "id": "mas:897118787",
+      "type": "mas",
+      "token": "897118787",
+      "name": "Shazam",
+      "description": "identify songs from the menu bar",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id897118787?platform=mac"
+    },
+    {
+      "id": "mas:1496833156",
+      "type": "mas",
+      "token": "1496833156",
+      "name": "Swift Playgrounds",
+      "description": "learn/prototype Swift",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "education"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id1496833156?platform=mac"
+    },
+    {
+      "id": "mas:899247664",
+      "type": "mas",
+      "token": "899247664",
+      "name": "TestFlight",
+      "description": "beta-test iOS/macOS apps",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id899247664?platform=mac"
+    },
+    {
+      "id": "mas:640199958",
+      "type": "mas",
+      "token": "640199958",
+      "name": "Apple Developer",
+      "description": "Apple developer news & WWDC",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id640199958?platform=mac"
+    },
+    {
+      "id": "mas:1287239339",
+      "type": "mas",
+      "token": "1287239339",
+      "name": "ColorSlurp",
+      "description": "color picker",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id1287239339?platform=mac"
+    },
+    {
+      "id": "mas:424389933",
+      "type": "mas",
+      "token": "424389933",
+      "name": "Final Cut Pro",
+      "description": "video editing (paid)",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "paid": true,
+      "url": "https://apps.apple.com/app/id424389933?platform=mac"
+    },
+    {
+      "id": "mas:424390742",
+      "type": "mas",
+      "token": "424390742",
+      "name": "Compressor",
+      "description": "Final Cut export encoder (paid)",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "paid": true,
+      "url": "https://apps.apple.com/app/id424390742?platform=mac"
+    },
+    {
+      "id": "mas:571213070",
+      "type": "mas",
+      "token": "571213070",
+      "name": "DaVinci Resolve",
+      "description": "video editing",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "creative"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id571213070?platform=mac"
+    },
+    {
+      "id": "mas:634148309",
+      "type": "mas",
+      "token": "634148309",
+      "name": "Logic Pro",
+      "description": "music production (paid)",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "paid": true,
+      "url": "https://apps.apple.com/app/id634148309?platform=mac"
+    },
+    {
+      "id": "mas:434290957",
+      "type": "mas",
+      "token": "434290957",
+      "name": "Motion",
+      "description": "motion graphics (paid)",
+      "category": "media",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "paid": true,
+      "url": "https://apps.apple.com/app/id434290957?platform=mac"
+    },
+    {
+      "id": "mas:1444636541",
+      "type": "mas",
+      "token": "1444636541",
+      "name": "Photomator",
+      "description": "photo editing (in-app purchase)",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "creative"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "purchaseNote": "In-app purchases",
+      "url": "https://apps.apple.com/app/id1444636541?platform=mac"
+    },
+    {
+      "id": "mas:803453959",
+      "type": "mas",
+      "token": "803453959",
+      "name": "Slack",
+      "description": "team messaging",
+      "category": "communication",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "productivity"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "color": "#724566",
+      "initial": "S",
+      "url": "https://apps.apple.com/app/id803453959?platform=mac"
+    },
+    {
+      "id": "mas:823766827",
+      "type": "mas",
+      "token": "823766827",
+      "name": "OneDrive",
+      "description": "Microsoft file sync",
+      "category": "productivity",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "productivity"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id823766827?platform=mac"
+    },
+    {
+      "id": "mas:1475387142",
+      "type": "mas",
+      "token": "1475387142",
+      "name": "Tailscale",
+      "description": "private networking; sign in separately",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id1475387142?platform=mac"
+    },
+    {
+      "id": "mas:1176074088",
+      "type": "mas",
+      "token": "1176074088",
+      "name": "Termius",
+      "description": "SSH client",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id1176074088?platform=mac"
+    },
+    {
+      "id": "mas:897446215",
+      "type": "mas",
+      "token": "897446215",
+      "name": "Canva",
+      "description": "visual design (universal listing)",
+      "category": "ai-design",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "education",
+        "creative"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "color": "#337d95",
+      "initial": "Ca",
+      "url": "https://apps.apple.com/app/id897446215?platform=mac"
+    },
+    {
+      "id": "mas:1113153706",
+      "type": "mas",
+      "token": "1113153706",
+      "name": "Microsoft Teams",
+      "description": "work chat & meetings (App Store)",
+      "category": "communication",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "productivity"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id1113153706?platform=mac"
+    },
+    {
+      "id": "mas:310633997",
+      "type": "mas",
+      "token": "310633997",
+      "name": "WhatsApp",
+      "description": "WhatsApp Messenger (native Mac app)",
+      "category": "communication",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "color": "#348354",
+      "initial": "W",
+      "url": "https://apps.apple.com/app/id310633997?platform=mac"
+    },
+    {
+      "id": "mas:425424353",
+      "type": "mas",
+      "token": "425424353",
+      "name": "The Unarchiver",
+      "description": "archive extraction",
+      "category": "utilities",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "essentials"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "url": "https://apps.apple.com/app/id425424353?platform=mac"
+    },
+    {
+      "id": "step:xcode",
+      "type": "step",
+      "token": "xcode",
+      "name": "Command Line Tools",
+      "description": "Apple compilers and Git; required by Homebrew",
+      "category": "development",
+      "locked": true,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "step:brew",
+      "type": "step",
+      "token": "brew",
+      "name": "Homebrew",
+      "description": "The package manager behind your setup",
+      "category": "development",
+      "locked": true,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "step:directories",
+      "type": "step",
+      "token": "directories",
+      "name": "Workspace folders",
+      "description": "Developer, Screenshots and Downloads/Installers folders",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "step:ssh",
+      "type": "step",
+      "token": "ssh",
+      "name": "SSH key",
+      "description": "Create a key only if missing; existing keys are preserved",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "step:git",
+      "type": "step",
+      "token": "git",
+      "name": "Git configuration",
+      "description": "Your identity, Git LFS and GitHub sign-in guidance",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [
+        "brew:git",
+        "brew:git-lfs",
+        "brew:gh"
+      ]
+    },
+    {
+      "id": "step:terminal",
+      "type": "step",
+      "token": "terminal",
+      "name": "Zsh & Starship setup",
+      "description": "Shell configuration, smart navigation and plugin hooks",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [
+        "brew:starship"
+      ]
+    },
+    {
+      "id": "step:node",
+      "type": "step",
+      "token": "node",
+      "name": "Node.js",
+      "description": "Latest LTS, managed with fnm",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [
+        "brew:fnm"
+      ]
+    },
+    {
+      "id": "step:python",
+      "type": "step",
+      "token": "python",
+      "name": "Python",
+      "description": "Managed Python with uv and isolated CLI tools",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [
+        "brew:uv",
+        "brew:pipx"
+      ]
+    },
+    {
+      "id": "step:swift",
+      "type": "step",
+      "token": "swift",
+      "name": "Swift extras",
+      "description": "SwiftFormat + SwiftLint checks",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:swiftformat",
+        "brew:swiftlint"
+      ]
+    },
+    {
+      "id": "step:vscode",
+      "type": "step",
+      "token": "vscode",
+      "name": "VS Code settings & extensions",
+      "description": "settings, snippets, and extensions",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer"
+      ],
+      "dependencies": [
+        "cask:visual-studio-code"
+      ]
+    },
+    {
+      "id": "pref:xcode:full_xcode",
+      "type": "pref",
+      "token": "xcode:full_xcode",
+      "name": "Xcode",
+      "description": "Full Apple IDE from the App Store; large download",
+      "category": "development",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "brew:mas"
+      ],
+      "methodLabel": "App Store",
+      "url": "https://apps.apple.com/app/id497799835?platform=mac"
+    },
+    {
+      "id": "pref:terminal:ohmyzsh",
+      "type": "pref",
+      "token": "terminal:ohmyzsh",
+      "name": "Oh My Zsh",
+      "description": "Optional framework and Git helpers; Starship remains your prompt",
+      "category": "terminal",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": [
+        "step:terminal"
+      ]
+    },
+    {
+      "id": "pref:macos:keyboard",
+      "type": "pref",
+      "token": "macos:keyboard",
+      "name": "Keyboard",
+      "description": "fast key repeat, no autocorrect or smart quotes/dashes",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "pref:macos:trackpad",
+      "type": "pref",
+      "token": "macos:trackpad",
+      "name": "Tap to click",
+      "description": "tap the trackpad to click",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "pref:macos:finder",
+      "type": "pref",
+      "token": "macos:finder",
+      "name": "Finder tweaks",
+      "description": "path bar, all extensions, list view, folders first, no .DS_Store on shares",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer",
+        "education",
+        "productivity",
+        "creative"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "pref:macos:dock",
+      "type": "pref",
+      "token": "macos:dock",
+      "name": "Dock icon size",
+      "description": "~20% — position, magnification and animations stay stock",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "pref:macos:screenshots",
+      "type": "pref",
+      "token": "macos:screenshots",
+      "name": "Screenshots → ~/Screenshots",
+      "description": "save screenshots to ~/Screenshots instead of the Desktop",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx",
+        "developer",
+        "productivity",
+        "creative"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "pref:macos:safari",
+      "type": "pref",
+      "token": "macos:safari",
+      "name": "Safari Develop menu",
+      "description": "Develop menu + web inspector (needs Full Disk Access to write)",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "pref:macos:panels",
+      "type": "pref",
+      "token": "macos:panels",
+      "name": "Expanded save/print panels",
+      "description": "expand save/print dialogs; save new documents locally, not iCloud",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "pref:security:firewall",
+      "type": "pref",
+      "token": "security:firewall",
+      "name": "Application firewall",
+      "description": "turn the macOS application firewall on",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "pref:security:touchid_sudo",
+      "type": "pref",
+      "token": "security:touchid_sudo",
+      "name": "Touch ID for sudo",
+      "description": "approve terminal sudo with your fingerprint",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "id": "pref:security:screen_lock",
+      "type": "pref",
+      "token": "security:screen_lock",
+      "name": "Immediate screen lock",
+      "description": "require your password right after sleep/screensaver",
+      "category": "preferences",
+      "locked": false,
+      "profiles": [
+        "britx"
+      ],
+      "dependencies": []
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "manual:vmware",
+      "type": "manual",
+      "name": "VMware Fusion",
+      "category": "utilities",
+      "description": "Download from Broadcom; account and licence steps stay with you",
+      "url": "https://support.broadcom.com/group/ecx/free-downloads",
+      "profiles": [
+        "britx"
+      ]
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "manual:gemini-cli",
+      "type": "manual",
+      "name": "Gemini CLI",
+      "category": "ai-design",
+      "description": "Official Node-based installer; the Homebrew formula is deprecated",
+      "url": "https://github.com/google-gemini/gemini-cli#installation",
+      "profiles": [
+        "britx"
+      ]
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "manual:vercel-cli",
+      "type": "manual",
+      "name": "Vercel CLI",
+      "category": "development",
+      "description": "Official CLI setup and account sign-in",
+      "url": "https://vercel.com/docs/cli",
+      "profiles": [
+        "britx",
+        "developer"
+      ]
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "manual:figma-code-connect",
+      "type": "manual",
+      "name": "Figma Code Connect CLI",
+      "category": "development",
+      "description": "Optional code-to-design mappings; configure inside your project",
+      "url": "https://developers.figma.com/docs/code-connect/quickstart-guide/",
+      "profiles": [
+        "britx"
+      ]
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "web:google-docs",
+      "type": "web",
+      "name": "Google Docs",
+      "category": "productivity",
+      "description": "Browser app; add to your Dock from your browser if you like",
+      "url": "https://docs.google.com/",
+      "profiles": [
+        "britx",
+        "education",
+        "productivity"
+      ]
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "web:google-sheets",
+      "type": "web",
+      "name": "Google Sheets",
+      "category": "productivity",
+      "description": "Browser spreadsheets; no desktop package is installed",
+      "url": "https://sheets.google.com/",
+      "profiles": [
+        "britx",
+        "education",
+        "productivity"
+      ]
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "web:google-slides",
+      "type": "web",
+      "name": "Google Slides",
+      "category": "productivity",
+      "description": "Browser presentations; sign in with your own Google account",
+      "url": "https://slides.google.com/",
+      "profiles": [
+        "britx",
+        "education",
+        "productivity"
+      ]
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:github",
+      "type": "mcp",
+      "name": "GitHub MCP",
+      "category": "connections",
+      "description": "Connect your coding agent to GitHub; choose account permissions",
+      "url": "https://github.com/github/github-mcp-server",
+      "profiles": [
+        "britx"
+      ],
+      "endpoint": "https://api.githubcopilot.com/mcp/"
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:figma",
+      "type": "mcp",
+      "name": "Figma MCP",
+      "category": "connections",
+      "description": "Bring design context into your editor; sign in through Figma",
+      "url": "https://developers.figma.com/docs/figma-mcp-server/remote-server-installation/",
+      "profiles": [
+        "britx"
+      ],
+      "endpoint": "https://mcp.figma.com/mcp"
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:docker",
+      "type": "mcp",
+      "name": "Docker MCP Toolkit",
+      "category": "connections",
+      "description": "Enable and review servers inside Docker Desktop",
+      "url": "https://docs.docker.com/ai/mcp-catalog-and-toolkit/",
+      "profiles": [
+        "britx"
+      ]
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:notion",
+      "type": "mcp",
+      "name": "Notion MCP",
+      "category": "connections",
+      "description": "Connect your workspace using Notion’s official OAuth flow",
+      "url": "https://developers.notion.com/guides/mcp/overview",
+      "profiles": [
+        "britx"
+      ],
+      "endpoint": "https://mcp.notion.com/mcp"
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:vercel",
+      "type": "mcp",
+      "name": "Vercel MCP",
+      "category": "connections",
+      "description": "Review deployment access and authenticate in your agent",
+      "url": "https://vercel.com/docs/agent-resources/vercel-mcp",
+      "profiles": [
+        "britx"
+      ],
+      "endpoint": "https://mcp.vercel.com"
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:supabase",
+      "type": "mcp",
+      "name": "Supabase MCP",
+      "category": "connections",
+      "description": "Scope to a development project; prefer read-only access",
+      "url": "https://supabase.com/docs/guides/ai-tools/mcp",
+      "profiles": [
+        "britx"
+      ],
+      "endpoint": "https://mcp.supabase.com/mcp?read_only=true"
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:railway",
+      "type": "mcp",
+      "name": "Railway MCP",
+      "category": "connections",
+      "description": "Use the current Railway CLI or remote OAuth server",
+      "url": "https://docs.railway.com/ai/mcp-server",
+      "profiles": [
+        "britx"
+      ],
+      "endpoint": "https://mcp.railway.com"
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:stripe",
+      "type": "mcp",
+      "name": "Stripe MCP",
+      "category": "connections",
+      "description": "Use the official agent setup; review payment access",
+      "url": "https://docs.stripe.com/mcp",
+      "profiles": [
+        "britx"
+      ],
+      "endpoint": "https://mcp.stripe.com"
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:slack",
+      "type": "mcp",
+      "name": "Slack MCP",
+      "category": "connections",
+      "description": "Review workspace access with your Slack admin, then connect your agent",
+      "url": "https://docs.slack.dev/ai/slack-mcp-server/",
+      "profiles": [
+        "britx"
+      ]
+    },
+    {
+      "locked": false,
+      "dependencies": [],
+      "id": "mcp:canva-dev",
+      "type": "mcp",
+      "name": "Canva Dev MCP",
+      "category": "connections",
+      "description": "Developer assistance for Canva apps; separate from access to your Canva designs",
+      "url": "https://www.canva.dev/docs/apps/dev-mcp-server/",
+      "profiles": [
+        "britx"
+      ]
+    }
+  ],
+  "version": "766706b33939aab4"
+}
