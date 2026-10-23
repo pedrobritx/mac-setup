@@ -149,6 +149,7 @@
     "runtimeCiConclusion": "success",
     "originalPr": "https://github.com/pedrobritx/mac-setup/pull/7",
     "originalPrMergedCommit": "621136f4346593d0a5fff5dc048a4579cb322509",
-    "springFixMergePending": true
+    "springFixMergePending": true,
+    "followUpPr": "https://github.com/pedrobritx/mac-setup/pull/8"
   }
 }

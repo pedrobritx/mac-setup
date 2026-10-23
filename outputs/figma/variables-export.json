@@ -2234,7 +2234,7 @@
       "componentSets": 0,
       "components": 0,
       "instances": 0,
-      "editableTexts": 10,
+      "editableTexts": 11,
       "boundNodes": 0
     },
     {
@@ -2429,6 +2429,14 @@
         "type": "URL",
         "value": "https://www.linkedin.com/in/pedrobritx/"
       }
+    },
+    {
+      "text": "Design handoff · pull request #8",
+      "hyperlink": {
+        "type": "URL",
+        "value": "https://github.com/pedrobritx/mac-setup/pull/8"
+      }
     }
-  ]
+  ],
+  "handoffPr": "https://github.com/pedrobritx/mac-setup/pull/8"
 }

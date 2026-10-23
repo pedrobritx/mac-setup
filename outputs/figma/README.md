@@ -5,6 +5,8 @@ in the **Projects** team. This file records the approved implementation from
 [mac-setup](https://github.com/pedrobritx/mac-setup), initially published in
 [PR #7](https://github.com/pedrobritx/mac-setup/pull/7). Its source baseline includes
 [the bounded spring-settling fix](https://github.com/pedrobritx/mac-setup/commit/5b9bc761d6e82aed23013805509762c3d2e682d3).
+The saved handoff and spring fix are published together in
+[PR #8](https://github.com/pedrobritx/mac-setup/pull/8).
 
 ## File structure
 
