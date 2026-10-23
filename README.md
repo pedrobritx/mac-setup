@@ -32,6 +32,11 @@ See the [Liquid Acrylic interface notes](docs/LIQUID_INTERFACE.md) and the
 permissions, provider requests and MIT reuse. App artwork is bundled locally;
 category actions can select an entire category with its prerequisites.
 
+The editable **[mac-setup Figma design](https://www.figma.com/design/OU3tjfPMFYA2Sz3QtpVWqu?node-id=16-2)**
+is saved in the Projects team, with reusable controls, Dark/Light appearance
+variables and desktop journey layouts. The [design handoff](outputs/figma/README.md)
+records the source mapping, exported variables and verification limits.
+
 Use the round flag control to switch between English (UK), Brazilian Portuguese,
 French, German and Spanish (Spain). The setup flow, catalogue descriptions and
 Safety page use local translation files; your language choice stays in this

@@ -1,0 +1,131 @@
+{
+  "fileKey": "OU3tjfPMFYA2Sz3QtpVWqu",
+  "createdNodeIds": [
+    "4:130",
+    "4:131",
+    "4:132",
+    "4:133"
+  ],
+  "collections": [
+    {
+      "id": "VariableCollectionId:4:2",
+      "name": "mac-setup / Primitives",
+      "modes": {
+        "Value": "4:0"
+      }
+    },
+    {
+      "id": "VariableCollectionId:4:3",
+      "name": "mac-setup / Appearance",
+      "modes": {
+        "Dark": "4:1",
+        "Light": "4:2"
+      }
+    },
+    {
+      "id": "VariableCollectionId:4:4",
+      "name": "mac-setup / Geometry",
+      "modes": {
+        "Value": "4:3"
+      }
+    },
+    {
+      "id": "VariableCollectionId:4:5",
+      "name": "mac-setup / Motion",
+      "modes": {
+        "Value": "4:4"
+      }
+    }
+  ],
+  "variables": {
+    "bg": "VariableID:4:50",
+    "window": "VariableID:4:51",
+    "popover": "VariableID:4:52",
+    "surface": "VariableID:4:53",
+    "surface-soft": "VariableID:4:54",
+    "field": "VariableID:4:55",
+    "ink": "VariableID:4:56",
+    "muted": "VariableID:4:57",
+    "quiet": "VariableID:4:58",
+    "border": "VariableID:4:59",
+    "control-border": "VariableID:4:60",
+    "accent": "VariableID:4:61",
+    "accent-hover": "VariableID:4:62",
+    "tint": "VariableID:4:63",
+    "green": "VariableID:4:64",
+    "warn": "VariableID:4:65",
+    "warn-bg": "VariableID:4:66",
+    "mint": "VariableID:4:67",
+    "sky": "VariableID:4:68",
+    "lilac": "VariableID:4:69",
+    "title-gradient": "VariableID:4:70",
+    "accent-gradient": "VariableID:4:71",
+    "rim": "VariableID:4:72",
+    "sheen": "VariableID:4:73",
+    "shadow": "VariableID:4:74",
+    "radius": "VariableID:4:75",
+    "ambient-opacity": "VariableID:4:76",
+    "space/4": "VariableID:4:77",
+    "space/6": "VariableID:4:78",
+    "radius/6": "VariableID:4:79",
+    "space/8": "VariableID:4:80",
+    "radius/8": "VariableID:4:81",
+    "space/10": "VariableID:4:82",
+    "radius/10": "VariableID:4:83",
+    "space/12": "VariableID:4:84",
+    "space/13": "VariableID:4:85",
+    "radius/13": "VariableID:4:86",
+    "space/14": "VariableID:4:87",
+    "space/15": "VariableID:4:88",
+    "space/16": "VariableID:4:89",
+    "radius/16": "VariableID:4:90",
+    "space/18": "VariableID:4:91",
+    "radius/18": "VariableID:4:92",
+    "space/20": "VariableID:4:93",
+    "radius/20": "VariableID:4:94",
+    "space/22": "VariableID:4:95",
+    "radius/22": "VariableID:4:96",
+    "space/23": "VariableID:4:97",
+    "radius/23": "VariableID:4:98",
+    "space/24": "VariableID:4:99",
+    "radius/24": "VariableID:4:100",
+    "space/28": "VariableID:4:101",
+    "radius/28": "VariableID:4:102",
+    "space/32": "VariableID:4:103",
+    "space/36": "VariableID:4:104",
+    "space/40": "VariableID:4:105",
+    "radius/40": "VariableID:4:106",
+    "space/44": "VariableID:4:107",
+    "space/46": "VariableID:4:108",
+    "space/48": "VariableID:4:109",
+    "duration-quick": "VariableID:4:110",
+    "duration-fast": "VariableID:4:111",
+    "duration-slow": "VariableID:4:112",
+    "ease-smooth-out": "VariableID:4:113",
+    "ease-liquid": "VariableID:4:114",
+    "modal-open-dur": "VariableID:4:115",
+    "modal-close-dur": "VariableID:4:116",
+    "modal-scale": "VariableID:4:117",
+    "modal-scale-close": "VariableID:4:118",
+    "modal-ease": "VariableID:4:119",
+    "check-box": "VariableID:4:120",
+    "check-draw": "VariableID:4:121",
+    "check-uncheck": "VariableID:4:122",
+    "check-ease": "VariableID:4:123",
+    "liquid-opacity": "VariableID:4:124"
+  },
+  "primitiveCount": 44,
+  "styleIds": [
+    "S:f062d8ea85e286b52d05b6510376d948f8bfb530,",
+    "S:5d3e854d60b744d2ac0b1ba6c2423893e446adbd,",
+    "S:ba2d2d4a47512450584a679ed77df2749e5b0d5b,",
+    "S:cd0315c415c87daf50a8ad855cee81c86edc03dc,",
+    "S:35bb2c158ddc37c6299d0888701d331416fbb729,"
+  ],
+  "pages": {
+    "00 \u00b7 Start here": "4:130",
+    "01 \u00b7 Foundations": "4:131",
+    "02 \u00b7 Components": "4:132",
+    "03 \u00b7 Screens": "4:133"
+  }
+}
