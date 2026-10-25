@@ -63,6 +63,8 @@ jobs:
       - run: npm test
       - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npm run test:browser -- --browser=${{ matrix.browser }}
+      - name: Rehearse deployed-site acceptance locally
+        run: npm run test:production:local -- --browser=${{ matrix.browser }}
       - name: Preserve browser results and failure evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -71,5 +73,32 @@ jobs:
           path: |
             test-results/
             playwright-report/
+          if-no-files-found: warn
+          retention-days: 7
+
+  macos-dry-run:
+    name: Native macOS dry-run compatibility
+    runs-on: macos-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check:catalog
+      - run: npm test
+      - name: Check the system Bash and run isolated dry-run smoke checks
+        run: python3 tests/acceptance/native_macos.py
+      - name: Preserve native dry-run evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-macos-dry-run-${{ github.run_id }}-${{ github.run_attempt }}
+          path: test-results/native-macos/
           if-no-files-found: warn
           retention-days: 7
