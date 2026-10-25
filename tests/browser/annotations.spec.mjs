@@ -142,8 +142,9 @@ test("the visual guide dismisses from its backdrop and returns keyboard focus", 
   });
   await expect(dialog).toHaveCSS("opacity", "1");
   const box = await close.boundingBox();
-  expect(box.width).toBe(44);
-  expect(box.height).toBe(44);
+  // Transforms can introduce subpixel rounding in the reported hit target.
+  expect(box.width).toBeCloseTo(44, 2);
+  expect(box.height).toBeCloseTo(44, 2);
   await expect(close.locator("svg")).toHaveCount(1);
   await expect(dialog).toHaveCSS("opacity", "1");
   await capture(page, "preview-how-it-works.png");
