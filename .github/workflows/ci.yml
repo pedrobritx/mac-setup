@@ -42,8 +42,12 @@ jobs:
           ./install.sh --dry-run --britx
 
   browser:
-    name: Browser plans & local companion
+    name: Browser plans & local companion (${{ matrix.browser }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [webkit, chromium, firefox]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -57,5 +61,15 @@ jobs:
       - run: npm run check:catalog
       - run: npm run check:format
       - run: npm test
-      - run: npx playwright install --with-deps webkit
-      - run: npm run test:browser
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: npm run test:browser -- --browser=${{ matrix.browser }}
+      - name: Preserve browser results and failure evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-results-${{ matrix.browser }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: warn
+          retention-days: 7

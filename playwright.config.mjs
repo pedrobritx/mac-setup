@@ -5,6 +5,12 @@ export default defineConfig({
   fullyParallel: false,
   workers: 1,
   timeout: 60000,
+  retries: 0,
+  reporter: [
+    ["list", { printSteps: true }],
+    ["json", { outputFile: "test-results/results.json" }],
+    ["html", { outputFolder: "playwright-report", open: "never" }],
+  ],
   use: {
     baseURL: "http://127.0.0.1:3419",
     viewport: { width: 1536, height: 1024 },
