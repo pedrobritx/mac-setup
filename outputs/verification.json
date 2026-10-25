@@ -242,5 +242,31 @@
       "reason": "BRITX dry run exceeded original 60-second collector budget",
       "realInstallationPerformed": false
     }
+  },
+  "deploymentTriggerFollowUp": {
+    "verifiedDateBrasilia": "2026-10-25",
+    "testedBaseCommit": "dfbed9484a85124d88859be8797fbe147dcd6856",
+    "mainCi": "https://github.com/pedrobritx/mac-setup/actions/runs/40199599717",
+    "mainCiConclusion": "success",
+    "pagesDeployment": "https://github.com/pedrobritx/mac-setup/actions/runs/40199599590",
+    "pagesDeploymentConclusion": "success",
+    "originalPagesWorkflowSubscriptionProducedAcceptanceRun": false,
+    "replacementEntryPoint": "successful same-repository main CI; require successful Pages run for the exact SHA",
+    "localTests": {
+      "node": 15,
+      "python": 21,
+      "deploymentGateRegressions": 4
+    },
+    "realApiDeploymentGatePassed": true,
+    "workflowLint": "actionlint 1.7.12 passed",
+    "dockerAvailable": false,
+    "hostedReplacementTriggerVerified": false,
+    "realInstallationPerformed": false,
+    "humanAcceptancePerformed": false,
+    "sourceSha256": {
+      ".github/workflows/production-smoke.yml": "694ee7202f7dd5381e45e92f09fcdd251be8e3a91453c7b6eb838ef2ccf29b89",
+      "tests/acceptance/wait_pages.py": "cd7bdc8e586de024222e3ed27678308cc7d16b760e2d4cb1faf71aa9f6e443a3",
+      "tests/test_deployment_gate.py": "bf0185049ede5ed39426f55c64ca0a23d3cdf50199184e867d0fa146eba049ab"
+    }
   }
 }

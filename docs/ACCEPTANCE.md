@@ -33,11 +33,19 @@ Reports are written under `test-results/production/` and
 `playwright-report/production/`, separately from the existing browser suite.
 
 The normal CI matrix runs the local rehearsal on all three engines. The
-`Deployed site acceptance` workflow is configured to run after a successful,
-same-repository main-branch Pages workflow, and can also be dispatched manually.
-It checks out the triggering deployment's source revision. The new workflow
-must be merged to the default branch before its post-deployment trigger can be
-verified; its configured trigger is not evidence that it has run.
+`Deployed site acceptance` workflow runs after successful same-repository
+main-branch CI, and can also be dispatched manually. Before checking the live
+site, it requires a successful GitHub-managed Pages deployment of that exact
+revision, with a three-minute bounded wait. A failed or missing deployment fails
+the gate; an older deployment cannot satisfy it. The checked-out revision and
+browser report metadata use the triggering CI's source SHA.
+
+The first PR #10 merge (`dfbed94`) passed main CI and Pages, but the original
+`workflow_run` subscription to the GitHub-managed dynamic Pages workflow did
+not start any acceptance run. The follow-up uses the repository's normal CI
+workflow as its entry point and checks Pages explicitly. Its actual hosted
+trigger remains unverified until the follow-up merges and runs; a configured
+trigger alone is not evidence of execution.
 
 ## Native macOS dry-run compatibility
 
