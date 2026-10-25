@@ -201,8 +201,8 @@
       ".github/workflows/ci.yml": "3465a4561ee9057b732ded49af25aa2684583cfdd1273f14839846361bb4ad2a",
       ".github/workflows/production-smoke.yml": "41e75a36de560fca86f600e1bf0814fa8803bd7b445cc9389198a7f8c8615ec9",
       "playwright.production.config.mjs": "38b9ffaa21d2fdac9fe6f26499b264c067c10f8ac38f172861d9debdc33aba71",
-      "tests/acceptance/production.spec.mjs": "8de2bc8544ef4f1d8943a3e2997cbab2bdb10ebc9062b8e9def513fdc811b4f8",
-      "tests/acceptance/native_macos.py": "db29aefcaea5d338eace76d259e96fa82e7ec5040a68d1f8dada7b260a88ab2d",
+      "tests/acceptance/production.spec.mjs": "b29b77582e57575e28301cda798fce436ddd4027f974e552f6349917a98241c9",
+      "tests/acceptance/native_macos.py": "38cdfbcaa7319cd0a941415613bfed22b8ae1db50a44fe1c78e45dd09cfe091e",
       "package.json": "68a253e6038247ba9d6fdb432ba8885af4ef639000e10b5cce53f8fb2ee8d237"
     },
     "localRehearsal": {
@@ -228,6 +228,19 @@
       "result": "passed"
     },
     "realMacInstallationPerformed": false,
-    "humanAcceptancePerformed": false
+    "humanAcceptancePerformed": false,
+    "importNegativeControlDetectedBrokenHandler": true,
+    "nativeCollectorProcessGroupCleanupControlsPassed": true,
+    "firstNativeProbe": {
+      "run": "https://github.com/pedrobritx/mac-setup/actions/runs/40159834603",
+      "platform": "Darwin",
+      "macOS": "26.6.2",
+      "machine": "arm64",
+      "syntaxChecksPassed": 31,
+      "smokeChecksPassed": 3,
+      "status": "failed",
+      "reason": "BRITX dry run exceeded original 60-second collector budget",
+      "realInstallationPerformed": false
+    }
   }
 }

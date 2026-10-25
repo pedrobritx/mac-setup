@@ -86,6 +86,19 @@ test("the public site filters, exports, imports and opens Safety without install
   await expect(page.locator("#main h1")).toContainText("Your Mac.");
   await page.goto("/");
   await ready(page);
+  await page.getByRole("searchbox").fill("Figma MCP");
+  await expect(
+    page.getByRole("checkbox", { name: "Figma MCP", exact: true }),
+  ).toBeChecked();
+  // Returning from Safety preserves the plan. Import must also work from a
+  // different starting selection, rather than succeeding on saved state alone.
+  await page.evaluate(() => localStorage.removeItem("mac-setup.plan.v1"));
+  await page.reload();
+  await ready(page);
+  await page.getByRole("searchbox").fill("Figma MCP");
+  await expect(
+    page.getByRole("checkbox", { name: "Figma MCP", exact: true }),
+  ).not.toBeChecked();
   await page.locator("#plan-file").setInputFiles(file);
   await expect(
     page.getByRole("checkbox", { name: "Figma MCP", exact: true }),

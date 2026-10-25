@@ -53,6 +53,12 @@ home/state directory and explicitly enforce dry-run mode. Evidence is saved to
 On another OS the collector exits with code 2, records `not_run`, and executes
 no installer checks.
 
+Each native smoke command has a five-minute budget. The collector stops its
+entire subprocess group before removing the temporary home, including on timeout.
+The first hosted probe completed 31 syntax checks and three smoke commands,
+then exceeded the original 60-second budget during the BRITX dry run. That is
+collector failure evidence, not a failed real installation.
+
 This evidence covers native command compatibility. It does not demonstrate a
 fresh real installation, sudo/App Store approval or human accessibility. Run
 installation acceptance on a disposable Mac or suitable isolated macOS VM.
@@ -90,6 +96,10 @@ Reviewer/date: ____________________
   CI and Pages deployment passed.
 - Local rehearsal of this new suite passed all nine cases across WebKit,
   Chromium and Firefox.
+- The import check clears the saved plan and verifies the exported choice is
+  absent before import. Disabling the import handler in a local negative control
+  fails the post-import checkbox assertion. Native collector success and timeout
+  controls also verified descendant cleanup before removing its temporary home.
 - The live Chromium suite passed all three cases, including the public export
   and isolated companion dry run. The local managed-network CA was trusted in
   a temporary browser profile; TLS validation was not disabled.

@@ -5,10 +5,28 @@ import json
 import os
 from pathlib import Path
 import platform
+import signal
 import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def run_smoke(args, env, timeout=300):
+    """Stop installer descendants before cleaning their temporary HOME."""
+    process = subprocess.Popen(
+        ["/bin/bash", "./install.sh", *args], cwd=ROOT, env=env,
+        start_new_session=True,
+    )
+    try:
+        return process.wait(timeout=timeout)
+    finally:
+        # A timeout must not leave a module writing into a removed HOME.
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        process.wait()
 
 
 def collect(output):
@@ -67,14 +85,12 @@ def collect(output):
                 ["--help"], ["--list"], ["--dry-run", "--yes"],
                 ["--dry-run", "--britx"],
             ):
-                result = subprocess.run(
-                    ["/bin/bash", "./install.sh", *args],
-                    cwd=ROOT, env=env, timeout=60, check=False,
-                )
+                returncode = run_smoke(args, env)
                 evidence["checks"].append({
-                    "args": args, "exitCode": result.returncode,
+                    "args": args, "exitCode": returncode,
                 })
-                result.check_returncode()
+                if returncode:
+                    raise subprocess.CalledProcessError(returncode, args)
         evidence["status"] = "passed"
     except (OSError, subprocess.SubprocessError) as error:
         evidence["status"] = "failed"
