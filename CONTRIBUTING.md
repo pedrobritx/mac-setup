@@ -86,6 +86,11 @@ If Docker is unavailable, record that limitation and the native Linux runtime
 versions. A Linux browser pass does not establish native macOS installation,
 real sudo/App Store behaviour, VoiceOver acceptance or production verification.
 
+For live-site checks, isolated public-to-local handoff rehearsal, native macOS
+dry-run evidence and the remaining human cases, use the
+[acceptance guide](docs/ACCEPTANCE.md). Production checks have separate report
+directories and keep HTTPS verification enabled.
+
 Use `./web.sh --dry-run` for visual review. Keep installation tests in isolated
 homes/state directories and never apply a real setup to the developer's Mac.
 Browser plans are untrusted data: validate catalogue versions, prerequisites and
