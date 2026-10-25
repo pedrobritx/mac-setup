@@ -1,22 +1,25 @@
 import { test, expect } from "@playwright/test";
-import path from "node:path";
 
-test("rapid selection changes settle on the final choice and record the real liquid interface", async ({
-  browser,
+// Recording is an explicit QA mode; functional CI does not depend on encoding video.
+// The page fixture owns cleanup, so a close error cannot replace a body failure.
+test.use({
+  video:
+    process.env.MAC_SETUP_RECORD_VIDEO === "1"
+      ? { mode: "on", size: { width: 1280, height: 854 } }
+      : "off",
+});
+
+test("rapid selection changes settle on the final choice across the liquid interface", async ({
+  page,
 }) => {
-  const context = await browser.newContext({
-    viewport: { width: 1536, height: 1024 },
-    recordVideo: {
-      dir: path.resolve("test-results/liquid-video"),
-      size: { width: 1280, height: 854 },
-    },
-  });
-  const page = await context.newPage();
-  const video = page.video();
-  try {
-    await page.goto("http://127.0.0.1:3419/");
-    const profiles = page.locator("#profiles");
+  const profiles = page.locator("#profiles");
+
+  await test.step("Open the setup and wait for its initial selection", async () => {
+    await page.goto("/");
     await expect(profiles).toHaveAttribute("data-liquid-state", "settled");
+  });
+
+  await test.step("Rapid profile changes settle on BRITX Choice", async () => {
     await page.getByRole("radio", { name: "Developer", exact: true }).check();
     await expect(profiles).toHaveAttribute("data-liquid-state", "moving");
     await page.getByRole("radio", { name: "Education", exact: true }).check();
@@ -27,6 +30,9 @@ test("rapid selection changes settle on the final choice and record the real liq
     await expect(
       page.getByRole("radio", { name: "BRITX Choice", exact: true }),
     ).toBeChecked();
+  });
+
+  await test.step("The guide responds to hover, opens and dismisses", async () => {
     const how = page.getByRole("button", { name: "How it works", exact: true });
     await how.hover();
     await expect
@@ -40,6 +46,9 @@ test("rapid selection changes settle on the final choice and record the real liq
       .getByRole("button", { name: "Close details", exact: true })
       .click();
     await expect(page.getByRole("dialog")).not.toBeVisible();
+  });
+
+  await test.step("Source and category controls settle without blocking details", async () => {
     const source = page.getByRole("button", {
       name: "Source All sources",
       exact: true,
@@ -61,6 +70,9 @@ test("rapid selection changes settle on the final choice and record the real liq
       .getByRole("button", { name: "Close details", exact: true })
       .click();
     await expect(page.getByRole("dialog")).not.toBeVisible();
+  });
+
+  await test.step("Review and return preserve an editable final selection", async () => {
     await page.mouse.wheel(0, 320);
     await expect
       .poll(() => page.evaluate(() => window.scrollY))
@@ -82,8 +94,5 @@ test("rapid selection changes settle on the final choice and record the real liq
     await back.click();
     await page.getByRole("radio", { name: "Essentials", exact: true }).check();
     await expect(profiles).toHaveAttribute("data-liquid-state", "settled");
-  } finally {
-    await context.close();
-  }
-  await video.saveAs(path.resolve("outputs/liquid-preview.webm"));
+  });
 });
