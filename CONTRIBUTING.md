@@ -42,6 +42,50 @@ npx playwright install webkit
 npm run test:browser               # public-to-local flow, responsive layout and axe
 ```
 
+### Browser failure diagnosis
+
+Browser tests keep retries disabled. Named motion steps and the JSON report in
+`test-results/results.json` record phase durations. The HTML report in
+`playwright-report/` also exposes fixture setup and teardown steps. CI runs
+WebKit, Chromium and Firefox independently and uploads both report directories
+on success and failure for seven days; failures also retain traces and
+screenshots. Inspect the first failed step before blaming a later cleanup error.
+
+Run the affected regression checks repeatedly on one source revision:
+
+```bash
+npx playwright test tests/browser/liquid.spec.mjs tests/browser/motion.spec.mjs tests/browser/visual.spec.mjs --workers=1 --retries=0 --repeat-each=5
+```
+
+`npm run test:browser` defaults to WebKit. Use `npm run test:browser:all` for all
+three engines, or `npm run test:browser -- --browser=firefox` for one engine.
+The CI matrix keeps artifacts separate by browser and does not cancel the
+remaining engines when one fails.
+
+Motion tests use Playwright's managed page/context fixtures. Functional CI does
+not encode a demonstration video. To compare the same journey with recording
+enabled, run `npm run test:motion:record`; its video is attached beneath the
+test's unique `test-results/` directory. Tests do not overwrite the curated
+`outputs/liquid-preview.webm` handoff recording. Keep the functional assertions
+and the 60-second test budget unchanged unless measurements justify a scoped
+change.
+
+For local browser QA, prefer Docker with an image matching the pinned
+`@playwright/test` version in `package.json`:
+
+```bash
+docker run --rm --init --ipc=host \
+  --mount type=bind,src="$PWD",dst=/work \
+  --mount type=volume,dst=/work/node_modules \
+  --workdir /work \
+  mcr.microsoft.com/playwright:v1.64.1-noble \
+  bash -lc 'npm ci --ignore-scripts && npm run check:catalog && npm run check:format && npm test && npm run test:browser'
+```
+
+If Docker is unavailable, record that limitation and the native Linux runtime
+versions. A Linux browser pass does not establish native macOS installation,
+real sudo/App Store behaviour, VoiceOver acceptance or production verification.
+
 Use `./web.sh --dry-run` for visual review. Keep installation tests in isolated
 homes/state directories and never apply a real setup to the developer's Mac.
 Browser plans are untrusted data: validate catalogue versions, prerequisites and

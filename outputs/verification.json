@@ -28,7 +28,7 @@
     "vendor and MCP authentication",
     "human screen-reader review",
     "physical touch hardware",
-    "Firefox and Chromium rendering",
+    "human cross-browser visual review",
     "production FPS profiling",
     "native-language editorial review",
     "production deployment verification"
@@ -149,7 +149,46 @@
     "runtimeCiConclusion": "success",
     "originalPr": "https://github.com/pedrobritx/mac-setup/pull/7",
     "originalPrMergedCommit": "621136f4346593d0a5fff5dc048a4579cb322509",
-    "springFixMergePending": true,
+    "springFixMergePending": false,
+    "springFixMergedCommit": "e8eb8a053b2ec41a028a5289229aecdde84ca034",
+    "mergedCi": "https://github.com/pedrobritx/mac-setup/actions/runs/39900406869",
+    "mergedCiConclusion": "success",
     "followUpPr": "https://github.com/pedrobritx/mac-setup/pull/8"
+  },
+  "ciReliabilityFollowUp": {
+    "verifiedDateBrasilia": "2026-10-24",
+    "testedBaseCommit": "e8eb8a053b2ec41a028a5289229aecdde84ca034",
+    "evidence": "docs/CI_RELIABILITY.md",
+    "sourceSha256": {
+      ".github/workflows/ci.yml": "4bc273b9b30ad8e3411060dd2af5f9a3bcabfce66e2c41c48343d4ac9600f5a4",
+      "package.json": "9632245e257779675b4b6219b679e5b5bd4be8c1efc0da41a884bb6fe0fff5c6",
+      "playwright.config.mjs": "e8333f616415b84ce381bd0f322ac4c064f5e0f76a27f64468e5a066cc7057f1",
+      "tests/browser/annotations.spec.mjs": "4aacf7ac2e8f520f48e581a55f608f99922bb351be54d085d195edce461d9ff2",
+      "tests/browser/motion.spec.mjs": "25e54a282d23ebad9b7c8521d66dbf81df814d28e1a3f5e05a598b559b1c1b21"
+    },
+    "localTests": {
+      "node": 15,
+      "python": 17,
+      "webkit": 15,
+      "chromium": 15,
+      "firefox": 15,
+      "focusedWebkit": 30,
+      "firefoxRoundingRegression": 3,
+      "finalGuideAcrossEngines": 3,
+      "recordedMotion": 3
+    },
+    "retries": 0,
+    "historicalTimeoutReproduced": false,
+    "controlledErrorPreservationProbePassed": true,
+    "htmlFixtureTimingsVerified": true,
+    "distinctRecordedVideoAttachmentsVerified": 3,
+    "dockerAvailable": false,
+    "localBrowserSysrootUsed": true,
+    "localFirefoxSandboxAdjustmentRequired": true,
+    "productionHttpSmoke": {
+      "successfulResponses": 5,
+      "allMatchMergedMainBytes": true,
+      "interactiveAcceptancePerformed": false
+    }
   }
 }
