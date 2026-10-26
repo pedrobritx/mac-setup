@@ -322,5 +322,38 @@
       "timedOut": 1,
       "boundary": "screenshot capture at the 60-second journey deadline"
     }
+  },
+  "companionRestoreReadinessFollowUp": {
+    "verifiedDate": "2026-10-26",
+    "testedBaseCommit": "67d334bfa8fa0f91154557a44396afb04bf3b47a",
+    "failedMainCI": "https://github.com/pedrobritx/mac-setup/actions/runs/40402855500",
+    "failedWebkitJob": 121852965633,
+    "retainedFailureArtifact": 12690630070,
+    "traceRestoredStatus": "complete",
+    "traceEagerReturnVisibility": false,
+    "cause": "Session banner precedes initial run restoration; eager visibility skipped Return to choices and later waited on hidden radios.",
+    "fix": "Wait for initial /api/state response, branch on actual status, and auto-wait for return-button rendering.",
+    "localChromium": {
+      "controlledDelayedStateProbes": 3,
+      "realCompanionCaptures": 3,
+      "allPassed": true,
+      "retries": 0
+    },
+    "testTimeoutMsUnchanged": 60000,
+    "applicationCodeChanged": false,
+    "localWebkitAvailable": false,
+    "localFirefoxAvailable": false,
+    "liveProbeFor67d334b": {
+      "assetEqualityPassed": 7,
+      "interactiveCasesPassed": 0,
+      "interactiveCasesBlocked": 2,
+      "error": "net::ERR_CERT_AUTHORITY_INVALID in local proxied Chromium",
+      "httpsVerificationDisabled": false
+    },
+    "realInstallationPerformed": false,
+    "humanAcceptancePerformed": false,
+    "sourceSha256": {
+      "tests/browser/visual.spec.mjs": "585f0a467e53365f3286eef19a70be0e5ef8e485478b0824ade92e7931c3b574"
+    }
   }
 }

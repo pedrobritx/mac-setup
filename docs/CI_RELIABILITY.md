@@ -89,6 +89,32 @@ records three-engine deployed browser/local-companion dry-run success for merged
 main `18abe0a`. It supersedes the interactive automated-acceptance gap above;
 real installation and human checks remain open.
 
+## Companion restoration readiness — 26 October 2026
+
+Merged-main `67d334b` passed Chromium, Firefox, native dry-run and lint checks,
+but [WebKit CI](https://github.com/pedrobritx/mac-setup/actions/runs/40402855500/job/121852965633)
+passed 25/26 cases and timed out finding the Essentials radio in the companion
+capture. The [retained trace](https://github.com/pedrobritx/mac-setup/actions/runs/40402855500/artifacts/12690630070)
+shows `Return to choices.isVisible()` returning false while startup restoration
+was still rendering. The actual `/api/state` payload was a completed dry run;
+the final snapshot shows its progress view with Return to choices visible.
+
+The session banner is populated before the initial state is applied. An eager
+visibility probe can therefore skip returning to choices, then wait forever on
+radios hidden by the restored progress view. The capture now registers the
+initial state-response wait before navigation, branches on its real status and
+lets the return-button click wait for rendering. An idle companion remains on
+choices. Application behaviour, assertions and the 60-second test budget are
+unchanged.
+
+Local Chromium validation passed three controlled delayed-state probes and three
+real companion capture runs, covering idle and previously completed state. The
+controlled old branch skipped the return action and could not check the hidden
+radio; the response-based branch restored choices. These diagnostic fixtures
+were not added to product code. Firefox/WebKit were unavailable locally; hosted
+revalidation is required. This evidenced race is separate from the unreproduced
+historical PR #8 timeout.
+
 ## Evidence links
 
 - [Historical failed PR workflow](https://github.com/pedrobritx/mac-setup/actions/runs/39888755209)
