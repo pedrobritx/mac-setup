@@ -25,9 +25,10 @@ editable native layers. The interface is not a flattened screenshot.
 The components cover primary, secondary, tertiary and icon actions, profile
 cards, categories, a catalogue row and an unchecked checkbox. Captured profile
 and category components retain their own resting/selected styling; the moving
-selection rail belongs to the surrounding browser group. The complete proposed
-hover/press/focus state matrix in the [consistency review](../consistency-review/REVIEW.md)
-is future guidance, rather than a claim about completed variants.
+selection rail belongs to the surrounding browser group. The runtime
+[component contract](../../docs/COMPONENTS.md) now governs shared
+geometry and states. This Figma baseline does not claim the newer runtime state
+reference as completed Figma variants.
 
 ## Variables and source mapping
 

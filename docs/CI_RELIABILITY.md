@@ -78,11 +78,16 @@ The live home page, Safety page, catalogue, `liquid.mjs` and `app.mjs` all retur
 HTTP 200 and matched the merged main revision byte-for-byte. This establishes
 asset availability and version consistency, not interactive production acceptance.
 
-Still pending: installation on an isolated Mac; real sudo and App Store flows;
+Pending at this checkpoint: installation on an isolated Mac; real sudo and App Store flows;
 licences and vendor/MCP account authentication; human VoiceOver acceptance;
 physical touch hardware; human cross-browser visual review; production FPS;
 native-language editorial review; and interactive production/local-companion
 acceptance. Existing dry-run specimens do not establish real installation.
+
+The later [acceptance checkpoint](ACCEPTANCE.md#merged-main-checkpoint--26-october-2026)
+records three-engine deployed browser/local-companion dry-run success for merged
+main `18abe0a`. It supersedes the interactive automated-acceptance gap above;
+real installation and human checks remain open.
 
 ## Evidence links
 

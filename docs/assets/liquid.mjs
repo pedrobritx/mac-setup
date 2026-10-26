@@ -404,6 +404,10 @@ export function createLiquidUI() {
     "pointermove",
     (event) => {
       if (!motionAllowed() || event.pointerType === "touch") return;
+      if (event.target.closest('button:disabled, [aria-busy="true"]')) {
+        clearHover();
+        return;
+      }
       if (appWindow && event.target.closest(".setup-window") === appWindow) {
         const bounds = appWindow.getBoundingClientRect();
         const x = clamp(
@@ -460,6 +464,7 @@ export function createLiquidUI() {
       pressed = event.target.closest(
         ".primary-button, .secondary-button, .icon-button, .filter-button, .text-button, .back-button, .nav-link, .source-option, .app-source",
       );
+      if (pressed?.matches(':disabled, [aria-busy="true"]')) pressed = null;
       pressed?.classList.add("is-liquid-pressed");
     },
     { passive: true },

@@ -246,7 +246,7 @@
               <span data-icon="back"></span>Back to choices
             </button>
             <div class="review-layout">
-              <div>
+              <div class="review-panel">
                 <div class="review-heading">
                   <h2>Everything you’ve chosen</h2>
                   <span id="review-total" class="quiet"></span>
@@ -280,8 +280,16 @@
                         maxlength="200"
                     /></label>
                   </div>
-                  <label class="confirmation" id="confirmation-label" hidden
+                  <label
+                    class="confirmation app-choice"
+                    id="confirmation-label"
+                    hidden
                     ><input type="checkbox" id="confirm-install" /><span
+                      class="choice-mark"
+                      aria-hidden="true"
+                      ><svg viewBox="0 0 24 24">
+                        <path d="m5 12 4 4 10-10" /></svg></span
+                    ><span
                       >I’ve reviewed this setup and want to continue.</span
                     ></label
                   ><button class="primary-button" id="continue-button">

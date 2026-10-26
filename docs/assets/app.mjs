@@ -684,6 +684,7 @@ async function startInstallation() {
   }
   if (!$("git-email").reportValidity()) return;
   starting = true;
+  $("continue-button").setAttribute("aria-busy", "true");
   $("continue-button").disabled = true;
   // Discard the previous run's presentation before the new request can yield.
   // A completed, hidden view must not look like the new run has finished.
@@ -716,6 +717,7 @@ async function startInstallation() {
     showError(error.message);
     $("continue-button").disabled = false;
   } finally {
+    $("continue-button").removeAttribute("aria-busy");
     starting = false;
   }
 }

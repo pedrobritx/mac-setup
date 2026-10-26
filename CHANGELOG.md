@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — shared component contract
+
+- Consolidated control geometry, spacing and response tokens; kept geometry in
+  the component stylesheet and reused catalogue checkmarks for installation
+  confirmation. Aligned comparable Review headings and panel insets.
+- Installation starts expose busy state and suppress duplicate activation and
+  decorative disabled/busy response. Added an internal real-control reference
+  and busy/error retry coverage, with both themes and Calm captures.
+- Split independent locale, viewport and capture checks into bounded tests
+  without removing assertions or raising timeouts. Removed the completed
+  consistency proposal; the component contract and acceptance checklist remain.
+
 ### Changed — languages and softer window motion
 
 - Added a keyboard-operable round flag picker for English (UK), Brazilian

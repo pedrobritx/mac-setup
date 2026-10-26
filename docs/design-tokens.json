@@ -1,9 +1,6 @@
 {
   "name": "mac-setup",
-  "sourceOfTruth": [
-    "docs/assets/style.css",
-    "docs/assets/liquid.css"
-  ],
+  "sourceOfTruth": ["docs/assets/style.css", "docs/assets/liquid.css"],
   "repository": "https://github.com/pedrobritx/mac-setup",
   "modes": {
     "dark": {
@@ -71,19 +68,38 @@
     "duration-slow": "400ms",
     "ease-smooth-out": "cubic-bezier(0.22, 1, 0.36, 1)",
     "ease-liquid": "cubic-bezier(0.2, 1.45, 0.4, 1)",
-    "modal-open-dur": "250ms",
-    "modal-close-dur": "150ms",
+    "modal-open-dur": "var(--duration-fast)",
+    "modal-close-dur": "var(--duration-quick)",
     "modal-scale": "0.96",
     "modal-scale-close": "0.96",
-    "modal-ease": "cubic-bezier(0.22, 1, 0.36, 1)",
-    "check-box": "150ms",
+    "modal-ease": "var(--ease-smooth-out)",
+    "check-box": "var(--duration-quick)",
     "check-draw": "350ms",
-    "check-uncheck": "150ms",
-    "check-ease": "cubic-bezier(0.22, 1, 0.36, 1)",
+    "check-uncheck": "var(--duration-quick)",
+    "check-ease": "var(--ease-smooth-out)",
     "liquid-opacity": "0.3"
   },
   "notes": [
-    "Current implementation values; consistency-review proposals are not implemented.",
+    "Runtime component contract is implemented; see docs/COMPONENTS.md. Figma retains its saved desktop baseline.",
     "System font stack retained in code; Figma font availability must be verified."
-  ]
+  ],
+  "geometry": {
+    "radius-mark": "6px",
+    "radius-control": "16px",
+    "radius-panel": "24px",
+    "radius-window": "28px",
+    "radius-action": "999px",
+    "control-compact": "32px",
+    "control-default": "44px",
+    "control-prominent": "48px"
+  },
+  "spacing": {
+    "space-1": "4px",
+    "space-2": "8px",
+    "space-3": "12px",
+    "space-4": "16px",
+    "space-6": "24px",
+    "space-8": "32px",
+    "space-12": "48px"
+  }
 }

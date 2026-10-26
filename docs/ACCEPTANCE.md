@@ -42,10 +42,12 @@ browser report metadata use the triggering CI's source SHA.
 
 The first PR #10 merge (`dfbed94`) passed main CI and Pages, but the original
 `workflow_run` subscription to the GitHub-managed dynamic Pages workflow did
-not start any acceptance run. The follow-up uses the repository's normal CI
-workflow as its entry point and checks Pages explicitly. Its actual hosted
-trigger remains unverified until the follow-up merges and runs; a configured
-trigger alone is not evidence of execution.
+not start any acceptance run. PR #11 corrected the entry point to normal CI
+and checks Pages explicitly. This trigger is verified for merged main `18abe0a`:
+[deployed acceptance run 40231047013](https://github.com/pedrobritx/mac-setup/actions/runs/40231047013)
+passed all three cases in each of Chromium, Firefox and WebKit, after the
+exact-revision Pages gates passed. This is automated dry-run evidence; the human
+and real-installation rows below remain unperformed.
 
 ## Native macOS dry-run compatibility
 
@@ -116,3 +118,19 @@ Reviewer/date: ____________________
   CI artifact for the tested commit; they cannot be inferred from Linux.
 - The historical motion timeout remains unreproduced. New acceptance coverage
   does not retrospectively establish its internal cause.
+
+## Merged-main checkpoint — 26 October 2026
+
+For `18abe0acd4f6bdbaedc980c099084ce4c0881345`, all five
+[main CI jobs](https://github.com/pedrobritx/mac-setup/actions/runs/40230732341),
+[Pages](https://github.com/pedrobritx/mac-setup/actions/runs/40230731914) and the
+three-engine deployed suite linked above passed. Native macOS compatibility
+passed its isolated dry-run job. None of these checks installed software on a
+real test Mac or supplied human acceptance.
+
+The next real-installation test needs an explicitly chosen disposable Mac or
+macOS VM, a recoverable snapshot, and a reviewed minimal plan for the candidate
+revision. Run the native collector and `./web.sh --dry-run --plan FILE` first;
+record actual install/repeat-run outcomes only after real installation on that
+disposable environment is separately authorized. Later source changes require
+their own main CI, Pages and deployed-suite evidence.

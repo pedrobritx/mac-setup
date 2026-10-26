@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import path from "node:path";
 
-test("five languages keep choices, translate new renders and persist across Safety", async ({
+test("five languages keep choices and translate new renders at compact widths", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 932, height: 932 });
@@ -61,15 +61,6 @@ test("five languages keep choices, translate new renders and persist across Safe
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    const result = await new AxeBuilder({ page })
-      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
-      .analyze();
-    expect(
-      result.violations.map((v) => ({
-        id: v.id,
-        nodes: v.nodes.map((n) => n.target),
-      })),
-    ).toEqual([]);
     for (const width of [390, 320]) {
       await page.setViewportSize({ width, height: 844 });
       // The measured SVG surfaces need a resize frame before layout is settled.
@@ -80,6 +71,23 @@ test("five languages keep choices, translate new renders and persist across Safe
     }
     await page.setViewportSize({ width: 932, height: 932 });
   }
+});
+
+test("language picker supports keyboard selection, translated search and Safety persistence", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 932, height: 932 });
+  await page.goto("/");
+  await expect(page.locator("#profiles")).toHaveAttribute(
+    "data-liquid-state",
+    "settled",
+  );
+  await page.getByRole("radio", { name: "Developer", exact: true }).check();
+  const choose = async (name, id) => {
+    await page.locator("#language-trigger").click();
+    await page.getByRole("option", { name, exact: true }).click();
+    await expect(page.locator("html")).toHaveAttribute("lang", id);
+  };
   // Keyboard selection and dismissal use the same listbox contract as Source.
   await page.locator("#language-trigger").focus();
   await page.keyboard.press("ArrowDown");
@@ -148,3 +156,31 @@ test("five languages keep choices, translate new renders and persist across Safe
     animations: "disabled",
   });
 });
+
+// Audit each locale independently so five full catalogue scans do not consume
+// the interaction journey's budget. Assertions and per-test deadlines stay intact.
+for (const [name, id] of [
+  ["Português (Brasil)", "pt-BR"],
+  ["Français", "fr-FR"],
+  ["Deutsch", "de-DE"],
+  ["Español (España)", "es-ES"],
+  ["English (UK)", "en-GB"],
+]) {
+  test(`${id} catalogue meets automated WCAG checks`, async ({ page }) => {
+    await page.setViewportSize({ width: 932, height: 932 });
+    await page.goto("/");
+    await page.getByRole("radio", { name: "Developer", exact: true }).check();
+    await page.locator("#language-trigger").click();
+    await page.getByRole("option", { name, exact: true }).click();
+    await expect(page.locator("html")).toHaveAttribute("lang", id);
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .analyze();
+    expect(
+      result.violations.map((v) => ({
+        id: v.id,
+        nodes: v.nodes.map((n) => n.target),
+      })),
+    ).toEqual([]);
+  });
+}
