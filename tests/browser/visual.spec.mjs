@@ -43,15 +43,14 @@ test("capture the real catalogue, mobile layout and review", async ({
 });
 
 test("capture a completed isolated companion preview", async ({ page }) => {
+  // The session banner precedes restored-run rendering. Decide from the actual
+  // startup response, then let click wait for the restored view when needed.
+  const initialState = page.waitForResponse("http://127.0.0.1:3420/api/state");
   await page.goto("http://127.0.0.1:3420/#session=browser-test-session-only");
   await expect(
     page.getByText("Local companion · Dry-run preview", { exact: true }),
   ).toBeVisible();
-  if (
-    await page
-      .getByRole("button", { name: "Return to choices", exact: true })
-      .isVisible()
-  ) {
+  if ((await (await initialState).json()).status !== "idle") {
     await page
       .getByRole("button", { name: "Return to choices", exact: true })
       .click();
