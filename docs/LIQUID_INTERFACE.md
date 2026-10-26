@@ -148,5 +148,8 @@ behaviour. Visual references and the comparison ledger live under `outputs/`.
 The built-in browser is also used to inspect the actual local companion.
 
 These checks do not install applications or apply macOS preferences on the
-developer's Mac. Native touch hardware, VoiceOver and current Firefox/Chromium
-rendering remain manual verification areas.
+developer's Mac. Chromium, Firefox and WebKit now run in CI; native touch
+hardware, VoiceOver and human browser rendering review remain acceptance areas.
+
+The implemented [component contract](COMPONENTS.md) defines geometry ownership,
+shared states, confirmation marks and the internal real-control reference.

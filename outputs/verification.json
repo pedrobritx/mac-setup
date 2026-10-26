@@ -268,5 +268,59 @@
       "tests/acceptance/wait_pages.py": "cd7bdc8e586de024222e3ed27678308cc7d16b760e2d4cb1faf71aa9f6e443a3",
       "tests/test_deployment_gate.py": "bf0185049ede5ed39426f55c64ca0a23d3cdf50199184e867d0fa146eba049ab"
     }
+  },
+  "componentContractFollowUp": {
+    "verifiedDate": "2026-10-26",
+    "testedBaseCommit": "18abe0acd4f6bdbaedc980c099084ce4c0881345",
+    "evidence": "docs/COMPONENTS.md",
+    "removedCompletedProposal": "outputs/consistency-review/REVIEW.md",
+    "localTests": {
+      "node": 15,
+      "python": 21,
+      "chromium": 26,
+      "catalog": "passed",
+      "format": "passed",
+      "chromiumProductionRehearsal": 3
+    },
+    "retries": 0,
+    "dockerAvailable": false,
+    "nativeMacAvailable": false,
+    "localFirefoxAvailable": false,
+    "localWebkitAvailable": false,
+    "priorHostedBaseline": {
+      "commit": "18abe0acd4f6bdbaedc980c099084ce4c0881345",
+      "mainCI": "https://github.com/pedrobritx/mac-setup/actions/runs/40230732341",
+      "pages": "https://github.com/pedrobritx/mac-setup/actions/runs/40230731914",
+      "productionAcceptance": "https://github.com/pedrobritx/mac-setup/actions/runs/40231047013",
+      "productionBrowsersPassed": {
+        "chromium": 3,
+        "firefox": 3,
+        "webkit": 3
+      }
+    },
+    "baselineCombinedViewportAuditExceeded60SecondBudget": true,
+    "independentChecksSplitWithoutDroppingAssertionsOrRaisingTimeouts": true,
+    "earlierIntermittentOverflowCause": "unresolved; not reproduced in final full suite",
+    "historicalPr8TimeoutCause": "unresolved",
+    "realInstallationPerformed": false,
+    "humanAcceptancePerformed": false,
+    "sourceSha256": {
+      "docs/index.html": "d8ae16139ff7c7cd3269b64cd858aa3fde620163c4cfb9a88cee72323cbc71b8",
+      "docs/assets/style.css": "de68cdf28a29f6781e9b34a09bff6414da24f67f1302f95626a88fbf16134819",
+      "docs/assets/liquid.css": "e5d18146998ca141b105b073d361c1685ba0c8778d23bc83b1ebbd1727a0b31f",
+      "docs/assets/liquid.mjs": "13fdf50f426b57b48ce2d482b1fd41b1b90d04e963fdbee447c54018e7bbe4c7",
+      "docs/assets/app.mjs": "f4887a58810c1966dc3329fe3ae06eba9888f6bd73fb7f2297edae93416484fb",
+      "tests/browser/components.spec.mjs": "4cb364d94f5e3e0327b09a99c4855bd4ae11f75ef5e778b76eeea57fcc8a3162",
+      "tests/browser/languages.spec.mjs": "3e122aada8a51235cc6b3b2c796c697a50438e6276ecdfc7c6bfa64e0ef45090",
+      "tests/browser/setup.spec.mjs": "e98c6b8e161057e76eadb71580fe6731771f9302de54bfc1b2f1b2b5f6b594cb",
+      "tests/browser/visual.spec.mjs": "518f95a069f0631eb7b12d00b317141533fdc1c7fc65547c6ca5290efc772f9c",
+      "tests/acceptance/production.spec.mjs": "2e158ba5f5c38cd853bd545a8905ec886bc138240ebe7e257cd5042100662ef9"
+    },
+    "deployedAssetEqualityIncludesComponentStylesheets": true,
+    "combinedLanguageRepetitionsBeforeFinalSplit": {
+      "passed": 1,
+      "timedOut": 1,
+      "boundary": "screenshot capture at the 60-second journey deadline"
+    }
   }
 }

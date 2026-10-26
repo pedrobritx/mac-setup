@@ -160,14 +160,14 @@ test("BRITX labels paid apps and MCP setup honestly, with keyboard operable deta
   );
 });
 
-test("desktop and mobile have no horizontal overflow and meet automated WCAG checks in both themes", async ({
-  page,
-}) => {
-  for (const viewport of [
-    { width: 1536, height: 1024 },
-    { width: 923, height: 932 },
-    { width: 390, height: 844 },
-  ]) {
+for (const viewport of [
+  { width: 1536, height: 1024 },
+  { width: 923, height: 932 },
+  { width: 390, height: 844 },
+]) {
+  test(`${viewport.width}px has no horizontal overflow and meets automated WCAG checks in both themes`, async ({
+    page,
+  }) => {
     await page.setViewportSize(viewport);
     await page.goto("/");
     await waitForCatalogue(page);
@@ -211,5 +211,5 @@ test("desktop and mobile have no horizontal overflow and meet automated WCAG che
         targets: v.nodes.map((n) => n.target),
       })),
     ).toEqual([]);
-  }
-});
+  });
+}

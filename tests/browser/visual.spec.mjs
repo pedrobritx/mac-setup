@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { mkdir } from "node:fs/promises";
 import path from "node:path";
 
-test("capture the real catalogue, mobile layout, review and completed preview", async ({
+test("capture the real catalogue, mobile layout and review", async ({
   page,
 }) => {
   const output = path.resolve("outputs");
@@ -40,7 +40,9 @@ test("capture the real catalogue, mobile layout, review and completed preview", 
   await page.getByRole("button", { name: "Review setup", exact: true }).click();
   await expect(page.locator("#paid-notice")).toBeVisible();
   await capture("preview-review.png");
+});
 
+test("capture a completed isolated companion preview", async ({ page }) => {
   await page.goto("http://127.0.0.1:3420/#session=browser-test-session-only");
   await expect(
     page.getByText("Local companion · Dry-run preview", { exact: true }),
@@ -81,5 +83,8 @@ test("capture the real catalogue, mobile layout, review and completed preview", 
   await expect(
     page.getByRole("button", { name: "Download install report", exact: true }),
   ).toBeEnabled();
-  await capture("preview-progress.png");
+  await page.screenshot({
+    path: path.resolve("outputs/preview-progress.png"),
+    animations: "disabled",
+  });
 });

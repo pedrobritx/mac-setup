@@ -40,6 +40,8 @@ test("published pages and runtime assets match the checked-out deployment", asyn
     "index.html",
     "safety.html",
     "assets/catalog.json",
+    "assets/style.css",
+    "assets/liquid.css",
     "assets/liquid.mjs",
     "assets/app.mjs",
   ]) {

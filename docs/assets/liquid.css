@@ -5,15 +5,15 @@
   --duration-slow: 400ms;
   --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-liquid: cubic-bezier(0.2, 1.45, 0.4, 1);
-  --modal-open-dur: 250ms;
-  --modal-close-dur: 150ms;
+  --modal-open-dur: var(--duration-fast);
+  --modal-close-dur: var(--duration-quick);
   --modal-scale: 0.96;
   --modal-scale-close: 0.96;
-  --modal-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --check-box: 150ms;
+  --modal-ease: var(--ease-smooth-out);
+  --check-box: var(--duration-quick);
   --check-draw: 350ms;
-  --check-uncheck: 150ms;
-  --check-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --check-uncheck: var(--duration-quick);
+  --check-ease: var(--ease-smooth-out);
   --liquid-opacity: 0.3;
 }
 html[data-theme="light"] {
@@ -120,7 +120,6 @@ html[data-theme="light"] {
 ) {
   position: relative;
   isolation: isolate;
-  border-radius: 24px;
 }
 :is(
   .text-button,
@@ -145,8 +144,8 @@ html[data-theme="light"] {
   opacity: 0;
   transform: scale(0.82, 0.7);
   transition:
-    transform 400ms var(--ease-liquid),
-    opacity 180ms ease;
+    transform var(--duration-slow) var(--ease-liquid),
+    opacity var(--duration-quick) var(--ease-smooth-out);
 }
 :is(
     .text-button,
@@ -286,7 +285,7 @@ html[data-theme="light"] {
   width: 19px;
   height: 19px;
   border: 1px solid var(--control-border);
-  border-radius: 6px;
+  border-radius: var(--radius-mark);
   background: var(--field);
   box-shadow: inset 0 1px 2px #0002;
   transition:
@@ -300,8 +299,8 @@ html[data-theme="light"] {
   stroke-width: 2.4;
 }
 .choice-mark path {
-  stroke-dasharray: var(--check-len);
-  stroke-dashoffset: var(--check-len);
+  stroke-dasharray: var(--check-len, 32);
+  stroke-dashoffset: var(--check-len, 32);
   transition: stroke-dashoffset var(--check-uncheck) var(--check-ease);
 }
 .app-choice input:checked + .choice-mark {
@@ -526,4 +525,24 @@ html[data-transparency="solid"] .catalog-panel {
   .category-button[aria-pressed="true"] {
     outline: 2px solid Highlight;
   }
+}
+
+/* Disabled/busy controls never retain decorative hover or press surfaces. */
+:is(button:disabled, [aria-busy="true"])::before {
+  transform: none !important;
+  box-shadow: none !important;
+}
+:is(
+    .text-button,
+    .back-button,
+    .icon-button,
+    .filter-button,
+    .source-option,
+    .category-button,
+    .effects-button
+  ):is(:disabled, [aria-busy="true"])::before {
+  opacity: 0 !important;
+}
+:is(button:disabled, [aria-busy="true"]).has-liquid-light::after {
+  opacity: 0;
 }

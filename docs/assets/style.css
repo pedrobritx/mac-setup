@@ -1,4 +1,19 @@
 :root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --radius-mark: 6px;
+  --radius-control: 16px;
+  --radius-panel: 24px;
+  --radius-window: 28px;
+  --radius-action: 999px;
+  --control-compact: 32px;
+  --control-default: 44px;
+  --control-prominent: 48px;
   --bg: #10131a;
   --window: rgb(17 24 37 / 84%);
   --popover: rgb(21 30 45 / 96%);
@@ -187,7 +202,7 @@ input:disabled {
 .top-nav {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: var(--space-6);
   min-height: 60px;
   padding: 7px 12px 7px 20px;
   border: 1px solid var(--rim);
@@ -236,18 +251,18 @@ input:disabled {
 .nav-actions a,
 .nav-actions .text-button {
   padding: 11px 12px;
-  min-height: 44px;
+  min-height: var(--control-default);
   display: inline-flex;
   align-items: center;
   color: var(--muted);
   text-decoration: none;
   font-size: 13px;
-  border-radius: 24px;
+  border-radius: var(--radius-panel);
   font-weight: 500;
 }
 .text-button {
-  padding: 8px 12px;
-  min-height: 32px;
+  padding: var(--space-2) var(--space-3);
+  min-height: var(--control-compact);
   border: 0;
   background: none;
   color: var(--accent);
@@ -262,7 +277,7 @@ input:disabled {
   align-items: center;
   justify-content: center;
   min-width: 44px;
-  min-height: 44px;
+  min-height: var(--control-default);
   padding: 10px;
   border: 0;
   background: none;
@@ -282,7 +297,7 @@ input:disabled {
   min-height: 40px;
   padding: 7px 11px;
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: var(--radius-panel);
   background: var(--surface-soft);
   font-size: 12px;
 }
@@ -341,7 +356,7 @@ input:disabled {
 .setup-window {
   position: relative;
   border: 1px solid var(--rim);
-  border-radius: 28px;
+  border-radius: var(--radius-window);
   background: var(--window);
   box-shadow:
     inset 0 1px 0 var(--sheen),
@@ -419,7 +434,7 @@ input:disabled {
   margin: 0 auto 18px;
   padding: 0;
   list-style: none;
-  gap: 24px;
+  gap: var(--space-6);
 }
 .stepper li {
   position: relative;
@@ -430,7 +445,7 @@ input:disabled {
   min-height: 42px;
   padding: 6px 14px;
   border: 1px solid transparent;
-  border-radius: 24px;
+  border-radius: var(--radius-panel);
   color: var(--muted);
   font-size: 12px;
   white-space: nowrap;
@@ -606,8 +621,8 @@ html[data-theme="light"] .profile-option:last-child > svg {
   align-items: center;
   gap: 11px;
   border: 1px solid transparent;
-  border-radius: 16px;
-  min-height: 44px;
+  border-radius: var(--radius-control);
+  min-height: var(--control-default);
   padding: 10px 12px;
   background: none;
   text-align: left;
@@ -634,7 +649,7 @@ html[data-theme="light"] .profile-option:last-child > svg {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 4px;
+  gap: var(--space-1);
   margin: 15px 0 0;
   padding-top: 12px;
   border-top: 1px solid var(--border);
@@ -665,9 +680,9 @@ html[data-theme="light"] .catalog-panel {
   align-items: center;
   flex: 1;
   min-width: 0;
-  min-height: 44px;
+  min-height: var(--control-default);
   border: 1px solid var(--control-border);
-  border-radius: 16px;
+  border-radius: var(--radius-control);
   padding: 10px 12px;
   color: var(--muted);
   background: var(--field);
@@ -705,9 +720,9 @@ html[data-theme="light"] .catalog-panel {
   justify-content: center;
   gap: 7px;
   padding: 10px 12px;
-  min-height: 44px;
+  min-height: var(--control-default);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--radius-control);
   background: var(--surface-soft);
   color: var(--muted);
   font-size: 11px;
@@ -758,7 +773,7 @@ html[data-theme="light"] .catalog-panel {
 .source-trigger svg {
   width: 14px;
   height: 14px;
-  transition: rotate 250ms var(--ease-liquid);
+  transition: rotate var(--duration-fast) var(--ease-liquid);
 }
 .source-trigger[aria-expanded="true"] svg {
   rotate: 180deg;
@@ -783,8 +798,8 @@ html[data-theme="light"] .catalog-panel {
   transform: translateY(-6px) scale(0.94);
   opacity: 0;
   transition:
-    transform 150ms var(--ease-smooth-out),
-    opacity 150ms ease;
+    transform var(--duration-quick) var(--ease-smooth-out),
+    opacity var(--duration-quick) var(--ease-smooth-out);
 }
 .source-options[data-side="above"] {
   top: auto;
@@ -802,11 +817,11 @@ html[data-theme="light"] .catalog-panel {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  min-height: 44px;
+  min-height: var(--control-default);
   align-items: center;
   padding: 10px 14px;
   border: 0;
-  border-radius: 17px;
+  border-radius: var(--radius-control);
   background: none;
   font-size: 12px;
   text-align: left;
@@ -857,7 +872,7 @@ html[data-theme="light"] .catalog-panel {
   height: 19px;
 }
 .catalog-meta select {
-  min-height: 32px;
+  min-height: var(--control-compact);
   border: 1px solid var(--border);
   border-radius: 10px;
   color: var(--ink);
@@ -966,7 +981,7 @@ html[data-theme="light"] .catalog-panel {
   color: var(--muted);
   font-size: 9px;
   white-space: nowrap;
-  min-height: 44px;
+  min-height: var(--control-default);
   max-width: 65px;
 }
 .app-source:hover {
@@ -1134,10 +1149,10 @@ html[data-theme="light"] .catalog-panel {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  border-radius: 24px;
+  border-radius: var(--radius-action);
   font-weight: 600;
   line-height: 1.5;
-  min-height: 46px;
+  min-height: var(--control-prominent);
   padding: 11px 18px;
   border: 1px solid transparent;
   text-decoration: none;
@@ -1238,8 +1253,8 @@ html[data-theme="light"] .catalog-panel {
   background: none;
   border: 0;
   color: var(--accent);
-  min-height: 44px;
-  padding: 8px 12px;
+  min-height: var(--control-default);
+  padding: var(--space-2) var(--space-3);
   margin-bottom: 14px;
   font-size: 12px;
 }
@@ -1250,7 +1265,7 @@ html[data-theme="light"] .catalog-panel {
 .review-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 330px;
-  gap: 24px;
+  gap: var(--space-6);
   align-items: start;
 }
 .review-heading {
@@ -1324,7 +1339,7 @@ html[data-theme="light"] .catalog-panel {
 .field input {
   width: 100%;
   min-width: 0;
-  min-height: 44px;
+  min-height: var(--control-default);
   border: 1px solid var(--control-border);
   border-radius: 13px;
   background: var(--field);
@@ -1409,8 +1424,8 @@ html[data-theme="light"] .catalog-panel {
   gap: 18px;
   background: var(--field);
   border: 1px solid var(--border);
-  padding: 16px;
-  border-radius: 16px;
+  padding: var(--space-4);
+  border-radius: var(--radius-control);
   margin-top: 14px;
 }
 .command-box code {
@@ -1606,7 +1621,7 @@ progress::-moz-progress-bar {
   overflow-wrap: anywhere;
   background: var(--field);
   border-radius: 14px;
-  padding: 16px;
+  padding: var(--space-4);
 }
 .followup-panel > p {
   margin-top: 12px;
@@ -1637,7 +1652,7 @@ progress::-moz-progress-bar {
   gap: 6px;
   font-size: 11px;
   margin-top: 7px;
-  min-height: 32px;
+  min-height: var(--control-compact);
 }
 .followups a svg {
   width: 13px;
@@ -1658,7 +1673,7 @@ dialog {
   background: var(--popover);
   color: var(--ink);
   border: 1px solid var(--rim);
-  border-radius: 28px;
+  border-radius: var(--radius-window);
   padding: 26px;
   max-width: 560px;
   width: calc(100% - 36px);
@@ -2036,7 +2051,7 @@ dialog::backdrop {
     padding: 12px 11px 17px;
   }
   .stepper {
-    gap: 4px;
+    gap: var(--space-1);
     margin-bottom: 16px;
   }
   .stepper li {
@@ -2065,7 +2080,7 @@ dialog::backdrop {
   .profile-option {
     padding: 12px 6px;
     min-height: 92px;
-    border-radius: 16px;
+    border-radius: var(--radius-control);
   }
   .profile-option > svg {
     width: 22px;
@@ -2127,7 +2142,7 @@ dialog::backdrop {
     border: 0;
   }
   .catalog-actions button {
-    min-height: 32px;
+    min-height: var(--control-compact);
     font-size: 10px;
   }
   .catalog-panel {
@@ -2236,7 +2251,7 @@ dialog::backdrop {
     margin-top: 2px;
   }
   .selection-column .counts > div {
-    gap: 4px;
+    gap: var(--space-1);
     padding: 2px 0;
   }
   .selection-column .counts dt {
@@ -2395,7 +2410,7 @@ dialog::backdrop {
   }
   dialog {
     padding: 22px;
-    border-radius: 24px;
+    border-radius: var(--radius-panel);
   }
   .dialog-heading h2 {
     font-size: 21px;
@@ -2485,7 +2500,7 @@ dialog::backdrop {
 }
 .setup-flow {
   display: grid;
-  gap: 24px;
+  gap: var(--space-6);
   list-style: none;
   padding: 8px 0;
   margin: 0;
@@ -2529,7 +2544,7 @@ dialog::backdrop {
   display: flex;
   align-items: start;
   gap: 12px;
-  padding: 16px;
+  padding: var(--space-4);
   margin-top: 22px;
   border-radius: 18px;
   background: var(--surface-soft);
@@ -2547,7 +2562,7 @@ dialog::backdrop {
   font-size: 12px;
 }
 #dialog-content > .text-button {
-  padding: 8px 12px;
+  padding: var(--space-2) var(--space-3);
 }
 .safety-page {
   max-width: 1120px;
@@ -2585,7 +2600,7 @@ dialog::backdrop {
 }
 .safety-lead {
   display: flex;
-  gap: 24px;
+  gap: var(--space-6);
   align-items: center;
   padding: 28px 0 32px;
   max-width: 780px;
@@ -2625,7 +2640,7 @@ dialog::backdrop {
 .privacy-flow li {
   position: relative;
   border: 1px solid var(--rim);
-  border-radius: 24px;
+  border-radius: var(--radius-panel);
   padding: 22px;
   background: var(--surface-soft);
   box-shadow: inset 0 1px 1px var(--sheen);
@@ -2663,7 +2678,7 @@ dialog::backdrop {
   padding: 28px;
   border: 1px solid var(--rim);
   background: var(--tint);
-  border-radius: 24px;
+  border-radius: var(--radius-panel);
 }
 .open-source-note p + p {
   margin-top: 12px;
@@ -2675,14 +2690,14 @@ dialog::backdrop {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 4px;
+  gap: var(--space-1);
   text-align: center;
 }
 .safety-actions a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
+  min-height: var(--control-default);
   font-size: 12px;
   white-space: nowrap;
 }
@@ -2690,7 +2705,7 @@ dialog::backdrop {
   display: flex;
   gap: 18px;
   align-items: start;
-  padding: 32px 0 0;
+  padding: var(--space-8) 0 0;
 }
 .safety-contribute > span {
   margin-top: 12px;
@@ -2736,7 +2751,7 @@ dialog::backdrop {
     padding: 24px 0;
   }
   .safety-emblem {
-    width: 48px;
+    width: var(--space-12);
     height: 48px;
     flex-basis: 48px;
     border-radius: 17px;
@@ -2764,7 +2779,7 @@ dialog::backdrop {
     left: calc(50% - 9px);
   }
   .safety-grid {
-    gap: 24px;
+    gap: var(--space-6);
   }
   .open-source-note {
     padding: 22px;
@@ -2866,6 +2881,59 @@ body:has(#choose-view[hidden]) #floating-summary-slot {
     flex-wrap: wrap;
   }
   .catalog-actions button {
-    padding: 8px 12px;
+    padding: var(--space-2) var(--space-3);
   }
+}
+
+/* Geometry belongs to the component layer; motion consumes these shapes. */
+.review-panel,
+.review-side .summary-panel {
+  padding: var(--space-6);
+}
+.review-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  background: var(--surface-soft);
+  min-width: 0;
+}
+.review-panel .review-list {
+  border: 0;
+  background: none;
+  border-radius: 0;
+}
+.review-panel .review-group {
+  padding-inline: 0;
+}
+.review-panel h2,
+.review-side h2 {
+  margin: 0;
+}
+.text-button,
+.back-button,
+.nav-link,
+.filter-button,
+.effects-button {
+  border-radius: var(--radius-action);
+}
+.icon-button {
+  border-radius: 50%;
+}
+.app-source {
+  border-radius: var(--radius-control);
+}
+:is(.text-button, .back-button, .filter-button, .effects-button) {
+  min-height: var(--control-default);
+}
+:is(
+  .primary-button,
+  .secondary-button,
+  .text-button,
+  .back-button,
+  .icon-button
+)[aria-busy="true"] {
+  cursor: progress;
+}
+
+.confirmation {
+  min-height: var(--control-default);
 }
