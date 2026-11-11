@@ -172,19 +172,35 @@ test("the headline gradient glides on hover and back, and stays still when motio
     title.evaluate((node) =>
       getComputedStyle(node).getPropertyValue("--title-stop-1").trim(),
     );
+  // Ask the engine for the transition it created instead of sampling colours
+  // on a timer: hidden CI windows can redraw too rarely to observe mid-points.
+  const transitions = () =>
+    title.evaluate((node) =>
+      node
+        .getAnimations()
+        .filter((animation) => animation.transitionProperty)
+        .map((animation) => [
+          animation.transitionProperty,
+          animation.effect.getTiming().duration,
+        ])
+        .sort(([a], [b]) => a.localeCompare(b)),
+    );
+  const glide = [
+    ["--title-stop-1", 900],
+    ["--title-stop-2", 900],
+    ["--title-stop-3", 900],
+  ];
   const rest = await stop();
   await title.hover();
-  await page.waitForTimeout(300);
-  const between = await stop();
-  await page.waitForTimeout(1200);
-  const hovered = await stop();
-  expect(hovered).not.toBe(rest);
-  expect([rest, hovered]).not.toContain(between);
+  expect(await transitions()).toEqual(glide);
+  await expect.poll(transitions, { timeout: 4000 }).toEqual([]);
+  expect(await stop()).not.toBe(rest);
   await page.mouse.move(5, 5);
-  await expect.poll(stop, { timeout: 3000 }).toBe(rest);
+  expect(await transitions()).toEqual(glide);
+  await expect.poll(stop, { timeout: 4000 }).toBe(rest);
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await title.hover();
-  await page.waitForTimeout(300);
+  expect(await transitions()).toEqual([]);
   expect(await stop()).toBe(rest);
 });
