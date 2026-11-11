@@ -7,7 +7,9 @@ edit every optional choice, and export your plan. The local companion opens the
 same interface on your Mac, asks for confirmation, and follows the real installer
 step by step. **Essentials** is a light default; **BRITX Choice** is Pedro's
 personal recommendation. Developer, Education, Productivity and Creative profiles
-provide other starting points.
+provide other starting points. Prefer something lighter? Review also offers a
+plain **Homebrew command** for just the apps and tools you selected, with no
+preferences or setup steps.
 
 From a clone:
 

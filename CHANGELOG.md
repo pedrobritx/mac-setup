@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Homebrew command route
+
+- Review now offers a choice: the existing **Guided setup** (plan download and
+  local companion, unchanged and still the default) or a **Homebrew command**
+  that lists only the selected packages, for example
+  `brew install --formula mas; brew install --cask google-chrome vlc`. Selected
+  App Store apps get an optional `mas get <id>…` line; preferences, setup steps,
+  connections and manual installs are listed as not included, with a way back
+  to the guided setup. The chosen route is remembered locally.
+- Commands are generated from allowlisted catalogue tokens only, one line each,
+  with groups separated by `;` so a formula failure does not skip the apps.
+
+### Fixed — copied launch command
+
+- **Copy** on the handoff page copied the companion launcher with two line
+  breaks, because formatting had wrapped the command across three lines in the
+  HTML. Pasting ran `curl -fsSL` without a URL and failed with
+  `parse error near '|'`. Copy buttons now write canonical one-line strings, and
+  unit and browser tests guard the page fallback and the clipboard text.
+
 ### Changed — shared component contract
 
 - Consolidated control geometry, spacing and response tokens; kept geometry in

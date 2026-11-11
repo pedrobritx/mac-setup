@@ -99,6 +99,8 @@ Reviewer/date: ____________________
 | Production performance | Measure fluid/calm frame behaviour on target hardware, recording conditions and measurements. | Not run | |
 | Language review | A qualified reviewer checks meaning, terminology and truncation in each locale. | Not run | |
 | Real production handoff | Export from the live site and complete the reviewed installation on the disposable Mac. | Not run | |
+| Copied launcher | Copy the handoff command from the live site, paste it into Terminal (zsh) and confirm the companion starts. | Not run | |
+| Homebrew command route | Copy the generated commands from the live site for a small selection; confirm Homebrew installs exactly those packages and `mas get` behaves as described when signed in and signed out. | Not run | |
 
 ## Evidence recorded in this follow-up
 
