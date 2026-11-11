@@ -84,10 +84,11 @@ retains canonical English text for reversible language changes. Longer phrases
 take precedence over broad interpolation templates; template slots are checked
 in the Node suite. Translated descriptions also participate in search.
 
-The shared language picker uses project-local round flags with full language
-names and native-language option labels. Flags are decorative; accessible names
-identify languages independently. It supports the source picker's keyboard and
-focus contract. English (UK) is the default. A choice is saved only in this
+The shared language picker uses project-local round flags with native language
+names and no country qualifiers (English, Português, Français, Deutsch,
+Español); the translations remain en-GB, pt-BR, fr-FR, de-DE and es-ES. Flags
+are decorative; accessible names identify languages independently. It supports
+the source picker's keyboard and focus contract. British English is the default. A choice is saved only in this
 browser, under `mac-setup.locale.v1`, and applies to setup and Safety.
 
 App names, package tokens, plan IDs, commands, raw installer output, downloaded

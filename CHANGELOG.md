@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed — interface feedback
+
+- **Copy** did nothing in browsers that refuse the async clipboard (the Claude
+  desktop browser denies its permission), and the error appeared only at the
+  top of the page. Copy now falls back to a selection copy; if that is refused
+  too, it selects the command and says to press ⌘C beside the button.
+- The language list opened above the viewport on Review and later views at
+  widths up to 1050 px: the hidden floating summary measured 0 × 0 and was
+  taken as the bottom edge. Hidden summaries no longer limit the list.
+- The round flag sat 2 px off-centre in its circle; the trigger now centres it.
+- Language names no longer carry countries: English, Português, Français,
+  Deutsch and Español. Translations remain en-GB, pt-BR, fr-FR, de-DE and es-ES.
+- The headline's hover colour change switched the gradient size instantly and
+  snapped back. Registered colour stops now glide for 900 ms in and out, and
+  stay still under Calm or reduced motion.
+
+### Added — navigable stepper
+
+- Steps 1–3 are buttons: Choose, Review, and the chosen install route (the
+  handoff, without downloading, or the Homebrew command). The local companion
+  locks earlier steps while an installation runs and enables its progress step
+  once a run exists.
+
 ### Added — Homebrew command route
 
 - Review now offers a choice: the existing **Guided setup** (plan download and

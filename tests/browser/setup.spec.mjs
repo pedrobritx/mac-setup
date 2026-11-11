@@ -100,6 +100,11 @@ test("public plan download imports into the real companion and runs an isolated 
   await page
     .getByRole("button", { name: "Start dry-run preview", exact: true })
     .click();
+  // Earlier steps stay locked while the installer runs.
+  const chooseStep = page
+    .locator(".stepper")
+    .getByRole("button", { name: /Choose & customise/ });
+  await expect(chooseStep).toBeDisabled();
   await expect(
     page
       .getByRole("region", { name: "Guided installation" })
@@ -107,6 +112,7 @@ test("public plan download imports into the real companion and runs an isolated 
         exact: true,
       }),
   ).toBeVisible({ timeout: 40000 });
+  await expect(chooseStep).toBeEnabled();
   await expect(
     page.getByRole("heading", { name: "Figma MCP", exact: true }),
   ).toBeVisible();
@@ -356,9 +362,7 @@ test("the Homebrew command view fits a phone, passes WCAG checks and translates"
   }
   const command = await page.locator("#brew-command").textContent();
   await page.locator("#language-trigger").click();
-  await page
-    .getByRole("option", { name: "Português (Brasil)", exact: true })
-    .click();
+  await page.getByRole("option", { name: "Português", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Seu comando do Homebrew." }),
   ).toBeVisible();

@@ -17,8 +17,10 @@ exceptions in the component stylesheet. The motion layer must not override
 component radii. Comparable review panels share their inset and heading origin.
 
 Immediate feedback, elastic surface response and spatial transitions use the
-shared quick/fast/slow duration and easing tokens. Ambient breathing and checkbox
-stroke drawing retain their documented expressive timing.
+shared quick/fast/slow duration and easing tokens. Ambient breathing, checkbox
+stroke drawing and the 900 ms headline colour glide retain their documented
+expressive timing. Stepper steps are buttons; the current one carries
+`aria-current="step"`.
 Calm and system reduced motion override decoration. Disabled or busy actions
 suppress press/hover deformation and pointer sheen. Starting an installation
 sets `aria-busy`, disables duplicate activation, and clears busy state on success
