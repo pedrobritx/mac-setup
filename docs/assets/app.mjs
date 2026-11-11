@@ -12,9 +12,11 @@ import { icon } from "./icons.mjs";
 import { createSourcePicker } from "./source-picker.mjs";
 import { requestTranslation, translate } from "./i18n.mjs";
 import { APP_ICONS } from "./app-icons.mjs";
+import { LAUNCH_COMMAND, homebrewCommands, oneLine } from "./commands.mjs";
 
 const $ = (id) => document.getElementById(id);
 const STORAGE_KEY = "mac-setup.plan.v1";
+const METHOD_KEY = "mac-setup.method.v1";
 const MODULE_NAMES = {
   xcode: "Command Line Tools & Apple tooling",
   brew: "Homebrew & packages",
@@ -68,11 +70,13 @@ const PRIORITY = [
 let catalog;
 let selected = new Set();
 let profile = "essentials";
+let method = "guided";
 let category = "all";
 let selectedOnly = false;
 let session = null;
 let token = "";
 let pollTimer;
+let commands = { brew: "", appStore: "" };
 let followupSignature = "";
 let lastRunStatus = "";
 let starting = false;
@@ -519,9 +523,10 @@ function renderSelection() {
 }
 function setView(view, moveFocus = true) {
   requestTranslation();
-  for (const name of ["choose", "review", "guide", "progress"])
+  for (const name of ["choose", "review", "guide", "command", "progress"])
     $(`${name}-view`).hidden = name !== view;
   const step = view === "choose" ? 0 : view === "review" ? 1 : 2;
+  renderInstallStep();
   document.querySelectorAll(".stepper li").forEach((node, index) => {
     node.classList.toggle("complete", index < step);
     if (index === step) node.setAttribute("aria-current", "step");
@@ -542,6 +547,11 @@ function setView(view, moveFocus = true) {
       "Your setup, ",
       "step by step.",
       "A short handoff, then your Mac takes it from here.",
+    ],
+    command: [
+      "Your apps, ",
+      "one command.",
+      "Paste it into Terminal. Only what you chose is installed.",
     ],
     progress: [
       "Your setup, ",
@@ -617,20 +627,97 @@ function renderReview() {
   $("git-identity").hidden = !session || !selected.has("step:git");
   $("confirm-install").checked = false;
   $("continue-button").disabled = Boolean(session);
+  renderReviewActions();
+  setView("review");
+}
+// The public site offers two routes; the local companion always installs.
+function renderReviewActions() {
+  const homebrew = !session && method === "homebrew";
+  $("install-method").hidden = Boolean(session);
+  for (const input of document.querySelectorAll('[name="install-method"]'))
+    input.checked = input.value === method;
   $("continue-button").textContent = session
     ? session.dryRun
       ? "Start dry-run preview"
       : "Install my setup"
-    : "Download plan & continue";
+    : homebrew
+      ? "Show Homebrew command"
+      : "Download plan & continue";
   $("review-explanation").textContent = session
     ? session.dryRun
       ? "Preview your actual installer commands. No apps, shell files or system preferences will be changed."
       : "The local companion will run this selection. Administrator prompts appear in Terminal. Account sign-ins and purchases remain yours."
-    : "Download your plan, then open the local companion on your Mac for a guided installation.";
+    : homebrew
+      ? "Get a ready-to-paste Terminal command for the apps and tools you selected."
+      : "Download your plan, then open the local companion on your Mac for a guided installation.";
   $("review-caption").textContent = session
     ? "Keep Terminal open throughout setup."
-    : "Your plan contains choices, never credentials.";
-  setView("review");
+    : homebrew
+      ? "Nothing runs until you paste it into Terminal."
+      : "Your plan contains choices, never credentials.";
+  renderInstallStep();
+  requestTranslation();
+}
+function renderInstallStep() {
+  $("install-step-label").textContent =
+    !session && method === "homebrew"
+      ? "Homebrew command"
+      : "Guided installation";
+}
+function changeMethod(next) {
+  method = next === "homebrew" ? "homebrew" : "guided";
+  try {
+    localStorage.setItem(METHOD_KEY, method);
+  } catch {
+    /* The choice still applies to this visit. */
+  }
+  renderReviewActions();
+}
+function renderCommands() {
+  requestTranslation();
+  const result = homebrewCommands(catalog, selected);
+  commands = { brew: result.command, appStore: result.appStoreCommand };
+  showCommand($("brew-command"), result.command);
+  $("brew-command-box").hidden = !result.command;
+  $("brew-empty").hidden = Boolean(result.command);
+  $("brew-summary").hidden = !result.command;
+  $("brew-summary").textContent =
+    `Command-line tools: ${result.formulae.length} · Apps: ${result.casks.length}`;
+  $("app-store-step").hidden = !result.appStoreCommand;
+  showCommand($("app-store-command"), result.appStoreCommand);
+  for (const id of ["copy-brew-command", "copy-app-store-command"])
+    $(id).textContent = "Copy";
+  $("not-included").hidden = result.notIncluded.length === 0;
+  $("not-included-list").replaceChildren(
+    ...result.notIncluded.map((item) => element("li", "", item.name)),
+  );
+  setView("command");
+}
+// Each word wraps as a unit, so hyphenated names never look like two packages.
+function showCommand(node, command) {
+  node.replaceChildren(
+    ...command
+      .split(" ")
+      .flatMap((word, index) => [
+        ...(index ? [document.createTextNode(" ")] : []),
+        element("span", "", word),
+      ]),
+  );
+}
+function bindCopy(button, text) {
+  button.addEventListener("click", async () => {
+    const value = oneLine(text());
+    if (!value) return;
+    try {
+      await navigator.clipboard.writeText(value);
+      button.textContent = "Copied";
+      announce("Command copied. Paste it into Terminal and press Return.");
+    } catch {
+      showError(
+        "Clipboard access is unavailable. Select the command and copy it manually.",
+      );
+    }
+  });
 }
 function download(content, name, type = "application/json") {
   const url = URL.createObjectURL(new Blob([content], { type }));
@@ -672,6 +759,10 @@ async function api(path, options = {}) {
 async function startInstallation() {
   if (starting) return;
   if (!session) {
+    if (method === "homebrew") {
+      renderCommands();
+      return;
+    }
     exportPlan();
     setView("guide");
     return;
@@ -964,16 +1055,16 @@ function bindEvents() {
       event.target.value = "";
     }
   });
-  $("copy-command").addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText($("launch-command").textContent);
-      $("copy-command").textContent = "Copied";
-      requestTranslation();
-    } catch {
-      showError(
-        "Clipboard access is unavailable. Select the command and copy it manually.",
-      );
-    }
+  // Copy from the canonical strings, never from formatted markup.
+  bindCopy($("copy-command"), () => LAUNCH_COMMAND);
+  bindCopy($("copy-brew-command"), () => commands.brew);
+  bindCopy($("copy-app-store-command"), () => commands.appStore);
+  for (const input of document.querySelectorAll('[name="install-method"]'))
+    input.addEventListener("change", () => changeMethod(input.value));
+  $("command-back").addEventListener("click", renderReview);
+  $("switch-to-guided").addEventListener("click", () => {
+    changeMethod("guided");
+    renderReview();
   });
   $("report-button").addEventListener("click", () => downloadReport("install"));
   $("manual-report-button").addEventListener("click", () =>
@@ -1017,6 +1108,12 @@ async function init() {
       );
     catalog = await response.json();
     selected = profileSelection(catalog, profile);
+    $("launch-command").textContent = LAUNCH_COMMAND;
+    try {
+      if (localStorage.getItem(METHOD_KEY) === "homebrew") method = "homebrew";
+    } catch {
+      /* Guided setup remains the default. */
+    }
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {

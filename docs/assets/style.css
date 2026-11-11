@@ -1380,6 +1380,88 @@ html[data-theme="light"] .catalog-panel {
   margin-top: 15px;
   line-height: 1.8;
 }
+/* Installation method: a persistent choice, styled like the profile options. */
+.method-choice {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  border: 0;
+}
+.method-choice legend {
+  padding: 0;
+  margin-bottom: var(--space-2);
+  font-size: 13px;
+  font-weight: 650;
+}
+.method-option {
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  column-gap: var(--space-3);
+  row-gap: 2px;
+  align-items: start;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  background: var(--surface-soft);
+  cursor: pointer;
+}
+.method-option:hover {
+  border-color: var(--control-border);
+}
+.method-option:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--tint);
+  box-shadow: inset 0 1px 0 var(--sheen);
+}
+.method-option:has(input:focus-visible) {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+.method-option input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.method-option > [data-icon] {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  display: flex;
+  padding-top: 1px;
+  color: var(--muted);
+}
+.method-option > [data-icon] svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.6;
+}
+.method-option:has(input:checked) > [data-icon] {
+  color: var(--accent);
+}
+.method-name,
+.method-description {
+  grid-column: 2;
+  min-width: 0;
+}
+.method-name {
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.4;
+}
+.method-description {
+  font-size: 11px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.method-option:has(input:checked) .method-description {
+  color: var(--ink);
+}
 .guide-panel {
   max-width: 990px;
   margin: 0 auto;
@@ -1435,6 +1517,46 @@ html[data-theme="light"] .catalog-panel {
 }
 .command-box button {
   flex-shrink: 0;
+}
+.command-box code {
+  min-width: 0;
+}
+.command-box code span {
+  white-space: nowrap;
+}
+.handoff-steps a.text-button {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.handoff-steps .command-meta {
+  margin-top: var(--space-2);
+  font-size: 12px;
+}
+.not-included {
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--border);
+}
+.not-included > p {
+  margin-top: var(--space-2);
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.not-included-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 var(--space-2);
+  padding: 0;
+  list-style: none;
+}
+.not-included-list li {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-action);
+  background: var(--surface-soft);
+  font-size: 12px;
 }
 .progress-layout {
   display: grid;

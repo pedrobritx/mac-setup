@@ -41,6 +41,31 @@ locally and system accessibility preferences take precedence. See the
 The public launcher requires the browser changes to have been published to the
 repository first. Local development and review work directly from this checkout.
 
+## Homebrew command route
+
+At step 3, the public site also offers **Homebrew command** instead of the guided
+setup. Guided setup stays the default; the choice is remembered in local storage
+only and never enters the exported plan. The route shows plain commands built
+from the selected catalogue tokens, in Brewfile order:
+
+```bash
+brew install --formula mas; brew install --cask google-chrome appcleaner 1password vlc
+mas get 425424353   # optional, only when App Store apps are selected
+```
+
+- Each command is one line. Copy buttons write the generated string, not page
+  text, so wrapping can never insert a line break into Terminal.
+- `;` keeps formulae and casks independent. Within a cask list, current Homebrew
+  reports a failing cask and continues with the rest.
+- `mas get` (mas 7+, the current Homebrew version) gets free apps and installs
+  apps the Apple Account already owns. It needs App Store sign-in, may ask for
+  the Mac password, and cannot buy paid apps.
+- Homebrew itself is a prerequisite and links to [brew.sh](https://brew.sh).
+  Preferences, setup steps, MCP connections, web apps and manual installs are
+  listed as not included; they need the guided setup or the user's own steps.
+- Unlike the guided installer, this route produces no reports or verification,
+  and it skips the selection-aware module behaviour described below.
+
 ## What is automated
 
 The [generated inventory](CATALOG.md) is the full list. Homebrew formulae/casks,

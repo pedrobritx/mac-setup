@@ -108,7 +108,8 @@
               <span class="step-number">2</span><span>Review your setup</span>
             </li>
             <li>
-              <span class="step-number">3</span><span>Guided installation</span>
+              <span class="step-number">3</span
+              ><span id="install-step-label">Guided installation</span>
             </li>
           </ol>
           <div class="notice" id="connection-notice" role="alert" hidden></div>
@@ -261,6 +262,44 @@
                     Download your plan, then open the local companion on your
                     Mac for a guided installation.
                   </p>
+                  <fieldset class="method-choice" id="install-method">
+                    <legend>How would you like to install?</legend>
+                    <label class="method-option"
+                      ><input
+                        type="radio"
+                        name="install-method"
+                        value="guided"
+                        checked
+                        aria-label="Guided setup"
+                        aria-describedby="method-guided-description"
+                      /><span data-icon="sliders"></span
+                      ><span class="method-name" aria-hidden="true"
+                        >Guided setup</span
+                      ><span
+                        class="method-description"
+                        id="method-guided-description"
+                        >Installs your apps and applies the preferences and
+                        setup steps you chose, with live progress and
+                        reports.</span
+                      ></label
+                    ><label class="method-option"
+                      ><input
+                        type="radio"
+                        name="install-method"
+                        value="homebrew"
+                        aria-label="Homebrew command"
+                        aria-describedby="method-homebrew-description"
+                      /><span data-icon="terminal"></span
+                      ><span class="method-name" aria-hidden="true"
+                        >Homebrew command</span
+                      ><span
+                        class="method-description"
+                        id="method-homebrew-description"
+                        >Copy one Terminal command that installs only your
+                        selected apps and tools. Nothing else changes.</span
+                      ></label
+                    >
+                  </fieldset>
                   <div id="git-identity" hidden>
                     <h3>Git identity <span class="quiet">optional</span></h3>
                     <p class="quiet">
@@ -342,10 +381,9 @@
                       need a first-time installation.
                     </p>
                     <div class="command-box">
-                      <code id="launch-command"
-                        >curl -fsSL
-                        https://raw.githubusercontent.com/pedrobritx/mac-setup/main/bootstrap.sh
-                        | bash -s -- --web</code
+                      <!-- One line: a pasted line break runs a partial command. -->
+                      <!-- prettier-ignore -->
+                      <code id="launch-command">curl -fsSL https://raw.githubusercontent.com/pedrobritx/mac-setup/main/bootstrap.sh | bash -s -- --web</code
                       ><button id="copy-command" class="secondary-button">
                         Copy
                       </button>
@@ -377,6 +415,92 @@
                 This website cannot inspect or change your Mac. Live progress
                 appears after you launch the local companion.
               </p>
+            </div>
+          </section>
+          <section id="command-view" hidden aria-label="Install with Homebrew">
+            <button class="back-button" id="command-back">
+              <span data-icon="back"></span>Back to review
+            </button>
+            <div class="guide-panel">
+              <h2>Your Homebrew command.</h2>
+              <p>
+                It installs only the apps and tools you selected. Preferences,
+                setup steps and connections stay as they are.
+              </p>
+              <ol class="handoff-steps">
+                <li>
+                  <span class="step-number">1</span>
+                  <div>
+                    <h3>Have Homebrew ready</h3>
+                    <p>
+                      If Terminal says “brew: command not found”, install
+                      Homebrew first and follow the “Next steps” it prints.
+                    </p>
+                    <a
+                      class="text-button"
+                      href="https://brew.sh"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      >Get Homebrew at brew.sh</a
+                    >
+                  </div>
+                </li>
+                <li>
+                  <span class="step-number">2</span>
+                  <div>
+                    <h3>Install your apps and tools</h3>
+                    <p>
+                      Open Terminal (⌘ Space, then “Terminal”), paste this
+                      command and press Return.
+                    </p>
+                    <div class="command-box" id="brew-command-box">
+                      <code id="brew-command"></code
+                      ><button id="copy-brew-command" class="secondary-button">
+                        Copy
+                      </button>
+                    </div>
+                    <p class="quiet command-meta" id="brew-summary"></p>
+                    <p class="notice" id="brew-empty" hidden>
+                      This selection has no Homebrew apps or tools. Go back to
+                      add some, or use the guided setup.
+                    </p>
+                  </div>
+                </li>
+                <li id="app-store-step" hidden>
+                  <span class="step-number">3</span>
+                  <div>
+                    <h3>Add your App Store apps</h3>
+                    <p>
+                      Optional. Sign in to the App Store first, then run this
+                      after the command above. Free apps are added to your Apple
+                      Account; paid apps need an existing purchase. Terminal may
+                      ask for your Mac password.
+                    </p>
+                    <div class="command-box">
+                      <code id="app-store-command"></code
+                      ><button
+                        id="copy-app-store-command"
+                        class="secondary-button"
+                      >
+                        Copy
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              </ol>
+              <section
+                class="not-included"
+                id="not-included"
+                aria-labelledby="not-included-title"
+                hidden
+              >
+                <h3 id="not-included-title">Not in these commands</h3>
+                <p>These choices need the guided setup, or your own steps:</p>
+                <ul id="not-included-list" class="not-included-list"></ul>
+                <button class="text-button" id="switch-to-guided">
+                  Use the guided setup instead
+                </button>
+              </section>
             </div>
           </section>
           <section id="progress-view" hidden aria-label="Guided installation">

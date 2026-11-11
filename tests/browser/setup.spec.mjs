@@ -213,3 +213,157 @@ for (const viewport of [
     ).toEqual([]);
   });
 }
+
+// Record clipboard writes; the copied text is what reaches Terminal.
+const recordClipboard = (page) =>
+  page.addInitScript(() => {
+    window.copied = [];
+    Object.defineProperty(navigator, "clipboard", {
+      value: { writeText: async (text) => window.copied.push(text) },
+    });
+  });
+
+test("the companion launch command copies as one Terminal line", async ({
+  page,
+}) => {
+  await recordClipboard(page);
+  await page.goto("/");
+  await waitForCatalogue(page);
+  await page.getByRole("button", { name: "Review setup", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Download plan & continue", exact: true })
+    .click();
+  await page.locator("#copy-command").click();
+  await expect(page.locator("#copy-command")).toHaveText("Copied");
+  expect(await page.evaluate(() => window.copied)).toEqual([
+    "curl -fsSL https://raw.githubusercontent.com/pedrobritx/mac-setup/main/bootstrap.sh | bash -s -- --web",
+  ]);
+});
+
+test("the Homebrew route copies exactly the selected packages, one line per command", async ({
+  page,
+}) => {
+  await recordClipboard(page);
+  await page.goto("/");
+  await waitForCatalogue(page);
+  await page.getByRole("button", { name: "Review setup", exact: true }).click();
+  await expect(
+    page.getByRole("radio", { name: "Guided setup", exact: true }),
+  ).toBeChecked();
+  await page
+    .getByRole("radio", { name: "Homebrew command", exact: true })
+    .check();
+  await expect(page.locator("#install-step-label")).toHaveText(
+    "Homebrew command",
+  );
+  await page
+    .getByRole("button", { name: "Show Homebrew command", exact: true })
+    .click();
+  const view = page.getByRole("region", { name: "Install with Homebrew" });
+  await expect(
+    view.getByRole("heading", { name: "Your Homebrew command." }),
+  ).toBeVisible();
+  const brew =
+    "brew install --formula mas; brew install --cask google-chrome appcleaner 1password vlc";
+  await expect(page.locator("#brew-command")).toHaveText(brew);
+  await expect(page.locator("#not-included")).toBeHidden();
+  await page.locator("#copy-brew-command").click();
+  await expect(page.locator("#copy-brew-command")).toHaveText("Copied");
+  await expect(page.locator("#app-store-command")).toHaveText(
+    "mas get 425424353",
+  );
+  await page.locator("#copy-app-store-command").click();
+  expect(await page.evaluate(() => window.copied)).toEqual([
+    brew,
+    "mas get 425424353",
+  ]);
+});
+
+test("the Homebrew command follows later choices, remembers the route and can switch back", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await waitForCatalogue(page);
+  await page.getByRole("searchbox").fill("VLC");
+  await page.getByRole("checkbox", { name: "VLC", exact: true }).uncheck();
+  await page.getByRole("searchbox").fill("Figma MCP");
+  await page.getByRole("checkbox", { name: "Figma MCP", exact: true }).check();
+  await page.getByRole("button", { name: "Review setup", exact: true }).click();
+  await page
+    .getByRole("radio", { name: "Homebrew command", exact: true })
+    .check();
+  await page.reload();
+  await waitForCatalogue(page);
+  await page.getByRole("button", { name: "Review setup", exact: true }).click();
+  await expect(
+    page.getByRole("radio", { name: "Homebrew command", exact: true }),
+  ).toBeChecked();
+  await page
+    .getByRole("button", { name: "Show Homebrew command", exact: true })
+    .click();
+  await expect(page.locator("#brew-command")).toHaveText(
+    "brew install --formula mas; brew install --cask google-chrome appcleaner 1password",
+  );
+  await expect(page.locator("#not-included-list")).toHaveText("Figma MCP");
+  await page
+    .getByRole("button", { name: "Use the guided setup instead", exact: true })
+    .click();
+  await expect(
+    page.getByRole("radio", { name: "Guided setup", exact: true }),
+  ).toBeChecked();
+  await expect(page.locator("#install-step-label")).toHaveText(
+    "Guided installation",
+  );
+  await expect(
+    page.getByRole("button", { name: "Download plan & continue", exact: true }),
+  ).toBeVisible();
+});
+
+test("the Homebrew command view fits a phone, passes WCAG checks and translates", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/");
+  await waitForCatalogue(page);
+  await page.getByRole("radio", { name: "Developer", exact: true }).check();
+  await page.getByRole("button", { name: "Review setup", exact: true }).click();
+  await page
+    .getByRole("radio", { name: "Homebrew command", exact: true })
+    .check();
+  await page
+    .getByRole("button", { name: "Show Homebrew command", exact: true })
+    .click();
+  await expect(page.locator("#not-included")).toBeVisible();
+  for (const mode of ["light", "dark"]) {
+    if ((await page.locator("html").getAttribute("data-theme")) !== mode)
+      await page
+        .getByRole("button", { name: `Switch to ${mode} theme`, exact: true })
+        .click();
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= window.innerWidth,
+      ),
+    ).toBe(true);
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+    expect(
+      results.violations.map((v) => ({
+        id: v.id,
+        targets: v.nodes.map((n) => n.target),
+      })),
+    ).toEqual([]);
+  }
+  const command = await page.locator("#brew-command").textContent();
+  await page.locator("#language-trigger").click();
+  await page
+    .getByRole("option", { name: "Português (Brasil)", exact: true })
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Seu comando do Homebrew." }),
+  ).toBeVisible();
+  await expect(page.locator("#brew-summary")).toHaveText(
+    /^Ferramentas de linha de comando: \d+ · Apps: \d+$/,
+  );
+  await expect(page.locator("#brew-command")).toHaveText(command);
+});

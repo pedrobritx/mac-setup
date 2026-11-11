@@ -13,7 +13,10 @@ Python standard-library companion bound to `127.0.0.1`. The browser submits a
 versioned plan of allowlisted IDs after local confirmation; the companion writes
 data-only picker keys and calls `install.sh --selection`. It reads module events
 and append-only reports for real progress. It does not accept shell commands,
-package URLs, arbitrary paths or MCP credentials from the browser.
+package URLs, arbitrary paths or MCP credentials from the browser. The public
+site's optional Homebrew command route only displays commands for the user to
+copy (`docs/assets/commands.mjs`); it emits allowlisted catalogue tokens and
+never sends commands anywhere.
 
 The [Liquid Acrylic presentation layer](LIQUID_INTERFACE.md) decorates native
 controls with CSS/SVG and small fixed-step springs. Its motion, theme and
