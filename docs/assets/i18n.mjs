@@ -1,11 +1,11 @@
 import messages from "./messages.mjs";
 
 export const LANGUAGES = [
-  { id: "en-GB", name: "English (UK)", flag: "gb" },
-  { id: "pt-BR", name: "Português (Brasil)", flag: "br" },
+  { id: "en-GB", name: "English", flag: "gb" },
+  { id: "pt-BR", name: "Português", flag: "br" },
   { id: "fr-FR", name: "Français", flag: "fr" },
   { id: "de-DE", name: "Deutsch", flag: "de" },
-  { id: "es-ES", name: "Español (España)", flag: "es" },
+  { id: "es-ES", name: "Español", flag: "es" },
 ];
 const normalise = (text) => text.replace(/\s+/g, " ").trim();
 const dictionaries = new Map(

@@ -64,17 +64,18 @@ export function createSourcePicker(
   };
   function positionList() {
     const bounds = trigger.getBoundingClientRect();
+    // The floating summary limits space only while it is shown: when hidden it
+    // measures 0 × 0 at the top, which once sent lists above the viewport.
     const summary = document.querySelector(".selection-column");
+    const summaryBounds = summary?.getBoundingClientRect();
     const bottom =
-      summary && getComputedStyle(summary).position === "fixed"
-        ? Math.min(
-            window.innerHeight - 16,
-            summary.getBoundingClientRect().top - 12,
-          )
+      summaryBounds?.height && getComputedStyle(summary).position === "fixed"
+        ? Math.min(window.innerHeight - 16, summaryBounds.top - 12)
         : window.innerHeight - 16;
     const below = bottom - bounds.bottom;
     const above = bounds.top - 96;
-    const opensAbove = below < list.scrollHeight + 8 && above > below;
+    const opensAbove =
+      below < list.scrollHeight + 8 && above > Math.max(below, 90);
     list.dataset.side = opensAbove ? "above" : "below";
     list.style.maxHeight = `${Math.max(90, (opensAbove ? above : below) - 12)}px`;
   }

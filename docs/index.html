@@ -100,16 +100,32 @@
         </div>
         <div class="window-body">
           <ol class="stepper" aria-label="Setup progress">
-            <li aria-current="step">
-              <span class="step-number">1</span
-              ><span>Choose &amp; customise</span>
+            <li>
+              <button class="step-link" type="button" data-step="choose">
+                <span class="step-number">1</span
+                ><span>Choose &amp; customise</span>
+              </button>
             </li>
             <li>
-              <span class="step-number">2</span><span>Review your setup</span>
+              <button
+                class="step-link"
+                type="button"
+                data-step="review"
+                disabled
+              >
+                <span class="step-number">2</span><span>Review your setup</span>
+              </button>
             </li>
             <li>
-              <span class="step-number">3</span
-              ><span id="install-step-label">Guided installation</span>
+              <button
+                class="step-link"
+                type="button"
+                data-step="install"
+                disabled
+              >
+                <span class="step-number">3</span
+                ><span id="install-step-label">Guided installation</span>
+              </button>
             </li>
           </ol>
           <div class="notice" id="connection-notice" role="alert" hidden></div>

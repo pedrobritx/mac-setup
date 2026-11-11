@@ -77,6 +77,9 @@ let session = null;
 let token = "";
 let pollTimer;
 let commands = { brew: "", appStore: "" };
+let currentView = "choose";
+let runState = "none"; // none | active | finished, for the local companion
+let planDownloaded = false;
 let followupSignature = "";
 let lastRunStatus = "";
 let starting = false;
@@ -525,13 +528,9 @@ function setView(view, moveFocus = true) {
   requestTranslation();
   for (const name of ["choose", "review", "guide", "command", "progress"])
     $(`${name}-view`).hidden = name !== view;
-  const step = view === "choose" ? 0 : view === "review" ? 1 : 2;
+  currentView = view;
   renderInstallStep();
-  document.querySelectorAll(".stepper li").forEach((node, index) => {
-    node.classList.toggle("complete", index < step);
-    if (index === step) node.setAttribute("aria-current", "step");
-    else node.removeAttribute("aria-current");
-  });
+  renderStepper();
   const titles = {
     choose: [
       "Make this ",
@@ -658,6 +657,34 @@ function renderReviewActions() {
   renderInstallStep();
   requestTranslation();
 }
+// Steps navigate like the Back buttons. A running installation locks the
+// earlier steps, and the companion's progress step needs a run to show.
+function renderStepper() {
+  const step = currentView === "choose" ? 0 : currentView === "review" ? 1 : 2;
+  document.querySelectorAll(".stepper li").forEach((node, index) => {
+    const link = node.querySelector(".step-link");
+    node.classList.toggle("complete", index < step);
+    if (index === step) link.setAttribute("aria-current", "step");
+    else link.removeAttribute("aria-current");
+    link.disabled =
+      index < 2
+        ? runState === "active"
+        : Boolean(session) && runState === "none";
+  });
+}
+function goToStep(step) {
+  if (step === "choose") setView("choose");
+  else if (step === "review") renderReview();
+  else if (session) setView("progress");
+  else if (method === "homebrew") renderCommands();
+  else showGuide();
+}
+function showGuide() {
+  $("download-again").textContent = planDownloaded
+    ? "Download again"
+    : "Download plan";
+  setView("guide");
+}
 function renderInstallStep() {
   $("install-step-label").textContent =
     !session && method === "homebrew"
@@ -687,6 +714,8 @@ function renderCommands() {
   showCommand($("app-store-command"), result.appStoreCommand);
   for (const id of ["copy-brew-command", "copy-app-store-command"])
     $(id).textContent = "Copy";
+  for (const status of $("command-view").querySelectorAll(".copy-status"))
+    status.textContent = "";
   $("not-included").hidden = result.notIncluded.length === 0;
   $("not-included-list").replaceChildren(
     ...result.notIncluded.map((item) => element("li", "", item.name)),
@@ -704,19 +733,57 @@ function showCommand(node, command) {
       ]),
   );
 }
+// Some browsers refuse the async clipboard (embedded browsers deny its
+// permission), so fall back to a selection copy, then to a manual ⌘C.
+function copyWithSelection(text) {
+  const focused = document.activeElement;
+  const buffer = element("textarea", "copy-buffer");
+  buffer.value = text;
+  buffer.readOnly = true;
+  buffer.tabIndex = -1;
+  buffer.setAttribute("aria-hidden", "true");
+  document.body.append(buffer);
+  buffer.focus({ preventScroll: true });
+  buffer.setSelectionRange(0, text.length);
+  let copied = false;
+  try {
+    copied = document.execCommand("copy");
+  } catch {
+    copied = false;
+  }
+  buffer.remove();
+  focused?.focus?.({ preventScroll: true });
+  return copied;
+}
+async function copyText(text) {
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      /* Fall back below. */
+    }
+  }
+  return copyWithSelection(text);
+}
 function bindCopy(button, text) {
+  const box = button.closest(".command-box");
+  const status = element("p", "copy-status");
+  status.setAttribute("role", "status");
+  box.after(status);
   button.addEventListener("click", async () => {
     const value = oneLine(text());
     if (!value) return;
-    try {
-      await navigator.clipboard.writeText(value);
+    status.textContent = "";
+    if (await copyText(value)) {
       button.textContent = "Copied";
       announce("Command copied. Paste it into Terminal and press Return.");
-    } catch {
-      showError(
-        "Clipboard access is unavailable. Select the command and copy it manually.",
-      );
+    } else {
+      getSelection().selectAllChildren(box.querySelector("code"));
+      status.textContent =
+        "This browser blocked copying. The command is selected: press ⌘C.";
     }
+    requestTranslation();
   });
 }
 function download(content, name, type = "application/json") {
@@ -730,6 +797,7 @@ function download(content, name, type = "application/json") {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 function exportPlan() {
+  planDownloaded = true;
   download(
     JSON.stringify(createPlan(catalog, profile, selected), null, 2) + "\n",
     "mac-setup-plan.json",
@@ -764,7 +832,7 @@ async function startInstallation() {
       return;
     }
     exportPlan();
-    setView("guide");
+    showGuide();
     return;
   }
   if (!$("confirm-install").checked) {
@@ -807,6 +875,8 @@ async function startInstallation() {
   } catch (error) {
     showError(error.message);
     $("continue-button").disabled = false;
+    runState = "none";
+    renderStepper();
   } finally {
     $("continue-button").removeAttribute("aria-busy");
     starting = false;
@@ -952,6 +1022,8 @@ function renderRun(run) {
     ? "Reports describe this run, including dry-run mode."
     : "Available when the run finishes.";
   $("new-plan").hidden = !finished;
+  runState = finished ? "finished" : "active";
+  renderStepper();
   if (lastRunStatus !== run.status) {
     announce($("progress-description").textContent);
     lastRunStatus = run.status;
@@ -1029,6 +1101,11 @@ function bindEvents() {
   $("review-button").addEventListener("click", renderReview);
   $("back-button").addEventListener("click", () => setView("choose"));
   $("guide-back").addEventListener("click", renderReview);
+  for (const link of document.querySelectorAll(".step-link"))
+    link.addEventListener("click", () => {
+      if (link.getAttribute("aria-current") !== "step")
+        goToStep(link.dataset.step);
+    });
   $("export-button").addEventListener("click", exportPlan);
   $("download-again").addEventListener("click", exportPlan);
   $("continue-button").addEventListener("click", startInstallation);
@@ -1127,6 +1204,7 @@ async function init() {
       );
     }
     bindEvents();
+    renderStepper();
     renderProfiles();
     renderCategories();
     renderSelection();

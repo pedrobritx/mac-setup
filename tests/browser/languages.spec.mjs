@@ -22,7 +22,7 @@ test("five languages keep choices and translate new renders at compact widths", 
   };
   for (const [name, id, heading, review] of [
     [
-      "Português (Brasil)",
+      "Português",
       "pt-BR",
       "Deixe este Mac com a sua cara.",
       "Revisar configuração",
@@ -34,13 +34,8 @@ test("five languages keep choices and translate new renders at compact widths", 
       "Mach diesen Mac zu deinem.",
       "Einrichtung überprüfen",
     ],
-    [
-      "Español (España)",
-      "es-ES",
-      "Haz este Mac tuyo.",
-      "Revisar configuración",
-    ],
-    ["English (UK)", "en-GB", "Make this Mac yours.", "Review setup"],
+    ["Español", "es-ES", "Haz este Mac tuyo.", "Revisar configuración"],
+    ["English", "en-GB", "Make this Mac yours.", "Review setup"],
   ]) {
     await choose(name, id);
     await expect(page.locator("#page-title")).toHaveText(heading);
@@ -93,7 +88,7 @@ test("language picker supports keyboard selection, translated search and Safety 
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("End");
   await expect(
-    page.getByRole("option", { name: "Español (España)", exact: true }),
+    page.getByRole("option", { name: "Español", exact: true }),
   ).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("html")).toHaveAttribute("lang", "es-ES");
@@ -101,7 +96,7 @@ test("language picker supports keyboard selection, translated search and Safety 
   await page.keyboard.press("Escape");
   await expect(page.locator("#language-options")).not.toBeVisible();
   await expect(page.locator("#language-trigger")).toBeFocused();
-  await choose("Português (Brasil)", "pt-BR");
+  await choose("Português", "pt-BR");
   await expect(
     page.getByRole("button", {
       name: "Selecionar tudo em Desenvolvimento",
@@ -115,11 +110,11 @@ test("language picker supports keyboard selection, translated search and Safety 
   await expect(
     page.getByRole("checkbox", { name: "Docker Desktop", exact: true }),
   ).toBeVisible();
-  await choose("English (UK)", "en-GB");
+  await choose("English", "en-GB");
   await expect(
     page.getByRole("checkbox", { name: "Docker Desktop", exact: true }),
   ).toHaveCount(0);
-  await choose("Português (Brasil)", "pt-BR");
+  await choose("Português", "pt-BR");
   await expect(
     page.getByRole("checkbox", { name: "Docker Desktop", exact: true }),
   ).toBeVisible();
@@ -160,11 +155,11 @@ test("language picker supports keyboard selection, translated search and Safety 
 // Audit each locale independently so five full catalogue scans do not consume
 // the interaction journey's budget. Assertions and per-test deadlines stay intact.
 for (const [name, id] of [
-  ["Português (Brasil)", "pt-BR"],
+  ["Português", "pt-BR"],
   ["Français", "fr-FR"],
   ["Deutsch", "de-DE"],
-  ["Español (España)", "es-ES"],
-  ["English (UK)", "en-GB"],
+  ["Español", "es-ES"],
+  ["English", "en-GB"],
 ]) {
   test(`${id} catalogue meets automated WCAG checks`, async ({ page }) => {
     await page.setViewportSize({ width: 932, height: 932 });

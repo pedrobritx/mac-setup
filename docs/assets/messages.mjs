@@ -3199,4 +3199,18 @@ export default [
     "Befehl kopiert. Füge ihn in Terminal ein und drücke die Eingabetaste.",
     "Comando copiado. Pégalo en Terminal y pulsa Intro.",
   ],
+  [
+    "Download plan",
+    "Baixar plano",
+    "Télécharger le plan",
+    "Plan herunterladen",
+    "Descargar plan",
+  ],
+  [
+    "This browser blocked copying. The command is selected: press ⌘C.",
+    "Este navegador bloqueou a cópia. O comando está selecionado: pressione ⌘C.",
+    "Ce navigateur a bloqué la copie. La commande est sélectionnée : appuyez sur ⌘C.",
+    "Dieser Browser hat das Kopieren blockiert. Der Befehl ist markiert: Drücke ⌘C.",
+    "Este navegador ha bloqueado la copia. El comando está seleccionado: pulsa ⌘C.",
+  ],
 ];
